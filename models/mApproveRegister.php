@@ -86,8 +86,48 @@ class mApproveRegister extends CI_Model {
     function deleteLocation($locationId){
 	$this->db->delete('locations', array('location_id' => $locationId));
     }
-    
-    
+    //2. GENERAL PROVIDER STARTS
+    //DROP DOWN STARTS
+    function getLocationID(){
+	$sql="SELECT * FROM locations";
+	return $this->db->query($sql, $return_object = TRUE)->result_array();
+    }
+    //DROP DOWN ENDS
+     function getProviderDetails($providerId){
+	$sql="SELECT * FROM provider_general where provider_id='$providerId'";
+	return $this->db->query($sql, $return_object = TRUE)->result_array();
+    }
+    function addProvider(){
+	$data = array(
+		      'first_name' => $this->input->post('firstName') ,
+		      'last_name' => $this->input->post('lastName') ,
+		      'phone' => $this->input->post('phoneNumber') ,
+		      'provider_type_id' => $this->input->post('provider_type_id') ,
+		      'NPI' => $this->input->post('NPI') ,
+		      'DEA_num' => $this->input->post('deaNumber') ,
+		      'location_id' => $this->input->post('locationID') 
+		      
+		    );
+	$this->db->insert('provider_general', $data);
+	
+    }
+    function updateprovider(){
+	$data = array(
+		      'first_name' => $this->input->post('firstName') ,
+		      'last_name' => $this->input->post('lastName') ,
+		      'phone' => $this->input->post('phoneNumber') ,
+		      'provider_type_id' => $this->input->post('provider_type_id') ,
+		      'NPI' => $this->input->post('NPI') ,
+		      'DEA_num' => $this->input->post('deaNumber') ,
+		      'location_id' => $this->input->post('locationID') 
+		    );
+	$this->db->where('provider_general', $this->input->post('provider_id'));
+	$this->db->update('provider_general', $data);
+    }
+    function deleteProvider($providerId){
+	$this->db->delete('provider_general', array('provider_id' => $providerId));
+    }
+    //***********************************************END**********************************************************
     function min_menu_code(){
 	$sql="SELECT MIN(MENU_CODE) as MIN_CODE FROM APPS_MENU";
 	return $this->db->query($sql, $return_object = TRUE)->result_array();
@@ -106,6 +146,7 @@ class mApproveRegister extends CI_Model {
 	//echo "<pre>";
 	//exit;
     }
+    
     function GetResponseForUser($menu_code){
 	$com_code=$this->session->userdata('USER_COMP_CODE');
 	$user_id=$this->session->userdata('USER_ID');

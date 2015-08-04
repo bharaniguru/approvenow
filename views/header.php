@@ -262,7 +262,7 @@
                         </a>
                         <ul class="sub-menu">
 			    <li><a href="<?=site_url('approveRegister/locationMaster');?>"><i class="fa fa-suitcase text-warning"></i> <span>Location</span></a></li>
-			    <li><a href="<?=site_url('approveRegister/dashboard');?>"><i class="fa fa-tasks text-warning"></i> <span>Provider</span></a></li>
+			    <li><a href="<?=site_url('approveRegister/generalProvider');?>"><i class="fa fa-tasks text-warning"></i> <span>General Provider</span></a></li>
 			</ul>
                     </li>
 		    

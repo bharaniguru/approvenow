@@ -94,8 +94,65 @@ class approveRegister extends CI_Controller {
 	$query['status']="Success";
 	echo json_encode($query);
     }
+    //2.GENERAL PROVIDER STARTS
+    function generalProvider(){
+	$sessionData = $this->session->userdata('accUsername');
+	
+	if($sessionData!=""){
+	    $data['locationDetails']= $this->mApproveRegister->getLocationID();
+	    $this -> load -> view('header');
+	    $this -> load -> view('application/generalProvider',$data);
+	    $this -> load -> view('footer');
+	}
+	else{
+	    redirect(site_url());
+	}
+    }
+   
+    function generalProviderTable(){
+        $this->datatables->select('provider_id,first_name,last_name,provider_type_id,phone,NPI,DEA_num,location_id')
+	->from('provider_general');
+	echo $this->datatables->generate();
+    }
+      function getProviderDetails(){
+	header('Content-Type: application/json');
+	$providerId = $_POST['provider_id'];
+	$result = $this->mApproveRegister->getProviderDetails($providerId);
+	echo json_encode($result);
+    }
+    function generalProviderOperation(){
+	if($this->input->post('proceed')=='Add'){
+	    $this->mApproveRegister->addProvider();
+	    $query['status']="Success";
+	    echo json_encode($query);
+	    
+	}elseif($this->input->post('proceed')=='Edit'){
+	    
+	    $this->mApproveRegister->updateprovider();
+	    $query['status']="Success";
+	    echo json_encode($query);
+	}
+    }
+    function deleteProvider(){
+	header('Content-Type: application/json');
+	$locationId = $_POST['provider_id'];
+	$this->mApproveRegister->deleteprovider($providerId);
+	$query['status']="Success";
+	echo json_encode($query);
+    }
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+ //********************************************************END************************************************************************   
     public function CheckingData(){
 	header('Access-Control-Allow-Origin:*');
 	header('Content-Type: application/json');
