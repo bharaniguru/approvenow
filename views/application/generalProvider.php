@@ -120,7 +120,7 @@ $status = $this->session->flashdata('status');
                         <div class="row">
 			    <section class="col-sm-offset-5 col-sm-3 form-group">
 				<input type="hidden" name="proceed" value="Add" />
-				<input type="hidden" name="locationId" value="" />
+				<input type="hidden" name="providerId" value="" />
 				<button class="btn btn-sm btn-primary m-r-5" name="save" type="submit">Save</button>
 				<button class="btn btn-sm btn-default" onclick="operationClose();" type="button">Cancel</button>
 			    </section>
@@ -182,12 +182,13 @@ function editProvider(providerId) {
 	dataType: 'json',
 	success:function(json){
 	    $('#providerForm').find('[name="firstName"]').val(json[0].first_name);
+	    $('#providerForm').find('[name="providerId"]').val(json[0].provider_id);
 	    $('#providerForm').find('[name="lastName"]').val(json[0].last_name);
 	    $('#providerForm').find('[name="provider_type_id"]').val(json[0].provider_type_id);
-	    $('#providerForm').find('[name="phoneNumber"]').val(json[0].phone_number);
+	    $('#providerForm').find('[name="phoneNumber"]').val(json[0].phone);
 	    $('#providerForm').find('[name="NPI"]').val(json[0].NPI);
-	    $('#providerForm').find('[name="deaNumber"]').val(json[0].dea_number);
-	    $('#providerForm').find('[name="loacationID"]').val(json[0].location_ID);
+	    $('#providerForm').find('[name="deaNumber"]').val(json[0].DEA_num);
+	    $('#providerForm').find('[name="loacationID"]').val(json[0].location_id);
 	    unLoader();
 	}
     });
@@ -225,7 +226,7 @@ $(document).ready(function() {
 	"sDom": "<'row'<'col-md-4 no 'f><'col-md-6 trcalign' TRC><'col-md-2 yes'l>r><t><'row'<'col-md-6'i><'col-md-6'p>>",
 	"bServerSide": true,
 	"bProcessing": false,
-	"sAjaxSource": '<?php echo site_url('approveRegister/locationMasterTable'); ?>',
+	"sAjaxSource": '<?php echo site_url('approveRegister/generalProviderTable'); ?>',
 	'responsive': true,
 	'scrollX':true,
         //"bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
@@ -251,11 +252,11 @@ $(document).ready(function() {
 		{
 		    data: null, className: "all","orderable": false, 
 		    render: function( data, type, row) {
-			return '<div class="btn-group m-r-5 m-b-5 pull-right"><a class="btn btn-success btn-xs dropdown-toggle" data-toggle="dropdown" href="javascript:;" aria-expanded="false"><i class="fa fa-gear"></i> <span class="caret"></span></a><ul class="dropdown-menu"><li><a  class="" onclick="editProvider('+data['provider_id']+')" >  <i class="fa  fa-edit" > </i> Edit</a></li><li><a class=""  id="delete_box" data-toggle="modal"  onclick="deleteProvider('+data['provider_id']+')" >  <i class="fa  fa-trash-o" >  </i> Delete </a></li></ul></div></td></tr>'
+			return '<div class="btn-group m-r-5 m-b-5 pull-right"><a class="btn btn-success btn-xs dropdown-toggle" data-toggle="dropdown" href="javascript:;" aria-expanded="false"><i class="fa fa-gear"></i> <span class="caret"></span></a><ul class="dropdown-menu"><li><a  class="btn btn-sm" onclick="editProvider('+data['provider_id']+')" >  <i class="fa  fa-edit" > </i> Edit</a></li><li><a class="btn btn-sm"  id="delete_box" data-toggle="modal"  onclick="deleteProvider('+data['provider_id']+')" >  <i class="fa  fa-trash-o" >  </i> Delete </a></li></ul></div></td></tr>'
 		    }
 		}
 		],
-	"order": [[ 8, "desc" ]],
+	"order": [[ 0, "desc" ]],
 	tableTools: {
 	    sSwfPath: "../assets/plugins/DataTables/swf/copy_csv_xls_pdf.swf"
 	},

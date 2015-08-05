@@ -333,7 +333,7 @@ $(document).ready(function() {
 		{
 		    data: null, className: "all","orderable": false, 
 		    render: function( data, type, row) {
-			return '<div class="btn-group m-r-5 m-b-5 pull-right"><a class="btn btn-success btn-xs dropdown-toggle" data-toggle="dropdown" href="javascript:;" aria-expanded="false"><i class="fa fa-gear"></i> <span class="caret"></span></a><ul class="dropdown-menu"><li><a  class="" onclick="editLocation('+data['location_id']+')" >  <i class="fa  fa-edit" > </i> Edit</a></li><li><a class=""  id="delete_box" data-toggle="modal"  onclick="deleteLocation('+data['location_id']+')" >  <i class="fa  fa-trash-o" >  </i> Delete </a></li></ul></div></td></tr>'
+			return '<div class="btn-group m-r-5 m-b-5 pull-right"><a class="btn btn-success btn-xs dropdown-toggle" data-toggle="dropdown" href="javascript:;" aria-expanded="false"><i class="fa fa-gear"></i> <span class="caret"></span></a><ul class="dropdown-menu"><li><a  class="btn btn-sm" onclick="editLocation('+data['location_id']+')" >  <i class="fa  fa-edit" > </i> Edit</a></li><li><a class="btn btn-sm"  id="delete_box" data-toggle="modal"  onclick="deleteLocation('+data['location_id']+')" >  <i class="fa  fa-trash-o" >  </i> Delete </a></li></ul></div></td></tr>'
 		    }
 		},
 		],

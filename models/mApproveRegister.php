@@ -121,8 +121,10 @@ class mApproveRegister extends CI_Model {
 		      'DEA_num' => $this->input->post('deaNumber') ,
 		      'location_id' => $this->input->post('locationID') 
 		    );
-	$this->db->where('provider_general', $this->input->post('provider_id'));
+	$this->db->where('provider_id', $this->input->post('providerId'));
 	$this->db->update('provider_general', $data);
+	//print_r($data);
+	//exit;
     }
     function deleteProvider($providerId){
 	$this->db->delete('provider_general', array('provider_id' => $providerId));

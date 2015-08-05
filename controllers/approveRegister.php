@@ -116,7 +116,7 @@ class approveRegister extends CI_Controller {
     }
       function getProviderDetails(){
 	header('Content-Type: application/json');
-	$providerId = $_POST['provider_id'];
+	$providerId = $_POST['providerId'];
 	$result = $this->mApproveRegister->getProviderDetails($providerId);
 	echo json_encode($result);
     }
@@ -135,7 +135,7 @@ class approveRegister extends CI_Controller {
     }
     function deleteProvider(){
 	header('Content-Type: application/json');
-	$locationId = $_POST['provider_id'];
+	$providerId = $_POST['providerId'];
 	$this->mApproveRegister->deleteprovider($providerId);
 	$query['status']="Success";
 	echo json_encode($query);
