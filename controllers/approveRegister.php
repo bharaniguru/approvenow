@@ -33,8 +33,10 @@ class approveRegister extends CI_Controller {
     function createAccount(){
 	if ($this->input->post('proceed')=='Yes'){
 	    $this->mApproveRegister->createAccount();
+	    
 	}
 	$this -> load -> view('createAccount');
+	//redirect(site_url("approveRegister/dashboard"));
     }
     
     public function Logout(){

@@ -37,7 +37,7 @@
             <div class="login-header">
                 <div class="brand">
                     ApproveNow
-                    <small>Register Now</small>
+                    <small>Enter Your Details To Register </small>
                 </div>
                 <div class="icon">
                     <i class="fa fa-share-square-o"></i>
@@ -46,91 +46,94 @@
             <!-- end brand -->
             <div class="login-content">
 		<form action="<?=site_url();?>approveRegister/createAccount" method="POST" class="margin-bottom-0">
-		    <div class="row">
-			<div class="col-sm-4 form-group">
+		   <div class="col-md-offset-2">
+		    <div class="col-md-10">
+			<div class="col-sm-6 form-group">
 			    <label  class="control-label">Account Number</label>
 			    <input type="text" class="form-control" name="accountNumber" placeholder="Account Number" />
 			</div>
-			<div class="col-sm-4 form-group">
-			    <label  class="control-label">Title Id</label>
-			    <input type="text" class="form-control" name="titleId" placeholder="Title Id" />
+			<div class="col-sm-6 form-group">
+			    <label  class="control-label">Account Password</label>
+			    <input type="text" class="form-control" name="accPassword" placeholder="Account Password" />
 			</div>
-			<div class="col-sm-4 form-group">
-			    <label  class="control-label">Membership Level Number</label>
-			    <input type="text" class="form-control" name="memLevelNo" placeholder="Membership Level Number" />
-			</div>
+			<!--<div class="col-sm-4 form-group">-->
+			<!--    <label  class="control-label">Title Id</label>-->
+			<!--    <input type="text" class="form-control" name="titleId" placeholder="Title Id" />-->
+			<!--</div>-->
+			<!--<div class="col-sm-4 form-group">-->
+			<!--    <label  class="control-label">Membership Level Number</label>-->
+			<!--    <input type="text" class="form-control" name="memLevelNo" placeholder="Membership Level Number" />-->
+			<!--</div>-->
 		    </div>
-		    <div class="row">
-			<div class="col-sm-4 form-group">
+		    <div class="col-md-10">
+			<div class="col-sm-6 form-group">
 			    <label  class="control-label">First Name</label>
 			    <input type="text" class="form-control" name="accFirstName" placeholder="First Name" />
 			</div>
-			<div class="col-sm-4 form-group">
-			    <label  class="control-label">Middle Name</label>
-			    <input type="text" class="form-control" name="accMidName" placeholder="Middle Name" />
-			</div>
-			<div class="col-sm-4 form-group">
+			<!--<div class="col-sm-4 form-group">-->
+			<!--    <label  class="control-label">Middle Name</label>-->
+			<!--    <input type="text" class="form-control" name="accMidName" placeholder="Middle Name" />-->
+			<!--</div>-->
+			<div class="col-sm-6 form-group">
 			    <label  class="control-label">Last Name</label>
 			    <input type="text" class="form-control" name="accLastName" placeholder="Last Name" />
 			</div>
 		    </div>
-		    <div class="row">
-			<div class="col-sm-4 form-group">
-			    <label  class="control-label">Genral Status Code</label>
-			    <input type="text" class="form-control" name="genStatusCode" placeholder="Genral Status Code" />
-			</div>
-			<div class="col-sm-4 form-group">
+		    <div class="col-md-10">
+			<!--<div class="col-sm-4 form-group">-->
+			<!--    <label  class="control-label">Genral Status Code</label>-->
+			<!--    <input type="text" class="form-control" name="genStatusCode" placeholder="Genral Status Code" />-->
+			<!--</div>-->
+			<div class="col-sm-6 form-group">
 			    <label  class="control-label">Email Address</label>
 			    <input type="text" class="form-control" name="accEmail" placeholder="Email Address" />
 			</div>
-			<div class="col-sm-4 form-group">
+			<div class="col-sm-6 form-group">
 			    <label  class="control-label">Organization Name</label>
 			    <input type="text" class="form-control" name="accOrgName" placeholder="Organization Name" />
 			</div>
 		    </div>
 		    <div class="row">
-			<div class="col-sm-4 form-group">
-			    <label  class="control-label">Web Address</label>
-			    <input type="text" class="form-control" name="webAddress" placeholder="Web Address" />
-			</div>
-			<div class="col-sm-4 form-group">
-			    <label  class="control-label">External Link</label>
-			    <input type="text" class="form-control" name="externalLink" placeholder="External Link" />
-			</div>
-			<div class="col-sm-4 form-group">
-			    <label  class="control-label">Account Password</label>
-			    <input type="text" class="form-control" name="accPassword" placeholder="Account Password" />
-			</div>
+			<!--<div class="col-sm-4 form-group">-->
+			<!--    <label  class="control-label">Web Address</label>-->
+			<!--    <input type="text" class="form-control" name="webAddress" placeholder="Web Address" />-->
+			<!--</div>-->
+			<!--<div class="col-sm-4 form-group">-->
+			<!--    <label  class="control-label">External Link</label>-->
+			<!--    <input type="text" class="form-control" name="externalLink" placeholder="External Link" />-->
+			<!--</div>-->
+			
 		    </div>
-		    <div class="row">
-			<div class="col-sm-4 form-group">
-			    <label  class="control-label">Account Type</label>
-			    <input type="text" class="form-control" name="accType" placeholder="Account Type" />
-			</div>
-			<div class="col-sm-4 form-group">
-			    <label  class="control-label">Account Id</label>
-			    <input type="text" class="form-control" name="accId" placeholder="Account Id" />
-			</div>
-			<div class="col-sm-4 form-group">
+		    <div class="col-md-10">
+			<!--<div class="col-sm-4 form-group">-->
+			<!--    <label  class="control-label">Account Type</label>-->
+			<!--    <input type="text" class="form-control" name="accType" placeholder="Account Type" />-->
+			<!--</div>-->
+			<!--<div class="col-sm-4 form-group">-->
+			<!--    <label  class="control-label">Account Id</label>-->
+			<!--    <input type="text" class="form-control" name="accId" placeholder="Account Id" />-->
+			<!--</div>-->
+			<div class="col-sm-6 form-group">
 			    <label  class="control-label">Account Username</label>
 			    <input type="text" class="form-control" name="accUsername" placeholder="Account Username" />
 			</div>
 		    </div>
 		    <div class="row">
-			<div class="col-sm-4 form-group">
-			    <label  class="control-label">Company Id</label>
-			    <input type="text" class="form-control" name="companyId" placeholder="Company Id" />
-			</div>
-			<div class="col-sm-4 form-group">
-			    <label  class="control-label">Account Name</label>
-			    <input type="text" class="form-control" name="accName" placeholder="Account Name" />
-			</div>
+			<!--<div class="col-sm-4 form-group">-->
+			<!--    <label  class="control-label">Company Id</label>-->
+			<!--    <input type="text" class="form-control" name="companyId" placeholder="Company Id" />-->
+			<!--</div>-->
+			<!--<div class="col-sm-4 form-group">-->
+			<!--    <label  class="control-label">Account Name</label>-->
+			<!--    <input type="text" class="form-control" name="accName" placeholder="Account Name" />-->
+			<!--</div>-->
 		    </div>
-		    <div class="row">
-			<div class="col-sm-offset-4 col-sm-4 form-group">
+		    <div class="col-md-5">
+			<div class="col-sm-offset-10 col-sm-4 form-group">
 			    <input type="hidden" name="proceed" value="Yes" />
 			    <button type="submit" class="btn btn-success btn-block">Sign me Up</button>
 			</div>
+		    </div>
 		    </div>
                 </form>
             </div>

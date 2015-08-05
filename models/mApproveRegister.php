@@ -23,7 +23,10 @@ class mApproveRegister extends CI_Model {
 		      'company_id' => $this->input->post('companyId') ,
 		      'account_name' => $this->input->post('accName')
 		      );
-	$this->db->insert('account_general', $data); 
+	$this->db->insert('account_general', $data);
+	
+	//print_r($data);
+	//exit;
     }
     function checkForAuthentication(){
 	$accUsername = $this->input->post('accUsername');
