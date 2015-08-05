@@ -188,10 +188,10 @@ function editProvider(providerId) {
 	    $('#providerForm').find('[name="phoneNumber"]').val(json[0].phone);
 	    $('#providerForm').find('[name="NPI"]').val(json[0].NPI);
 	    $('#providerForm').find('[name="deaNumber"]').val(json[0].DEA_num);
-	    $('#providerForm').find('[name="loacationID"]').val(json[0].location_id);
+	    $('#providerForm').find('[name="locationID"]').val(json[0].location_id);
 	    unLoader();
 	}
-    });
+    });   
 }
 function deleteProvider(providerId) {
     bootbox.confirm("Are you sure you want to delete?", function(confirmed) {
