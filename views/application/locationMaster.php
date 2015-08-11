@@ -41,11 +41,9 @@ $status = $this->session->flashdata('status');
 		    <table id="dataRespTable" class="table table-striped table-bordered nowrap" width="100%">
 			<thead>
 			    <tr>
-				<th>Company Name</th>
-				<th>Phone Area Code</th>
+				<th>Location Name</th>
 				<th>Phone Number</th>
 				<th>Phone Ext</th>
-				<th>Fax Area Code</th>
 				<th>Fax Number</th>
 				<th>Address</th>
 				<th>City</th>
@@ -54,12 +52,8 @@ $status = $this->session->flashdata('status');
 				<th>Zip Four</th>
 				<th>Email Address</th>
 				<th>Web Address</th>
-				<th>Product Name</th>
-				<th>Product Version</th>
-				<th>Product Build</th>
-				<th>Build Date</th>
 				<th>NPI</th>
-				<th>Account Number</th>
+				<th>Account Id</th>
 				<th>Action</th>
 			    </tr>
 			</thead>
@@ -88,12 +82,8 @@ $status = $this->session->flashdata('status');
 		    <form id="locationForm" data-fv-trigger="blur change keyup"   enctype="multipart/form-data" role="form">
 			<div class="row">
 			    <section class="col-sm-3 form-group">
-				<label  class="control-label">Company Name</label>
-				<input type="text" class="form-control" name="companyName" placeholder="Company Name" />
-			    </section>
-			    <section class="col-sm-3 form-group">
-				<label  class="control-label">Phone Area Code</label>
-				<input type="text" class="form-control" name="phoneAreaCode" placeholder="Phone Area Code" />
+				<label  class="control-label">Location Name</label>
+				<input type="text" class="form-control" name="locationName" placeholder="Location Name" />
 			    </section>
 			    <section class="col-sm-3 form-group">
 				<label  class="control-label">Phone Number</label>
@@ -103,16 +93,12 @@ $status = $this->session->flashdata('status');
 				<label  class="control-label">Phone Extension</label>
 				<input type="text" class="form-control" name="phoneExtension" placeholder="Phone Extension" />
 			    </section>
-			</div>
-			<div class="row">
-			    <section class="col-sm-3 form-group">
-				<label  class="control-label">Fax Area Code</label>
-				<input type="text" class="form-control" name="faxAreaCode" placeholder="Fax Area Code" />
-			    </section>
 			    <section class="col-sm-3 form-group">
 				<label  class="control-label">Fax Number</label>
 				<input type="text" class="form-control" name="faxNumber" placeholder="Fax Number" />
 			    </section>
+			</div>
+			<div class="row">
 			    <section class="col-sm-3 form-group">
 				<label  class="control-label">Address</label>
 				<input type="text" class="form-control" name="address" placeholder="Address" />
@@ -121,8 +107,6 @@ $status = $this->session->flashdata('status');
 				<label  class="control-label">City</label>
 				<input type="text" class="form-control" name="city" placeholder="City" />
 			    </section>
-			</div>
-			<div class="row">
 			    <section class="col-sm-3 form-group">
 				<label  class="control-label">State</label>
 				<input type="text" class="form-control" name="state" placeholder="State" />
@@ -131,6 +115,8 @@ $status = $this->session->flashdata('status');
 				<label  class="control-label">Zip Code</label>
 				<input type="text" class="form-control" name="zipCode" placeholder="Zip Code" />
 			    </section>
+			</div>
+			<div class="row">
 			    <section class="col-sm-3 form-group">
 				<label  class="control-label">Zip Four</label>
 				<input type="text" class="form-control" name="zipFour" placeholder="Zip Four" />
@@ -139,39 +125,13 @@ $status = $this->session->flashdata('status');
 				<label  class="control-label">Email Address</label>
 				<input type="text" class="form-control" name="emailAddress" placeholder="Email Address" />
 			    </section>
-			</div>
-			<div class="row">
 			    <section class="col-sm-3 form-group">
 				<label  class="control-label">Web Address</label>
 				<input type="text" class="form-control" name="webAddress" placeholder="Web Address" />
 			    </section>
 			    <section class="col-sm-3 form-group">
-				<label  class="control-label">Product Name</label>
-				<input type="text" class="form-control" name="productName" placeholder="Product Name" />
-			    </section>
-			    <section class="col-sm-3 form-group">
-				<label  class="control-label">Product Version</label>
-				<input type="text" class="form-control" name="productVersion" placeholder="Product Version" />
-			    </section>
-			</div>
-			<div class="row">
-			    <section class="col-sm-3 form-group">
-				<label  class="control-label">Product Build</label>
-				<input type="text" class="form-control" name="prodBuild" placeholder="Product Build" />
-			    </section>
-			    <section class="col-sm-3 form-group">
-				<label  class="control-label">Build Date</label>
-				<input type="text" class="form-control" name="prodBuildDate" placeholder="Build Date" />
-			    </section>
-			    <section class="col-sm-3 form-group">
 				<label  class="control-label">NPI</label>
 				<input type="text" class="form-control" name="NPI" placeholder="NPI" />
-			    </section>
-			</div>
-			<div class="row">
-			    <section class="col-sm-3 form-group">
-				<label  class="control-label">Account Number</label>
-				<input type="text" class="form-control" name="accountNum" placeholder="Account Number" />
 			    </section>
 			</div>
 			<div class="row">
@@ -219,7 +179,6 @@ $("#locationForm").submit(function(e) {
 	processData: false,
 	contentType: false,
 	success:function(json){
-	    //console.log(json);
 	    operationClose();
 	    $('#dataRespTable').dataTable().fnDraw();
 	    unLoader();
@@ -238,12 +197,10 @@ function editLocation(locationId) {
 	data:{locationId:locationId},
 	dataType: 'json',
 	success:function(json){
-	    $('#locationForm').find('[name="companyName"]').val(json[0].company_name);
+	    $('#locationForm').find('[name="locationName"]').val(json[0].company_name);
 	    $('#locationForm').find('[name="locationId"]').val(json[0].location_id);
-	    $('#locationForm').find('[name="phoneAreaCode"]').val(json[0].phone_area_code);
 	    $('#locationForm').find('[name="phoneNumber"]').val(json[0].phone_number);
 	    $('#locationForm').find('[name="phoneExtension"]').val(json[0].phone_ext);
-	    $('#locationForm').find('[name="faxAreaCode"]').val(json[0].fax_area_code);
 	    $('#locationForm').find('[name="faxNumber"]').val(json[0].fax_number);
 	    $('#locationForm').find('[name="address"]').val(json[0].address);
 	    $('#locationForm').find('[name="city"]').val(json[0].city);
@@ -252,12 +209,7 @@ function editLocation(locationId) {
 	    $('#locationForm').find('[name="zipFour"]').val(json[0].zip_four);
 	    $('#locationForm').find('[name="emailAddress"]').val(json[0].email_address);
 	    $('#locationForm').find('[name="webAddress"]').val(json[0].web_address);
-	    $('#locationForm').find('[name="productName"]').val(json[0].product_name);
-	    $('#locationForm').find('[name="productVersion"]').val(json[0].product_version);
-	    $('#locationForm').find('[name="prodBuild"]').val(json[0].product_build);
-	    $('#locationForm').find('[name="prodBuildDate"]').val(json[0].product_build_date);
 	    $('#locationForm').find('[name="NPI"]').val(json[0].NPI);
-	    $('#locationForm').find('[name="accountNum"]').val(json[0].account_num);
 	    unLoader();
 	}
     });
@@ -292,7 +244,7 @@ function unLoader() {
 
 $(document).ready(function() {
     var table = $("#dataRespTable").DataTable({
-	"sDom": "<'row'<'col-md-4 no 'f><'col-md-6 trcalign' TRC><'col-md-2 yes'l>r><t><'row'<'col-md-6'i><'col-md-6'p>>",
+	"sDom": "<'row'<'col-md-10 no 'f><'col-md-2 yes'l>r><t><'row'<'col-md-6'i><'col-md-6'p>>",
 	"bServerSide": true,
 	"bProcessing": false,
 	"sAjaxSource": '<?php echo site_url('approveRegister/locationMasterTable'); ?>',
@@ -311,11 +263,9 @@ $(document).ready(function() {
 	    //"processing": '<div class="loader overlay"><div class="loader-load"></div><div class="loader-overlay"></div></div>'
 	},
 	columns:[
-		{ data: 'company_name', className: "all"},
-		{ data: "phone_area_code"},
+		{ data: 'location_name', className: "all"},
 		{ data: "phone_number"},
 		{ data: "phone_ext"},
-		{ data: "fax_area_code"},
 		{ data: "fax_number"},
 		{ data: 'address'},
 		{ data: "city"},
@@ -324,12 +274,8 @@ $(document).ready(function() {
 		{ data: 'zip_four'},
 		{ data: 'email_address'},
 		{ data: "web_address"},
-		{ data: "product_name"},
-		{ data: "product_version"},
-		{ data: "product_build"},
-		{ data: "product_build_date"},
 		{ data: 'NPI'},
-		{ data: "account_num"},
+		{ data: "account_id"},
 		{
 		    data: null, className: "all","orderable": false, 
 		    render: function( data, type, row) {

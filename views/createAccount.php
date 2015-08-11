@@ -105,10 +105,15 @@
 			
 		    </div>
 		    <div class="col-md-10">
-			<!--<div class="col-sm-4 form-group">-->
-			<!--    <label  class="control-label">Account Type</label>-->
-			<!--    <input type="text" class="form-control" name="accType" placeholder="Account Type" />-->
-			<!--</div>-->
+			<div class="col-sm-6 form-group">
+			    <label  class="control-label">Account Type</label>
+			    <select name="accType" id="accType" class="form-control">
+				<option value="">Select Account Type</option>
+				<?php foreach ($accountType as $accountType){ ?>
+				<option value="<?=$accountType['ref_account_type_id']; ?>"><?=$accountType['description']; ?></option>
+				<?php } ?>
+			    </select>
+			</div>
 			<!--<div class="col-sm-4 form-group">-->
 			<!--    <label  class="control-label">Account Id</label>-->
 			<!--    <input type="text" class="form-control" name="accId" placeholder="Account Id" />-->

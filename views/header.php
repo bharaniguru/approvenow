@@ -258,11 +258,11 @@
                         <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <i class="fa fa-align-left text-warning"></i> 
-                            <span>Application</span>
+                            <span>Profile</span>
                         </a>
                         <ul class="sub-menu">
 			    <li><a href="<?=site_url('approveRegister/locationMaster');?>"><i class="fa fa-suitcase text-warning"></i> <span>Location</span></a></li>
-			    <li><a href="<?=site_url('approveRegister/generalProvider');?>"><i class="fa fa-tasks text-warning"></i> <span>General Provider</span></a></li>
+			    <li><a href="<?=site_url('approveRegister/generalProvider');?>"><i class="fa fa-tasks text-warning"></i> <span>Provider General</span></a></li>
 			</ul>
                     </li>
 		    
