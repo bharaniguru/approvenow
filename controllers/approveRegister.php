@@ -21,6 +21,8 @@ class approveRegister extends CI_Controller {
 	    $result = $this->mApproveRegister->checkForAuthentication();
 	    if($result){
 		$this->session->set_userdata('accUsername',$result[0]['account_username']);
+		$this->session->set_userdata('accountId',$result[0]['account_id']);
+		$this->session->set_userdata('organizationName',$result[0]['account_organization_name']);
 		redirect(site_url("approveRegister/dashboard"));
 	    }else{
 		$data['errorMsg'] = 'Invalid User Id and Password Please check it';
@@ -33,9 +35,9 @@ class approveRegister extends CI_Controller {
     function createAccount(){
 	if ($this->input->post('proceed')=='Yes'){
 	    $this->mApproveRegister->createAccount();
-	    
 	}
-	$this -> load -> view('createAccount');
+	$data['accountType']=$this->mApproveRegister->getAccountType();
+	$this -> load -> view('createAccount',$data);
 	//redirect(site_url("approveRegister/dashboard"));
     }
     
@@ -67,8 +69,9 @@ class approveRegister extends CI_Controller {
 	}
     }
     function locationMasterTable(){
-        $this->datatables->select('location_id,company_name,phone_area_code,phone_number,phone_ext,fax_area_code,fax_number,address,city,state,zip,zip_four,email_address,web_address,product_name,product_version,product_build,product_build_date,NPI,account_num')
-	->from('locations');
+        $this->datatables->select('location_id,location_name,phone_number,phone_ext,fax_number,address,city,state,zip,zip_four,email_address,web_address,NPI,account_id')
+	->from('locations')
+	->where('account_id = '.$this->session->userdata('accountId'));
 	echo $this->datatables->generate();
     }
     function getLocationDetails(){
