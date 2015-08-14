@@ -142,7 +142,18 @@ class approveRegister extends CI_Controller {
 	$query['status']="Success";
 	echo json_encode($query);
     }
-    
+    function priorAuth()
+    {
+       $this->load->view('header');
+       $this->load->view('application/priorAuth');
+       $this->load->view('footer');
+   }
+       function priorAuth2()
+    {
+       $this->load->view('header');
+       $this->load->view('application/priorAuth2');
+       $this->load->view('footer');
+   }
     
     
     

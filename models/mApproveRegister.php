@@ -31,8 +31,12 @@ class mApproveRegister extends CI_Model {
     function checkForAuthentication(){
 	$accUsername = $this->input->post('accUsername');
 	$accPassword = $this->input->post('accPassword');
-	$sql="SELECT * FROM account_general where account_username='$accUsername' AND account_pwd='$accPassword'";
+	$sql="SELECT * FROM accounts_general where account_username='$accUsername' AND account_pwd='$accPassword'";
+	//print_r($sql);
+	//exit;
 	return $this->db->query($sql, $return_object = TRUE)->result_array();
+	///print_r($return);
+	//exit;
     }
     function addLocation(){
 	$data = array(
