@@ -275,7 +275,8 @@
 				    <label class="col col-4"></label>
 				    <button class="btn btn-sm btn-danger" type="button" onclick="window.history.back();">cancel</button>
 				    <button class="btn btn-sm btn-info" type="reset" onclick="form_reset();" >Reset</button>
-				    <input type="submit" name="Save"  class="btn btn-sm btn-success"  value="Save">
+				    <!--<input type="submit" name="Save"  class="btn btn-sm btn-success"  value="Save">-->
+				    <a href="<?=site_url('approveRegister/priorAuth2')?>" class="btn btn-sm btn-success" > Next </a>
 				</div>
 			    </div>
 			  </form>

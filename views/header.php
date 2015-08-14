@@ -269,8 +269,7 @@
 			    <li><a href="<?=site_url('approveRegister/generalProvider');?>"><i class="fa fa-tasks text-warning"></i> <span>Provider General</span></a></li>
 			</ul>
                     </li>
-		     <li><a href="<?=site_url('approveRegister/priorAuth');?>"><i class="fa fa-rock text-warning"></i> <span>Prior Authorzation</span></a></li>
-                    <!-- begin sidebar minify button -->
+		    <!-- begin sidebar minify button -->
                     <li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
                     <!-- end sidebar minify button -->
                 </ul>

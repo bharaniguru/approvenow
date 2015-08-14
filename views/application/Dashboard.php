@@ -25,15 +25,7 @@
 			    <!-- end col-3 -->
 			
 			
-			        <div class="form-group pull-right">
-					<label class="col-md-3 control-label">Provider</label>
-					<div class="col-md-9">
-					<select name="providerName" id="providerName" class="form-control">
-						<option value='0'  selected disabled >select</option>
-						<option>Henry Jenkins</option>
-					</select>
-					</div>
-				</div>
+			      
 			<!-- end row -->
 			</div>
 		
@@ -126,7 +118,7 @@
 						<textarea class="form-control" rows="5" id="comment"></textarea>
 					</div>
 				</div>
-				<button type="button" class="btn btn-success pull-right">Fix PA</button>
+				<a href="<?=site_url('approveRegister/priorAuth')?>" class="btn btn-success pull-right">Fix PA</a>
 			</div>
 		</div>	
 		</div>
