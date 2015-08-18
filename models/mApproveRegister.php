@@ -75,7 +75,13 @@ class mApproveRegister extends CI_Model {
 	$sql="SELECT * FROM provider_general";
 	return $this->db->query($sql, $return_object = TRUE)->result_array();
     }
-    
+   public function paitentDetailsAjax()
+	{
+	    $priorId=$_POST["prior_authorizaion_id"];
+	    $sql="SELECT written_drug_form_desc,diagnosis_code,pharmacy_name FROM  prior_authorizaion where prior_authorizaion_id='$priorId'";
+	  
+	    return $this->db->query($sql, $return_object = TRUE)->result_array();
+	}
     //Dashboard End
     function addLocation(){
 	$data = array(

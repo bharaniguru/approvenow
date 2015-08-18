@@ -62,6 +62,38 @@ class approveRegister extends CI_Controller {
 	    redirect(site_url());
 	}
     }
+   public function paitentDetailsAjax()
+	{
+	    
+	    $data =$this->mApproveRegister->paitentDetailsAjax();
+	    foreach($data as $row) {
+	    ?>
+	    <div class="col-md-6 well" id="showDiv">
+			<div class="" >
+				<div class="col-md-6">
+					<div class="form-group">
+						<label class="control-label">Drug Name: <?php echo $row['written_drug_form_desc']; ?></label>
+					</div>
+					<div class="form-group">
+						<label class="control-label">Diagnosis Code:  <?php echo $row['diagnosis_code']; ?></label>
+					</div>
+					<div class="form-group">
+						<label class="control-label">Provider Name: <?php echo $row['pharmacy_name']; ?></label>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label class="control-label">Reject Issues</label>
+					</div>
+					<div class="form-group">
+						<textarea class="form-control" rows="5" id="comment"></textarea>
+					</div>
+				</div>
+				<a href="<?php echo site_url('approveRegister/priorAuth'); ?>" class="btn btn-success pull-right">Fix PA</a>
+			</div>
+		</div>
+		<?php }
+	}
     function locationMaster(){
 	$sessionData = $this->session->userdata('accUsername');
 	if($sessionData!=""){

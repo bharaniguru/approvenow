@@ -45,7 +45,7 @@
 				    <table id="" class="table table-striped table-bordered nowrap responsive" width="100%">
 		      <thead>
 			    <tr>
-				<th data-class="expand"><input type="checkbox" checked   value='Y' name="checkbox"></th>
+				<th data-class="expand"><input type="radio" id="" checked name="already_y"></th>
 				<th data-hide="phone,tablet">Date</th>
 				<th data-hide="phone,tablet">Paitent Last Name</th>
 		                <th data-hide="phone,tablet">DOB</th>
@@ -63,7 +63,8 @@
 				?>
 			   
 			    <tr class="">
-				<td><input type="checkbox" id="checkYes" value='Y' name="checkbox">
+				<td><input type="radio" value="Y" id="radioYes" onclick="patientDetails('<?php echo $row['prior_authorizaion_id']?>')" name="already_y">
+				<input type="hidden" name="already_y">
 				</td>
 				<td><?php echo $row['dispensed_date']; ?></td>					    
 				<td><?php echo $row['patient_last_name']; ?></td>
@@ -92,50 +93,67 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-6 well" id="moreinfo">
-			<div class="" >
-				<div class="col-md-6">
-					<div class="form-group">
-						<label class="control-label">Drug Name: <?php echo $row['written_drug_form_desc']; ?></label>
-					</div>
-					<div class="form-group">
-						<label class="control-label">Diagnosis Code:  <?php echo $row['diagnosis_code']; ?></label>
-					</div>
-					<div class="form-group">
-						<label class="control-label">Provider Name: <?php echo $row['pharmacy_name']; ?></label>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="form-group">
-						<label class="control-label">Reject Issues</label>
-					</div>
-					<div class="form-group">
-						<textarea class="form-control" rows="5" id="comment"></textarea>
-					</div>
-				</div>
-				<a href="<?php echo site_url('approveRegister/priorAuth'); ?>" class="btn btn-success pull-right">Fix PA</a>
-			</div>
-		</div>	
+		<div class="RemoveResponsive"></div>
 		</div>
 	</div>
 </div>
+<script>
+   function patientDetails($id)
+     {
+  
+  
+
+   $.ajax({
+      url: '<?php  echo site_url('approveRegister/paitentDetailsAjax')?>',
+      type: 'POST',
+      data: {prior_authorizaion_id:$id},
+      success: function (response)
+      {
+   $(".RemoveResponsive").html(response);
+       }
+  });
+     }
+</script>
+
+
+
+
+
 <script type="text/javascript">
     $(document).ready(function(){
 	
-	$("*#moreinfo").hide();
+	
+	$("*#showDiv").hide();
          });
-          $("#checkYes").click(function(){
+          $("*#radioYes").click(function(){
            
-	    if ($(this).val()=="Y"){
-		$("#moreinfo").show();
-		$('#checkYes').val('N');
-	    }else if($(this).val()=="N"){
-		$("#moreinfo").hide();
-		$('#checkYes').val('Y');
+	    if ($(this).val()=="Y")
+	    {
+		$("#showDiv").show();
+	    }
+            if ($(this).val()=="N")
+	    {
+		$("#showDiv").hide();
 	    }
 	    
 	    });
-	  
-	 
+    
     </script>
+<script>
+	//Loader
+function loadLoader() {
+ $('body').addClass('loading').loader('show', { overlay: true });
+    }
+function unLoader(args) {
+ $('body').removeClass('loading').loader('hide');
+    }
+    
+function loadTxn() {
+    $('body').addClass('loading').loader('show', { overlay: true });
+}
+function unloadTxn() {
+    $('body').removeClass('loading').loader('hide');
+}
+	//Loader
+</script>
 	

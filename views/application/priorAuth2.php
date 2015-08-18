@@ -233,22 +233,6 @@
                                             <label class="control-label"></label>
                                             <label><input type="radio" name="female"> No</label>
                                     </section>
-                                   
-                                    
-                                    <!--<section class="col-sm-10 form-group">
-					<label class="control-label">&nbsp;&nbsp;</label>
-				    </section>
-				    <section class="col-sm-10 form-group">
-					 <label class="control-label">&nbsp;&nbsp;</label>
-				    </section>
-				    <section class="col-sm-10 form-group">
-					<label class="control-label">&nbsp;&nbsp;</label>
-				    </section>
-				    <section class="col-sm-10 form-group">
-					<label class="control-label">&nbsp;&nbsp;</label>
-				    </section>-->
-				   
-				   
 				</div>
 			    </div>
 			    <section class="col-sm-10 form-group">

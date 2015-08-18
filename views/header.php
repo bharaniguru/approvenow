@@ -72,6 +72,7 @@
 	
 	<script src="<?php echo base_url(); ?>assets/plugins/jquery/jquery-1.9.1.min.js"></script>
 	<script src="<?php echo base_url(); ?>assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<?php echo base_url(); ?>assets/plugins/loader/jquery.loader.js"></script>
 	<!--<script src="<?php echo base_url(); ?>assets/js/dashboard-v2.min.js"></script>
 	<script src="<?php echo base_url(); ?>assets/js/apps.min.js"></script>-->
 	
