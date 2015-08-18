@@ -25,7 +25,6 @@
 			    <!-- end col-3 -->
 			
 			
-			      
 			<!-- end row -->
 			</div>
 		
@@ -46,7 +45,7 @@
 				    <table id="" class="table table-striped table-bordered nowrap responsive" width="100%">
 		      <thead>
 			    <tr>
-				<th data-class="expand"><input type="checkbox" id=""  value='Y' name="checkbox"></th>
+				<th data-class="expand"><input type="checkbox" checked   value='Y' name="checkbox"></th>
 				<th data-hide="phone,tablet">Date</th>
 				<th data-hide="phone,tablet">Paitent Last Name</th>
 		                <th data-hide="phone,tablet">DOB</th>
@@ -58,56 +57,52 @@
 			    </tr>
 			</thead>
 			<tbody>
-			   
+			    <?php 
+				 foreach($tableDetails as $row){
+				 
+				?>
 			   
 			    <tr class="">
-				<td><input type="checkbox" id=""  value='Y' name="checkbox"></td>
-				<td>7/15/15</td>					    
-				<td>Jones</td>
-				<td>2/8/88</td>
-				<td>zanathon</td>				    
-				<td>jenkins</td>
-				<td>Approved</td>
+				<td><input type="checkbox" id="checkYes" value='Y' name="checkbox">
+				</td>
+				<td><?php echo $row['dispensed_date']; ?></td>					    
+				<td><?php echo $row['patient_last_name']; ?></td>
+				<td><?php echo $row['patient_dob']; ?></td>
+				<td><?php echo $row['written_drug_form_desc']; ?></td>				    
+				<td><?php echo $row['pharmacy_name']; ?></td>
+				<td><?php echo $row['status_id']; ?></td>
 			    </tr>
-			    <tr class="">
-				<td><input type="checkbox" id=""  value='Y' name="checkbox"></td>
-				<td>7/15/15</td>					    
-				<td>Simon</td>
-				<td>6/18/88</td>
-				<td>zanathon</td>				    
-				<td>jenkins</td>
-				<td>Rejected</td>
-			    </tr>
-			
+			  
+			<?php }?>
 			</tbody>
 		    </table>
 				    
 		<div class="col-md-6">
-			<div class="col-md-6">
+			<div class="col-md-8">
 				<div class="widget widget-stats bg-green">
 				    <div class="stats-icon stats-icon-lg"><i class="fa  fa-users fa-fw"></i></div>
 				    <div class="stats-title">TOTAL PROGRESS</div>
-				    <div class="stats-number"><?//php echo $details['user'][0]['count(id)'];?></div>
+				    <div class="stats-number"><?php echo $details['user'];?> PA's in Queues</div>
 				    <div class="stats-progress progress">
 					<div class="progress-bar" style="width: 70.1%;"></div>
 				    </div>
-				    <div class="stats-desc">23 PAs in Queue</div>
-				    <div class="stats-desc">7 in Progress</div>
-				    <div class="stats-desc">4 in Rejected</div>
+				    
+				    <div class="stats-desc"><?php echo $details['pending'];?> Pending</div>
+				    <div class="stats-desc"><?php echo $details['rejected'];?> Rejected</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-md-6 well">
-			<div class="">
+		<div class="col-md-6 well" id="moreinfo">
+			<div class="" >
 				<div class="col-md-6">
 					<div class="form-group">
-						<label class="control-label">Drug Name:fatisans</label>
+						<label class="control-label">Drug Name: <?php echo $row['written_drug_form_desc']; ?></label>
 					</div>
 					<div class="form-group">
-						<label class="control-label">Diagnosis:250.1</label>
+						<label class="control-label">Diagnosis Code:  <?php echo $row['diagnosis_code']; ?></label>
 					</div>
 					<div class="form-group">
-						<label class="control-label">Provider Name:Jerome Butler</label>
+						<label class="control-label">Provider Name: <?php echo $row['pharmacy_name']; ?></label>
 					</div>
 				</div>
 				<div class="col-md-6">
@@ -118,19 +113,29 @@
 						<textarea class="form-control" rows="5" id="comment"></textarea>
 					</div>
 				</div>
-				<a href="<?=site_url('approveRegister/priorAuth')?>" class="btn btn-success pull-right">Fix PA</a>
+				<a href="<?php echo site_url('approveRegister/priorAuth'); ?>" class="btn btn-success pull-right">Fix PA</a>
 			</div>
 		</div>	
 		</div>
 	</div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
 	
-		
-
-	
-	
-		
-
-			
-	</div>
-
+	$("*#moreinfo").hide();
+         });
+          $("#checkYes").click(function(){
+           
+	    if ($(this).val()=="Y"){
+		$("#moreinfo").show();
+		$('#checkYes').val('N');
+	    }else if($(this).val()=="N"){
+		$("#moreinfo").hide();
+		$('#checkYes').val('Y');
+	    }
+	    
+	    });
+	  
+	 
+    </script>
 	

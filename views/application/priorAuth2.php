@@ -1,4 +1,3 @@
-  
 <!-- begin #content -->
     <div id="content" class="content">
 	<!-- begin breadcrumb -->
@@ -287,13 +286,9 @@ $(function () {
     $('.datepicker').datetimepicker({
 	format: 'DD-MMM-YYYY'
 	});
-
 });
 </script>
-
-
 <script type="text/javascript">
-
     $(document).ready(function(){
 	
 	
@@ -312,5 +307,4 @@ $(function () {
 	    
 	    });
     
-
     </script>

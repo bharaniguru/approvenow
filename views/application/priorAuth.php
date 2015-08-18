@@ -1,4 +1,4 @@
-  
+
 <!-- begin #content -->
     <div id="content" class="content">
 	<!-- begin breadcrumb -->
@@ -21,12 +21,20 @@
 			    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
 			    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
 			    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+			
 			</div>
-			<h4 class="panel-title">Authrization</h4>
+			<h4 class="panel-title">Prior Authorization</h4>
 		    </div>
+		    
 		    <div class="panel-body">
+			
 			<div class="">
+			    
 			    <form id="form_validation" method="POST" enctype="multipart/form-data" action="<?php echo site_url('approveRegister/priorAuth'); ?>" class="">
+			    <div class="well">
+				 <label>Submission Date: 07/23/2015</label>
+				    <label class=" form-group pull-right">Status: Rejected</label>
+			    </div>
 			    <div class="col-md-6">
 				<div class="row well">
 				<section class="col-sm-6 form-group">
@@ -127,7 +135,7 @@
 			   
 			  
                            <section class="col-sm-6 form-group">
-			    <label class="control-label">Your Idientifier (optional)</label>
+			    <label class="control-label">Your identifier  (optional)</label>
 			    <p><strong>Eg: medical record# or Billing#or RX# or your 3 intials</strong></p>
 				<input type="text" name="yourId" id="yourId"  class="form-control input-sm"  placeholder="Your Id" />
 			   </section>
@@ -165,14 +173,14 @@
 			</div>
 			    <div class="col-sm-6">
 				<div class="row well">
-				    <section class="col-sm-6 form-group">
-					<label class="control-label">&nbsp;&nbsp;</label>
-				   </section>
+				     <a href="" class="btn btn-sm btn-success pull-right" value="">Resubmit PA</a> 
+				   
 				    <section class="col-sm-6 form-group">
 					 <label class="control-label">&nbsp;&nbsp;</label>
 				    </section>
+				   
 				    <section class="col-sm-10 form-group">
-					 <label class="page-header">Genral Info</label>
+					 <label class="page-header">General Info</label>
 				     </section>
 				    
                                   <section class="col-sm-6 form-group">
@@ -227,7 +235,7 @@
 					<input type="text" name="yourId" id="yourId"  class="form-control input-sm"  placeholder="Office Contact Person" />
 				    </section>
                                     <section class="col-sm-6 form-group">
-					<label class="control-label">Requister (If Different from Prescriber)</label>
+					<label class="control-label">Requestor (If Different from Prescriber)</label>
 					<input type="text" name="yourId" id="yourId"  class="form-control input-sm"  placeholder="Requister" />
 				    </section>
                                     <!--<section class="col-sm-10 form-group">
@@ -252,19 +260,36 @@
 					<input type="text" name="yourId" id="yourId" value="IEHP" class="form-control input-sm"  placeholder="Primary Insurance Name" />
 				    </section>
                                      <section class="col-sm-6 form-group">
-					<label class="control-label">Primary Paient ID Number</label>
-					<input type="text" name="yourId" id="yourId" value="20140501534501" class="form-control input-sm"  placeholder="Primary Paient ID Number" />
+					<label class="control-label">Primary Patient ID Number</label>
+					<input type="text" name="yourId" id="yourId" value="20140501534501" class="form-control input-sm"  placeholder="Primary Patient ID Number" />
 				     </section>
 				    <section class="col-sm-6 form-group">
 					 <label class="control-label">Secondary Insurance Name</label>
 					 <input type="text" name="yourId" id="yourId"  class="form-control input-sm"  placeholder="Secondary Insurance Name" />
 				    </section>
 				    <section class="col-sm-6 form-group">
-					<label class="control-label">Secondary paient ID Number</label>
-					<input type="text" name="yourId" id="yourId"  class="form-control input-sm"  placeholder="Secondary paient ID Number" />
+					<label class="control-label">Secondary patient ID Number</label>
+					<input type="text" name="yourId" id="yourId"  class="form-control input-sm"  placeholder="Secondary patient ID Number" />
 				    </section>
+				     <div class="col-md-6">
+					<div class="form-group">
+						<label class="control-label">Reject Issues</label>
+					</div>
+					<div class="form-group">
+						<textarea class="form-control" rows="5" id="comment"></textarea>
+					</div>
+				</div>
+			    <div class="col-md-6">
+					<div class="form-group">
+						<label class="control-label">Update history</label>
+					</div>
+					<div class="form-group">
+						<textarea class="form-control" rows="5" id="comment"></textarea>
+					</div>
+				</div>
 				</div>
 			    </div>
+			   
 			    <section class="col-sm-10 form-group">
 					<label class="control-label">&nbsp;&nbsp;</label>
 				    </section>
@@ -301,8 +326,5 @@ $(function () {
     $('.datepicker').datetimepicker({
 	format: 'DD-MMM-YYYY'
 	});
-
 });
 </script>
-
-

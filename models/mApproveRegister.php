@@ -2,27 +2,28 @@
 
 class mApproveRegister extends CI_Model {
     //Start menu in header
-    function getAccountType(){
-	$sql="SELECT * FROM ref_account_type";
-	return $this->db->query($sql, $return_object = TRUE)->result_array();
-    }
+    
     function createAccount(){
-	//echo "<pre>";
-	//print_r($_POST);
-	//echo "</pre>";
-	//exit;
 	$data = array(
-		      'account_organization_name' => $this->input->post('accOrgName') ,
+		      'account_num' => $this->input->post('accountNumber') ,
+		      'title_id' => $this->input->post('titleId') ,
+		      'membership_level_num' => $this->input->post('memLevelNo') ,
 		      'account_first_name' => $this->input->post('accFirstName') ,
+		      'account_middle_name' => $this->input->post('accMidName') ,
 		      'account_last_name' => $this->input->post('accLastName') ,
-		      'general_status_code' => $this->input->post('genStatusCode'),
+		      'general_status_code' => $this->input->post('genStatusCode') ,
 		      'account_email_address' => $this->input->post('accEmail') ,
+		      'account_organization_name' => $this->input->post('accOrgName') ,
 		      'account_web_address' => $this->input->post('webAddress') ,
+		      'external_link' => $this->input->post('externalLink') ,
 		      'account_pwd' => $this->input->post('accPassword') ,
 		      'account_type' => $this->input->post('accType') ,
-		      'account_username' => $this->input->post('accUsername'),
+		      'account_id' => $this->input->post('accId') ,
+		      'account_username' => $this->input->post('accUsername') ,
+		      'company_id' => $this->input->post('companyId') ,
+		      'account_name' => $this->input->post('accName')
 		      );
-	$this->db->insert('accounts_general', $data);
+	$this->db->insert('account_general', $data);
 	
 	//print_r($data);
 	//exit;
@@ -31,15 +32,58 @@ class mApproveRegister extends CI_Model {
 	$accUsername = $this->input->post('accUsername');
 	$accPassword = $this->input->post('accPassword');
 	$sql="SELECT * FROM accounts_general where account_username='$accUsername' AND account_pwd='$accPassword'";
+	//print_r($sql);
+	//exit;
 	return $this->db->query($sql, $return_object = TRUE)->result_array();
 	///print_r($return);
 	//exit;
     }
+    //Dashboard Start
+    public function dashboard()
+    {
+	$accUsername=$this->session->userdata('accUsername');
+	$sql="SELECT * FROM prior_authorizaion b, provider_general p WHERE b.doctor_id='1' AND p.NPI='1'";
+	$sql="SELECT * FROM prior_authorizaion ";
+	
+	$result = $this->db->query($sql)->result_array();
+	$result["user"]=count($result);
+	//print_r($result["user"]);
+	//exit;
+	//$sql="SELECT * FROM prior_authorizaion where status_id=1";
+	//$result1 = $this->db->query($sql)->result_array();
+	//$result["approved"]=count($result1);
+	$sql="SELECT * FROM prior_authorizaion where status_id=2";
+	$result2 = $this->db->query($sql)->result_array();
+	$result["rejected"]=count($result2);
+	$sql="SELECT * FROM prior_authorizaion where status_id=3";
+	$result3 = $this->db->query($sql)->result_array();
+	$result["pending"]=count($result3);
+
+	//print_r($query);
+	//exit;
+	//$query['old']= $query['old1'][0]['count(prior_authorizaion_id)']+ $query['old2'][0]['count(prior_authorizaion_id)']  ;
+	
+	return $result;
+    }
+     function getTableDetails()
+    {
+	$sql="SELECT * FROM prior_authorizaion";
+	return $this->db->query($sql, $return_object = TRUE)->result_array();
+    }
+     function getProviderTableDetails()
+    {
+	$sql="SELECT * FROM provider_general";
+	return $this->db->query($sql, $return_object = TRUE)->result_array();
+    }
+    
+    //Dashboard End
     function addLocation(){
 	$data = array(
-		      'location_name' => $this->input->post('companyName') ,
+		      'company_name' => $this->input->post('companyName') ,
+		      'phone_area_code' => $this->input->post('phoneAreaCode') ,
 		      'phone_number' => $this->input->post('phoneNumber') ,
 		      'phone_ext' => $this->input->post('phoneExtension') ,
+		      'fax_area_code' => $this->input->post('faxAreaCode') ,
 		      'fax_number' => $this->input->post('faxNumber') ,
 		      'address' => $this->input->post('address') ,
 		      'city' => $this->input->post('city') ,
@@ -48,15 +92,21 @@ class mApproveRegister extends CI_Model {
 		      'zip_four' => $this->input->post('zipFour') ,
 		      'email_address' => $this->input->post('emailAddress') ,
 		      'web_address' => $this->input->post('webAddress') ,
+		      'product_name' => $this->input->post('productName') ,
+		      'product_version' => $this->input->post('productVersion'),
+		      'product_build' => $this->input->post('prodBuild') ,
+		      'product_build_date' => $this->input->post('prodBuildDate') ,
 		      'NPI' => $this->input->post('NPI') ,
-		      'account_id' => $this->session->userdata('accountId')
+		      'account_num' => $this->input->post('accountNum')
 		    );
 	$this->db->insert('locations', $data);
     }
     function updateLocation(){
 	$data = array(
+		      'phone_area_code' => $this->input->post('phoneAreaCode') ,
 		      'phone_number' => $this->input->post('phoneNumber') ,
 		      'phone_ext' => $this->input->post('phoneExtension') ,
+		      'fax_area_code' => $this->input->post('faxAreaCode') ,
 		      'fax_number' => $this->input->post('faxNumber') ,
 		      'address' => $this->input->post('address') ,
 		      'city' => $this->input->post('city') ,
@@ -65,9 +115,13 @@ class mApproveRegister extends CI_Model {
 		      'zip_four' => $this->input->post('zipFour') ,
 		      'email_address' => $this->input->post('emailAddress') ,
 		      'web_address' => $this->input->post('webAddress') ,
+		      'product_name' => $this->input->post('productName') ,
+		      'product_version' => $this->input->post('productVersion'),
+		      'product_build' => $this->input->post('prodBuild') ,
+		      'product_build_date' => $this->input->post('prodBuildDate') ,
 		      'NPI' => $this->input->post('NPI'),
-		      'account_id' => $this->session->userdata('accountId')
-		      );
+		      'account_num' => $this->input->post('accountNum')
+		    );
 	$this->db->where('location_id', $this->input->post('locationId'));
 	$this->db->update('locations', $data);
     }

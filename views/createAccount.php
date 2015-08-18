@@ -48,13 +48,14 @@
 		<form action="<?=site_url();?>approveRegister/createAccount" method="POST" class="margin-bottom-0">
 		   <div class="col-md-offset-2">
 		    <div class="col-md-10">
+			
 			<div class="col-sm-6 form-group">
-			    <label  class="control-label">Account Number</label>
-			    <input type="text" class="form-control" name="accountNumber" placeholder="Account Number" />
+			    <label  class="control-label"> Username</label>
+			    <input type="text" class="form-control" name="accUsername" placeholder="Username" />
 			</div>
 			<div class="col-sm-6 form-group">
-			    <label  class="control-label">Account Password</label>
-			    <input type="text" class="form-control" name="accPassword" placeholder="Account Password" />
+			    <label  class="control-label"> Password</label>
+			    <input type="text" class="form-control" name="accPassword" placeholder="Password" />
 			</div>
 			<!--<div class="col-sm-4 form-group">-->
 			<!--    <label  class="control-label">Title Id</label>-->
@@ -119,8 +120,8 @@
 			<!--    <input type="text" class="form-control" name="accId" placeholder="Account Id" />-->
 			<!--</div>-->
 			<div class="col-sm-6 form-group">
-			    <label  class="control-label">Account Username</label>
-			    <input type="text" class="form-control" name="accUsername" placeholder="Account Username" />
+			    <label  class="control-label">Account Number / NPI Number</label>
+			    <input type="text" class="form-control" name="accountNumber" placeholder="Account Number / NPI Number" />
 			</div>
 		    </div>
 		    <div class="row">
