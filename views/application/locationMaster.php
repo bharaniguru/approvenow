@@ -83,7 +83,7 @@ $status = $this->session->flashdata('status');
 			<div class="row">
 			    <section class="col-sm-3 form-group">
 				<label  class="control-label">Location Name</label>
-				<input type="text" class="form-control" name="locationName" placeholder="Location Name" />
+				<input type="text" class="form-control" name="location_name" placeholder="Location Name" />
 			    </section>
 			    <section class="col-sm-3 form-group">
 				<label  class="control-label">Phone Number</label>
@@ -197,7 +197,7 @@ function editLocation(locationId) {
 	data:{locationId:locationId},
 	dataType: 'json',
 	success:function(json){
-	    $('#locationForm').find('[name="locationName"]').val(json[0].company_name);
+	    $('#locationForm').find('[name="locationName"]').val(json[0].location_name);
 	    $('#locationForm').find('[name="locationId"]').val(json[0].location_id);
 	    $('#locationForm').find('[name="phoneNumber"]').val(json[0].phone_number);
 	    $('#locationForm').find('[name="phoneExtension"]').val(json[0].phone_ext);
@@ -283,7 +283,7 @@ $(document).ready(function() {
 		    }
 		},
 		],
-	"order": [[ 8, "desc" ]],
+	"order": [[ 11, "desc" ]],
 	tableTools: {
 	    sSwfPath: "../assets/plugins/DataTables/swf/copy_csv_xls_pdf.swf"
 	},
@@ -307,29 +307,4 @@ $(document).ready(function() {
     //----------------------------------------------
     
 });
-</script>
-<script>
-//$('#form_validation').on('click', '#delete_box', function(e) {
-//    e.preventDefault();
-//    //var link = $(this).attr('href');
-//    var a = $(this).attr('val');
-//    bootbox.confirm("Are you sure you want to delete?", function(confirmed) {
-//	if (confirmed) {
-//	    $.ajax({
-//		type:'POST',
-//		url:'<?php echo  site_url('AppsCtr/City_Delete');?>',
-//		data:{'id':a},
-//		success:function(response){
-//		if(response==1){
-//		$('#alert').append('<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Success!</strong> A Record is Deleted Successfully.</div>');
-//		}else{
-//		$('#alert').append('<div class="alert alert-danger "><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">&times;</a><strong>Failure!</strong> A Record is Unable To Delete</div>');
-//		}
-//		$('#dataRespTable').dataTable().fnDraw();
-//		setTimeout(function(){ $('#alert').empty(); }, 8000);
-//		}
-//	    });
-//	}
-//    });
-//});
 </script>

@@ -13,6 +13,8 @@ class approveRegister extends CI_Controller {
     //Authentication Controllers Begin
     function index(){
 	$sessionData = $this->session->userdata('accUsername');
+	
+	
 	if($sessionData!=""){
 	    redirect(site_url("approveRegister/dashboard"));
 	}
@@ -21,6 +23,7 @@ class approveRegister extends CI_Controller {
 	    $result = $this->mApproveRegister->checkForAuthentication();
 	    if($result){
 		$this->session->set_userdata('accUsername',$result[0]['account_username']);
+		$this->session->set_userdata('account_id',$result[0]['account_id']);
 		redirect(site_url("approveRegister/dashboard"));
 	    }else{
 		$data['errorMsg'] = 'Invalid User Id and Password Please check it';
@@ -48,9 +51,11 @@ class approveRegister extends CI_Controller {
     function dashboard()
     {
 	$sessionData = $this->session->userdata('accUsername');
-	
+	$accountId = $this->session->userdata('account_id');
 	$result['details']=$this->mApproveRegister->dashboard();
-	$result['tableDetails']=$this->mApproveRegister->getTableDetails();
+	$result['tableDetails']=$this->mApproveRegister->getTableDetails($accountId);
+	$result['statusDesc']=$this->mApproveRegister->statusDesc();
+	$result['rejectDetails']=$this->mApproveRegister->getRejectDetails();
 	//$result['providerDetails']=$this->mApproveRegister->getProviderTableDetails();
 	//print_r($result['details']);
 	//exit;
@@ -64,7 +69,7 @@ class approveRegister extends CI_Controller {
     }
    public function paitentDetailsAjax()
 	{
-	    
+	   
 	    $data =$this->mApproveRegister->paitentDetailsAjax();
 	    foreach($data as $row) {
 	    ?>
@@ -86,7 +91,7 @@ class approveRegister extends CI_Controller {
 						<label class="control-label">Reject Issues</label>
 					</div>
 					<div class="form-group">
-						<textarea class="form-control" rows="5" id="comment"></textarea>
+						<textarea class="form-control" rows="5" id="comment" readonly=""><?php  foreach($rejectDetails as $reject){ echo $reject['PA_reject_reason']; } ?></textarea>
 					</div>
 				</div>
 				<a href="<?php echo site_url('approveRegister/priorAuth'); ?>" class="btn btn-success pull-right">Fix PA</a>
@@ -106,7 +111,7 @@ class approveRegister extends CI_Controller {
 	}
     }
     function locationMasterTable(){
-        $this->datatables->select('location_id,company_name,phone_area_code,phone_number,phone_ext,fax_area_code,fax_number,address,city,state,zip,zip_four,email_address,web_address,product_name,product_version,product_build,product_build_date,NPI,account_num')
+        $this->datatables->select('location_id,location_name,phone_number,phone_ext,fax_number,address,city,state,zip,zip_four,email_address,web_address,NPI,account_id')
 	->from('locations');
 	echo $this->datatables->generate();
     }

@@ -57,7 +57,9 @@
 			    </tr>
 			</thead>
 			<tbody>
-			    <?php 
+				
+			    <?php
+				
 				 foreach($tableDetails as $row){
 				 
 				?>
@@ -71,7 +73,7 @@
 				<td><?php echo $row['patient_dob']; ?></td>
 				<td><?php echo $row['written_drug_form_desc']; ?></td>				    
 				<td><?php echo $row['pharmacy_name']; ?></td>
-				<td><?php echo $row['status_id']; ?></td>
+				<td><?php  foreach($statusDesc as $status){ if($status['reason_code_id']== $row['status_id'])echo $status['description']; } ?></td>
 			    </tr>
 			  
 			<?php }?>
@@ -99,20 +101,20 @@
 </div>
 <script>
    function patientDetails($id)
-     {
-  
-  
-
-   $.ajax({
-      url: '<?php  echo site_url('approveRegister/paitentDetailsAjax')?>',
-      type: 'POST',
-      data: {prior_authorizaion_id:$id},
-      success: function (response)
-      {
-   $(".RemoveResponsive").html(response);
-       }
-  });
-     }
+{
+	loadLoader();
+	$.ajax({
+		url: '<?php  echo site_url('approveRegister/paitentDetailsAjax')?>',
+		type: 'POST',
+		data: {prior_authorizaion_id:$id},
+		success: function (response)
+		
+		{
+			$(".RemoveResponsive").html(response);
+			unLoader();
+		}
+	});
+}
 </script>
 
 
@@ -141,6 +143,7 @@
     </script>
 <script>
 	//Loader
+	
 function loadLoader() {
  $('body').addClass('loading').loader('show', { overlay: true });
     }

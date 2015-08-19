@@ -39,13 +39,23 @@ class mApproveRegister extends CI_Model {
 	//exit;
     }
     //Dashboard Start
+    // Dashboard join table start
+   
+    
+    //Dashboard join table end
     public function dashboard()
     {
 	$accUsername=$this->session->userdata('accUsername');
-	$sql="SELECT * FROM prior_authorizaion b, provider_general p WHERE b.doctor_id='1' AND p.NPI='1'";
-	$sql="SELECT * FROM prior_authorizaion ";
+	$accountId=$this->session->userdata('account_id');
+	//echo $accountId;
+	//$sql="SELECT * FROM prior_authorizaion b, provider_general p WHERE b.doctor_npi='1' AND p.NPI='1'";
+	 $sql= "SELECT p.* FROM accounts_general a  JOIN locations l ON a.account_id=l.account_id join provider_general g  on l.location_id= g.location_id  join prior_authorizaion p on g.NPI=p.doctor_NPI where a.account_id='$accountId'";
+	// print_r($sql);
+	// exit;
+	//$sql="SELECT * FROM prior_authorizaion ";
 	
-	$result = $this->db->query($sql)->result_array();
+	$result['table'] = $this->db->query($sql)->result_array();
+
 	$result["user"]=count($result);
 	//print_r($result["user"]);
 	//exit;
@@ -65,9 +75,10 @@ class mApproveRegister extends CI_Model {
 	
 	return $result;
     }
-     function getTableDetails()
+     function getTableDetails($accountId)
     {
-	$sql="SELECT * FROM prior_authorizaion";
+	//$sql="SELECT p.* FROM accounts_general a  JOIN locations l ON a.account_id=l.account_id join provider_general g  on l.location_id= g.location_id  join prior_authorizaion p on g.NPI=p.doctor_NPI where a.account_id='$accountId'";
+	$sql="select * from prior_authorizaion where doctor_NPI in (select NPI from provider_general where location_id in (select location_id from locations where account_id in (select account_id from accounts_general where account_id='$accountId')))";
 	return $this->db->query($sql, $return_object = TRUE)->result_array();
     }
      function getProviderTableDetails()
@@ -75,6 +86,20 @@ class mApproveRegister extends CI_Model {
 	$sql="SELECT * FROM provider_general";
 	return $this->db->query($sql, $return_object = TRUE)->result_array();
     }
+     function getRejectDetails()
+    {
+	 $sql="SELECT * FROM PA_reject_reason";
+	
+	return $this->db->query($sql)->result_array();
+    }
+     function statusDesc()
+    {
+	 $sql="SELECT * from ref_reason_code";
+	
+	return $this->db->query($sql)->result_array();
+	
+    }
+    
    public function paitentDetailsAjax()
 	{
 	    $priorId=$_POST["prior_authorizaion_id"];
@@ -85,11 +110,11 @@ class mApproveRegister extends CI_Model {
     //Dashboard End
     function addLocation(){
 	$data = array(
-		      'company_name' => $this->input->post('companyName') ,
-		      'phone_area_code' => $this->input->post('phoneAreaCode') ,
+		      'location_name' => $this->input->post('location_name') ,
+		      //'phone_area_code' => $this->input->post('phoneAreaCode') ,
 		      'phone_number' => $this->input->post('phoneNumber') ,
 		      'phone_ext' => $this->input->post('phoneExtension') ,
-		      'fax_area_code' => $this->input->post('faxAreaCode') ,
+		      //'fax_area_code' => $this->input->post('faxAreaCode') ,
 		      'fax_number' => $this->input->post('faxNumber') ,
 		      'address' => $this->input->post('address') ,
 		      'city' => $this->input->post('city') ,
@@ -98,21 +123,21 @@ class mApproveRegister extends CI_Model {
 		      'zip_four' => $this->input->post('zipFour') ,
 		      'email_address' => $this->input->post('emailAddress') ,
 		      'web_address' => $this->input->post('webAddress') ,
-		      'product_name' => $this->input->post('productName') ,
-		      'product_version' => $this->input->post('productVersion'),
-		      'product_build' => $this->input->post('prodBuild') ,
-		      'product_build_date' => $this->input->post('prodBuildDate') ,
+		      //'product_name' => $this->input->post('productName') ,
+		      //'product_version' => $this->input->post('productVersion'),
+		      //'product_build' => $this->input->post('prodBuild') ,
+		      //'product_build_date' => $this->input->post('prodBuildDate') ,
 		      'NPI' => $this->input->post('NPI') ,
-		      'account_num' => $this->input->post('accountNum')
+		      'account_id' => $this->input->post('account_id')
 		    );
 	$this->db->insert('locations', $data);
     }
     function updateLocation(){
 	$data = array(
-		      'phone_area_code' => $this->input->post('phoneAreaCode') ,
+		      //'phone_area_code' => $this->input->post('phoneAreaCode') ,
 		      'phone_number' => $this->input->post('phoneNumber') ,
 		      'phone_ext' => $this->input->post('phoneExtension') ,
-		      'fax_area_code' => $this->input->post('faxAreaCode') ,
+		      //'fax_area_code' => $this->input->post('faxAreaCode') ,
 		      'fax_number' => $this->input->post('faxNumber') ,
 		      'address' => $this->input->post('address') ,
 		      'city' => $this->input->post('city') ,
@@ -121,18 +146,18 @@ class mApproveRegister extends CI_Model {
 		      'zip_four' => $this->input->post('zipFour') ,
 		      'email_address' => $this->input->post('emailAddress') ,
 		      'web_address' => $this->input->post('webAddress') ,
-		      'product_name' => $this->input->post('productName') ,
-		      'product_version' => $this->input->post('productVersion'),
-		      'product_build' => $this->input->post('prodBuild') ,
-		      'product_build_date' => $this->input->post('prodBuildDate') ,
+		      //'product_name' => $this->input->post('productName') ,
+		      //'product_version' => $this->input->post('productVersion'),
+		      //'product_build' => $this->input->post('prodBuild') ,
+		      //'product_build_date' => $this->input->post('prodBuildDate') ,
 		      'NPI' => $this->input->post('NPI'),
-		      'account_num' => $this->input->post('accountNum')
+		      'account_id' => $this->input->post('account_id')
 		    );
 	$this->db->where('location_id', $this->input->post('locationId'));
 	$this->db->update('locations', $data);
     }
     function getLocationDetails($locationId){
-	$sql="SELECT * FROM locations where location_id='$locationId'";
+	$sql="SELECT location_id FROM locations where location_id='3'";
 	return $this->db->query($sql, $return_object = TRUE)->result_array();
     }
     function deleteLocation($locationId){
