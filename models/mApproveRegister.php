@@ -206,6 +206,23 @@ class mApproveRegister extends CI_Model {
     function deleteProvider($providerId){
 	$this->db->delete('provider_general', array('provider_id' => $providerId));
     }
+    
+//    public function getajaxLocations()
+//    {
+//	$priorId=$_POST["location_id"];
+//	$sql="SELECT * FROM  locations where location_id='$locationId'";
+//	return $this->db->query($sql, $return_object = TRUE)->result_array();
+//    }
+//    
+    function getAjaxLocations($location_id)
+    {
+	$query=$this->db->query("SELECT * FROM provider_general WHERE location_id='$location_id'");
+	return $query->result_array();
+    }
+    
+    
+    
+    
     //***********************************************END**********************************************************
     function min_menu_code(){
 	$sql="SELECT MIN(MENU_CODE) as MIN_CODE FROM APPS_MENU";

@@ -233,6 +233,22 @@
                                             <label class="control-label"></label>
                                             <label><input type="radio" name="female"> No</label>
                                     </section>
+				   <div class="col-md-12">
+					<div class="form-group">
+						<label class="control-label">Reject Issues</label>
+					</div>
+					<div class="form-group">
+						<textarea class="form-control" rows="5" id="comment"></textarea>
+					</div>
+				</div>
+			    <div class="col-md-12">
+					<div class="form-group">
+						<label class="control-label">Update history</label>
+					</div>
+					<div class="form-group">
+						<textarea class="form-control" rows="5" id="comment"></textarea>
+					</div>
+				</div>
 				</div>
 			    </div>
 			    <section class="col-sm-10 form-group">
@@ -243,9 +259,11 @@
 			   <div class=" col-md-6 col-md-offset-4">
 				<div class="form-group">
 				    <label class="col col-4"></label>
-				    <button class="btn btn-sm btn-danger" type="button" onclick="window.history.back();">cancel</button>
+				    <a href="<?=site_url('approveRegister/dashboard')?>" class="btn btn-sm btn-danger">cancel</a>
+				    <button class="btn btn-sm btn-danger" type="button" onclick="window.history.back();">Back</button>
 				    <button class="btn btn-sm btn-info" type="reset" onclick="form_reset();" >Reset</button>
-				    <input type="submit" name="Save"  class="btn btn-sm btn-success"  value="Save">
+				    <input type="submit" name="Save"  class="btn btn-sm btn-success"  value="Update PA">
+				    <input type="submit" disabled="" name="Save"  class="btn btn-sm btn-primary"  value="Resubmit PA">
 				</div>
 			    </div>
 			  </form>

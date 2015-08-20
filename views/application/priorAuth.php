@@ -173,8 +173,6 @@
 			</div>
 			    <div class="col-sm-6">
 				<div class="row well">
-				     <a href="" class="btn btn-sm btn-success pull-right" value="">Resubmit PA</a> 
-				   
 				    <section class="col-sm-6 form-group">
 					 <label class="control-label">&nbsp;&nbsp;</label>
 				    </section>
@@ -271,7 +269,7 @@
 					<label class="control-label">Secondary patient ID Number</label>
 					<input type="text" name="yourId" id="yourId"  class="form-control input-sm"  placeholder="Secondary patient ID Number" />
 				    </section>
-				     <div class="col-md-6">
+				    <div class="col-md-12">
 					<div class="form-group">
 						<label class="control-label">Reject Issues</label>
 					</div>
@@ -279,7 +277,7 @@
 						<textarea class="form-control" rows="5" id="comment"></textarea>
 					</div>
 				</div>
-			    <div class="col-md-6">
+			    <div class="col-md-12">
 					<div class="form-group">
 						<label class="control-label">Update history</label>
 					</div>

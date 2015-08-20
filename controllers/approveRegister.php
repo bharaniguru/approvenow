@@ -55,7 +55,7 @@ class approveRegister extends CI_Controller {
 	$result['details']=$this->mApproveRegister->dashboard();
 	$result['tableDetails']=$this->mApproveRegister->getTableDetails($accountId);
 	$result['statusDesc']=$this->mApproveRegister->statusDesc();
-	$result['rejectDetails']=$this->mApproveRegister->getRejectDetails();
+	
 	//$result['providerDetails']=$this->mApproveRegister->getProviderTableDetails();
 	//print_r($result['details']);
 	//exit;
@@ -69,7 +69,7 @@ class approveRegister extends CI_Controller {
     }
    public function paitentDetailsAjax()
 	{
-	   
+	    $result=$this->mApproveRegister->getRejectDetails();
 	    $data =$this->mApproveRegister->paitentDetailsAjax();
 	    foreach($data as $row) {
 	    ?>
@@ -91,7 +91,7 @@ class approveRegister extends CI_Controller {
 						<label class="control-label">Reject Issues</label>
 					</div>
 					<div class="form-group">
-						<textarea class="form-control" rows="5" id="comment" readonly=""><?php  foreach($rejectDetails as $reject){ echo $reject['PA_reject_reason']; } ?></textarea>
+						<textarea class="form-control" rows="5" id="comment" readonly=""><?php echo $result[0]['PA_reject_reason']; ?></textarea>
 					</div>
 				</div>
 				<a href="<?php echo site_url('approveRegister/priorAuth'); ?>" class="btn btn-success pull-right">Fix PA</a>
@@ -101,9 +101,10 @@ class approveRegister extends CI_Controller {
 	}
     function locationMaster(){
 	$sessionData = $this->session->userdata('accUsername');
+	 $data['locationDetails']= $this->mApproveRegister->getLocationID();
 	if($sessionData!=""){
 	    $this -> load -> view('header');
-	    $this -> load -> view('application/locationMaster');
+	    $this -> load -> view('application/locationMaster',$data);
 	    $this -> load -> view('footer');
 	}
 	else{
@@ -140,20 +141,22 @@ class approveRegister extends CI_Controller {
 	$query['status']="Success";
 	echo json_encode($query);
     }
+    
     //2.GENERAL PROVIDER STARTS
-    function generalProvider(){
-	$sessionData = $this->session->userdata('accUsername');
-	
-	if($sessionData!=""){
-	    $data['locationDetails']= $this->mApproveRegister->getLocationID();
-	    $this -> load -> view('header');
-	    $this -> load -> view('application/generalProvider',$data);
-	    $this -> load -> view('footer');
-	}
-	else{
-	    redirect(site_url());
-	}
-    }
+//    function generalProvider(){
+//	$sessionData = $this->session->userdata('accUsername');
+//	
+//	if($sessionData!=""){
+//	   
+//	    
+//	    $this -> load -> view('header');
+//	    $this -> load -> view('application/generalProvider',$data);
+//	    $this -> load -> view('footer');
+//	}
+//	else{
+//	    redirect(site_url());
+//	}
+//    }
    
     function generalProviderTable(){
         $this->datatables->select('provider_id,first_name,last_name,provider_type_id,phone,NPI,DEA_num,location_id')
@@ -199,10 +202,43 @@ class approveRegister extends CI_Controller {
        $this->load->view('footer');
    }
     
+//     public function ajaxLocations()
+//	{
+//	    $result=$this->mApproveRegister->getajaxLocations();
+//	    
+//	}
     
     
+public function ajaxLocations()
+{
+    $location_id = $this->input->post('location_id');
+    $data = $this->mApproveRegister->getAjaxLocations($location_id);
+    //print_r($data);
     
-    
+    ?>
+   
+    <?php
+    foreach($data as $row) {
+   ?>
+   
+   
+	<tr>
+	    <td><?php echo $row['first_name'];?></td>
+	    <td><?php echo $row['last_name']; ?></td>
+	    <td><?php echo $row['provider_type_id']; ?></td>
+	    <td><?php echo $row['phone']; ?></td>
+	    <td><?php echo $row['NPI']; ?></td>
+	    <td><?php echo $row['DEA_num']; ?></td>
+	    <td><?php echo $row['location_id']; ?></td>
+	    <td><div class="btn-group m-r-5 m-b-5 pull-right"><a class="btn btn-success btn-xs dropdown-toggle" data-toggle="dropdown" href="javascript:;" aria-expanded="false"><i class="fa fa-gear"></i> <span class="caret"></span></a><ul class="dropdown-menu"><li><a  class="btn btn-sm" onclick="editProvider('<?php echo $row['provider_id'];?>')" >  <i class="fa  fa-edit" > </i> Edit</a></li><li><a class="btn btn-sm"  id="delete_box" data-toggle="modal"  onclick="deleteProvider('<?php echo $row['provider_id'];?>')" >  <i class="fa  fa-trash-o" >  </i> Delete </a></li></ul></div></td>
+	</tr>
+   
+    <?php }
+    ?>
+   
+    <?php
+   
+}    
     
     
     
