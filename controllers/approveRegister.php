@@ -70,8 +70,13 @@ class approveRegister extends CI_Controller {
     }
    public function paitentDetailsAjax()
 	{
+	    //$data= $this->mApproveRegister->getReasonRef($reasonRef);
+	   
 	    $result=$this->mApproveRegister->getRejectDetails();
 	    $data =$this->mApproveRegister->paitentDetailsAjax();
+	    //echo "pre";
+	    //print_r($data);
+	    //exit;
 	    foreach($data as $row) {
 	    ?>
 	    <div class="col-md-6 well" id="showDiv">
@@ -91,11 +96,12 @@ class approveRegister extends CI_Controller {
 					<div class="form-group">
 						<label class="control-label">Reject Issues</label>
 					</div>
+					
 					<div class="form-group">
 						<textarea class="form-control" rows="5" id="comment" readonly=""><?php echo $result[0]['PA_reject_reason']; ?></textarea>
 					</div>
 				</div>
-				<a href="<?php echo site_url('approveRegister/priorAuth'); ?>" class="btn btn-success pull-right">Fix PA</a>
+				<a href="<?php echo site_url('approveRegister/priorAuth/'.$row['prior_authorizaion_id']); ?>" class="btn btn-success pull-right">Fix PA</a>
 				
 			</div>
 		</div>
@@ -238,17 +244,27 @@ public function ajaxLocations()
    
 }    
    //3. ADD PRIOR AUTHORZATION STARTS
- function priorAuth(){
+ function priorAuth($id){
 	//$sessionData = $this->session->userdata('accUsername');
 	
 	//if($sessionData!=""){
 	    //$data['locationDetails']= $this->mApproveRegister->getLocationID();
+	   $this -> load -> view('header');
+	   if($id!='empty')
+	   {
+		$data['rejectReason']= $this->mApproveRegister->getRejectDetails();
+		$data['rejectReference']= $this->mApproveRegister->getReasonRef($id);
+		$this -> load -> view('application/priorAuth',$data);
+		$this -> load -> view('footer');
+	   }
+	    else{
+		$this -> load -> view('application/priorAuth');
+		$this -> load -> view('footer');
+	    }
 	   
-	    $this -> load -> view('header');
-	    $data['rejectReason']= $this->mApproveRegister->getRejectDetails();
 	   
-	    $this -> load -> view('application/priorAuth',$data);
-	    $this -> load -> view('footer');
+	    
+	    
 	//}
 	//else{
 	  //  redirect(site_url());

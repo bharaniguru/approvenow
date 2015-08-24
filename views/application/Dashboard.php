@@ -22,7 +22,7 @@
 		</div>
 		<div class="panel-body" id="form_validation">
 			<p>
-		<a href="<?php echo site_url('approveRegister/priorAuth'); ?>" onclick="operationOpen();" class="btn btn-primary"><i class="fa fa-plus fa-1x"></i> <span class="f-s-14 f-w-500">Add PA</span></a>
+		<a href="<?php echo site_url('approveRegister/priorAuth/empty'); ?>" onclick="operationOpen();" class="btn btn-primary"><i class="fa fa-plus fa-1x"></i> <span class="f-s-14 f-w-500">Add PA</span></a>
 			</p>
 		<table id="dataRespTable" class="table table-striped table-bordered nowrap responsive" width="100%">
 		      <thead>

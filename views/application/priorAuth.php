@@ -257,26 +257,38 @@ $status = $this->session->flashdata('status');
 					 <label class="control-label">Secondary Insurance Name</label>
 					 <input type="text" name="yourId" id="yourId"  class="form-control input-sm"  placeholder="Secondary Insurance Name" />
 				    </section>
-				    <section class="col-sm-6 form-group">
-					<label class="control-label">Secondary patient ID Number</label>
-					<input type="text" name="yourId" id="yourId"  class="form-control input-sm"  placeholder="Secondary patient ID Number" />
+				    <section class="col-sm-12 form-group">
+					<label class="control-label"></label>
+					
 				    </section>
-				    <div class="col-md-12">
-					<div class="form-group">
-						<label class="control-label">Reject Issues</label>
-					</div>
-					<div class="form-group">
-						<textarea class="form-control" rows="5" id="comment"></textarea>
-					</div>
-				</div>
-			    <div class="col-md-12">
-					<div class="form-group">
-						<label class="control-label">Update history</label>
-					</div>
-					<div class="form-group">
-						<textarea class="form-control" rows="5" id="comment"></textarea>
-					</div>
-				</div>
+				   <section class="col-sm-12 form-group">
+					<label class="control-label"></label>
+					
+				    </section>
+				   <section class="col-sm-12 form-group">
+					<label class="control-label"></label>
+					
+				    </section>
+				   <section class="col-sm-8 form-group">
+					<label class="control-label"></label>
+					
+				    </section>
+				   <section class="col-sm-8 form-group">
+					<label class="control-label"></label>
+					
+				    </section>
+				   <section class="col-sm-6 form-group">
+					<label class="control-label"></label>
+					
+				    </section>
+				   <section class="col-sm-6 form-group">
+					<label class="control-label"></label>
+					
+				    </section>
+				   <section class="col-sm-6 form-group">
+					<label class="control-label"></label>
+					
+				    </section>
 				</div>
 			    </div>
 			    <section class="form-group">
@@ -370,7 +382,7 @@ $status = $this->session->flashdata('status');
                                     </section>
                                     <section class="col-sm-6 form-group">
                                         <label class="control-label">Insurance Name</label>
-                                        <input type="text" name="address" id="address" value="IEHP" class="form-control input-sm"  placeholder="Insurance Name" />
+                                        <input type="text" name="address" id="address" value="" class="form-control input-sm"  placeholder="Insurance Name" />
                                     </section>
                                     <section class="col-sm-6 form-group">
                                         <label class="control-label">Prior Auth Name(if known)</label>
@@ -381,14 +393,16 @@ $status = $this->session->flashdata('status');
                                        
                                     </section>
                                 </div>
+			    <section class="form-group">
+					<label class="control-label">&nbsp;&nbsp;</label>
+			    </section>
 			      <div class="row well">
                                     <section class="col-sm-10 form-group">
                                         <label class="page-header">Rationale</label>
                                     </section>
                                     <section class="col-sm-6 form-group">
                                         <label class="control-label">Other Citeria</label>
-                                        
-                                    </section>
+				    </section>
                                     <section class="col-sm-6 form-group">
                                         <label class="control-label">Explanations</label>
                                         <textarea class="form-control" rows="8" id="comment"></textarea>
@@ -398,6 +412,22 @@ $status = $this->session->flashdata('status');
                                        
                                     </section>
 				</div>
+			      <section class="form-group">
+					<label class="control-label">&nbsp;&nbsp;</label>
+			    </section>
+			      <div class="row well">
+				<section class="col-sm-12 form-group">
+                                        <label class="page-header">Upload Addtional Documentation</label>
+                                </section>
+				<section class="col-sm-12 form-group">
+                                        <label class="control-label">Upload Attachement</label>
+					<p>Upload Test results or other medical information that you would like attached to your requested</p>
+					
+				<a href="" id="upload_link">Upload or manage Attachments</a>
+				<input id="upload" type="file"/>
+
+				</section>
+			      </div>
 			      <section class="form-group">
 					<label class="control-label">&nbsp;&nbsp;</label>
 			    </section>
@@ -474,14 +504,14 @@ $status = $this->session->flashdata('status');
                                     </section>
 				     <section class="col-sm-6 form-group">
 					<label class="control-label"></label>
-					<input type="text" name="address" id="address" value="CONTINUED THERAPY"  class="form-control input-sm"  placeholder="City" />
+					<input type="text" name="address" id="address" value=""  class="form-control input-sm"  placeholder="City" />
 				    </section>
 				    <section class="col-sm-10 form-group">
                                         <p><strong>Please Provide any additional clinical information or comment perteniment to this request for coverage</strong></p>
                                     </section>
 				    <section class="col-sm-6 form-group">
 				       <label class="control-label"></label>
-				       <input type="text" name="address" id="address" value="CONTINUED THERAPY" class="form-control input-sm"  placeholder="Zip Code" />
+				       <input type="text" name="address" id="address" value="" class="form-control input-sm"  placeholder="Zip Code" />
 				   </section>
                                     
                                    <section class="col-sm-6 form-group">
@@ -490,7 +520,7 @@ $status = $this->session->flashdata('status');
                                             <label class="control-label"></label>
                                             <label><input type="radio" name="female"> No</label>
                                     </section>
-			    <div class="col-md-12">
+			    <div class="col-md-12 table-responsive">
 				<table id="" class="table table-striped table-bordered nowrap" width="100%">
 				    <thead>
 					<tr>
@@ -501,15 +531,16 @@ $status = $this->session->flashdata('status');
 					</tr>
 				    </thead>
 				    <tbody id="">
+					<tr>
 					 <?php
 					
-					 foreach ($rejectReason as $row){?>
+					 foreach ($rejectReference as $row){?>
 					 
 					<td><?php echo $row['PA_reject_reason']; ?></td>
 					<td><?php echo $row['PA_reject_reasoncol']; ?></td>
 					<td><?php echo $row['Notes']; ?></td>
 					<td><input type="checkbox" name="rejectReason" id="rejectReason"></td>
-					
+					</tr>
 				    </tbody>
 				    <?php } ?>
 				</table>
@@ -696,5 +727,12 @@ function loadLoader() {
 function unLoader() {
     $('body').removeClass('loading').loader('hide');
 }
-
+//FILEUPLOAD SCRIPT START
+$(function(){
+    $("#upload_link").on('click', function(e){
+        e.preventDefault();
+        $("#upload:hidden").trigger('click');
+    });
+});
+//FILE UPLOAD SCRIPTY END
 </script>

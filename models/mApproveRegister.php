@@ -121,7 +121,7 @@ class mApproveRegister extends CI_Model {
    public function paitentDetailsAjax()
 	{
 	    $priorId=$_POST["prior_authorizaion_id"];
-	    $sql="SELECT written_drug_form_desc,diagnosis_code,pharmacy_name FROM  prior_authorizaion where prior_authorizaion_id='$priorId'";
+	    $sql="SELECT * FROM  prior_authorizaion where prior_authorizaion_id='$priorId'";
 	  
 	    return $this->db->query($sql, $return_object = TRUE)->result_array();
 	}
@@ -210,8 +210,7 @@ class mApproveRegister extends CI_Model {
 		      
 		    );
 	$this->db->insert('provider_general', $data);
-	print_r($data);
-	exit;
+	
     }
     function updateprovider(){
 	$data = array(
@@ -245,7 +244,13 @@ class mApproveRegister extends CI_Model {
 	return $query->result_array();
     }
     //3.PRIOR AUTH STARTS
-    
+    function getReasonRef($id)
+    {
+	
+	$sql="SELECT * FROM PA_reject_reason WHERE prior_authorizaion_id='$id'";
+	return $this->db->query($sql)->result_array();
+	
+    }
     //PRIOR AUTH ENDS
     
     

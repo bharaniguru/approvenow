@@ -185,6 +185,7 @@ $("#locationForm").submit(function(e) {
 	success:function(json){
 	    operationClose();
 	    $('#dataRespTable').dataTable().fnDraw();
+	    
 	    unLoader();
 	}
     });
@@ -348,7 +349,8 @@ $(document).ready(function() {
 			{?>
 			<div class="alert alert-success outer"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">&times;</a><?php echo $status; ?></div>
 		    <?php
-		    }?> 
+		    }?>
+		    <div class="table-responsive">
 		    <table id="dataRespTable1" class="table table-striped table-bordered nowrap" width="100%">
 			<thead>
 			    <tr>
@@ -366,6 +368,7 @@ $(document).ready(function() {
 			    
 			</tbody>
 		    </table>
+		    </div>
 		</div>
 	    </div>
 	    <!-- end view panel -->
@@ -445,9 +448,10 @@ function operationClose1() {
     $('#operationPanel1').addClass('hide');
 }
 $("#providerForm").submit(function(e) {
-    loadLoader1();
+   
     e.preventDefault();
     var formData = new FormData($(this)[0]);
+    loadLoader1();
     $.ajax({
 	type:'POST',
 	url:'<?=site_url('approveRegister/generalProviderOperation');?>',
@@ -458,16 +462,17 @@ $("#providerForm").submit(function(e) {
 	contentType: false,
 	success:function(json){
 	    //console.log(json);
-	   alert('test');
+	  
 	    unLoader1();
 	    operationClose1();
-	   
-	    $('#dataRespTable1').dataTable(
-					   ).fnDraw();
+	
+	    $('#dataRespTable1').dataTable().fnDraw();
+		    
 	    
 	}
     });
 });
+
 function editProvider(providerId) {
     loadLoader1();
     operationOpen1();
@@ -508,6 +513,7 @@ function deleteProvider(providerId) {
 		    //$('#alert').append('<div class="alert alert-danger "><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">&times;</a><strong>Failure!</strong> A Record is Unable To Delete</div>');
 		    //}
 		    $('#dataRespTable1').dataTable().fnDraw();
+		    
 		    //setTimeout(function(){ $('#alert').empty(); }, 8000);
 		}
 	    });
@@ -571,8 +577,8 @@ $(document).ready(function() {
 //	},
   });
     //------------- Start for Processing Icon image------------------------------------//
-    $('#dataRespTable1').on( 'processing.dt', function ( e, settings, processing ) {
-        $('#processingIndicator').css( 'display', processing ? loadLoader1() : unLoader1());
+    $('#dataRespTable1').on( 'processing.dt1', function ( e, settings, processing ) {
+        $('#processingIndicator1').css( 'display', processing ? loadLoader1() : unLoader1());
     }).dataTable();
     //------------- End of Processing Icon image------------------------------------//
     //---- for Append after Search button-----------
