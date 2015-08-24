@@ -81,6 +81,7 @@ $status = $this->session->flashdata('status');
 		    <div class="alert alert-danger errorMsgDiv"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">&times;</a><?php echo $error_message; ?></div>
 		    <?php } ?>
 		    <form id="locationForm" data-fv-trigger="blur change keyup"   enctype="multipart/form-data" role="form">
+			
 			<div class="row">
 			    <section class="col-sm-3 form-group">
 				<label  class="control-label">Location Name</label>
@@ -139,6 +140,7 @@ $status = $this->session->flashdata('status');
 			    <section class="col-sm-offset-5 col-sm-3 form-group">
 				<input type="hidden" name="proceed" value="Add" />
 				<input type="hidden" name="locationId" value="" />
+				
 				<button class="btn btn-sm btn-primary m-r-5" name="save" type="submit">Save</button>
 				<button class="btn btn-sm btn-default" onclick="operationClose();" type="button">Cancel</button>
 			    </section>
@@ -190,6 +192,7 @@ $("#locationForm").submit(function(e) {
 function editLocation(locationId) {
     loadLoader();
     operationOpen();
+    
     $('#operationPanel').find('.panel-title').text('Edit');
     $('#operationPanel').find('[name="proceed"]').val('Edit');
     $('#operationPanel').find('[name="save"]').text('Update');
@@ -199,7 +202,8 @@ function editLocation(locationId) {
 	data:{locationId:locationId},
 	dataType: 'json',
 	success:function(json){
-	    $('#locationForm').find('[name="locationName"]').val(json[0].location_name);
+	  console.log(json);
+	    $('#locationForm').find('[name="location_name"]').val(json[0].location_name);
 	    $('#locationForm').find('[name="locationId"]').val(json[0].location_id);
 	    $('#locationForm').find('[name="phoneNumber"]').val(json[0].phone_number);
 	    $('#locationForm').find('[name="phoneExtension"]').val(json[0].phone_ext);
@@ -212,6 +216,7 @@ function editLocation(locationId) {
 	    $('#locationForm').find('[name="emailAddress"]').val(json[0].email_address);
 	    $('#locationForm').find('[name="webAddress"]').val(json[0].web_address);
 	    $('#locationForm').find('[name="NPI"]').val(json[0].NPI);
+	    $('#locationForm').find('[name="account_id"]').val(json[0].account_id);
 	    unLoader();
 	}
     });
@@ -323,7 +328,7 @@ $(document).ready(function() {
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <button type="button" class="close"  data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Provider General</h4>
         </div>
         <div class="modal-body col-lg-12">
@@ -375,6 +380,7 @@ $(document).ready(function() {
 		    <div class="alert alert-danger errorMsgDiv"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">&times;</a><?php echo $error_message; ?></div>
 		    <?php } ?>
 		    <form id="providerForm" data-fv-trigger="blur change keyup"   enctype="multipart/form-data" role="form">
+			<input type="hidden" id='locationIdOld' name="locationIdOld" value="" />
 			<div class="row">
 			    <section class="col-sm-3 form-group">
 				<label  class="control-label">First Name</label>
@@ -405,18 +411,10 @@ $(document).ready(function() {
 			   
                             <section class="col-sm-3 form-group">
                                 <label class=" control-label">Location ID</label>
-				
-                                <select name="locationID" id="locationID" class="form-control input-sm">
-                                    <option >Select</option>
-                                            <?php if (count($locationDetails) > 0 )
-                                            {
-                                                foreach ($locationDetails as $row)
-                                                {
-                                                            ?>
-                                    <option value="<?php echo $row['location_id']; ?>"><?php echo $row['location_name']; ?></option>
-                                                <?php } }?>
-                                </select>
-                            </section>
+				    <?php foreach ($locationDetails as $row){?>
+				    <?php }?>
+				    <input type="text" name="locationID" id="locationID" class="form-control input-sm" readonly="">
+			    </section>
 			</div>
                         
                         <div class="row">
@@ -460,9 +458,13 @@ $("#providerForm").submit(function(e) {
 	contentType: false,
 	success:function(json){
 	    //console.log(json);
-	    operationClose1();
-	    $('#dataRespTable1').dataTable().fnDraw();
+	   alert('test');
 	    unLoader1();
+	    operationClose1();
+	   
+	    $('#dataRespTable1').dataTable(
+					   ).fnDraw();
+	    
 	}
     });
 });
@@ -574,7 +576,7 @@ $(document).ready(function() {
     }).dataTable();
     //------------- End of Processing Icon image------------------------------------//
     //---- for Append after Search button-----------
-    $( "#addbutton1") .appendTo( ".no1" );
+    $( "#addbutton1") .appendTo( ".no" );
     //----------------------------------------------
     
 
@@ -589,18 +591,20 @@ $(document).ready(function() {
   </div>
     <!--Modal End-->
 <script>
-   function ajaxLocations($id)
+   function ajaxLocations(id)
 {
 	//loadLoader();
 	
 	$.ajax({
 		url: '<?php  echo site_url('approveRegister/ajaxLocations')?>',
 		type: 'POST',
-		data: {loaction_id:$id},
+		data: {loaction_id:id},
 		success: function (response)
 		{
 			$("#provideTable").html(response);
-			$("#locationID").val($id);
+			 $("#locationIdOld option[value='"+id+"']").prop('selected', true);
+			//$("#locationIdOld").val($id);
+			$("#locationID").attr('value',id);
 			//$("#locationID").each(function() {
 			//    if($(this).val() == $id) {
 			//      $(this).attr('selected', 'selected');            

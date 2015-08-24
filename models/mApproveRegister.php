@@ -2,28 +2,31 @@
 
 class mApproveRegister extends CI_Model {
     //Start menu in header
-    
+    function getUserDetails(){
+	$sql="SELECT * FROM ref_account_type";
+	return $this->db->query($sql, $return_object = TRUE)->result_array();
+    }
     function createAccount(){
 	$data = array(
-		      'account_num' => $this->input->post('accountNumber') ,
-		      'title_id' => $this->input->post('titleId') ,
-		      'membership_level_num' => $this->input->post('memLevelNo') ,
+		      //'account_num' => $this->input->post('accountNumber') ,
+		      //'title_id' => $this->input->post('titleId') ,
+		      //'membership_level_num' => $this->input->post('memLevelNo') ,
 		      'account_first_name' => $this->input->post('accFirstName') ,
-		      'account_middle_name' => $this->input->post('accMidName') ,
+		      //'account_middle_name' => $this->input->post('accMidName') ,
 		      'account_last_name' => $this->input->post('accLastName') ,
-		      'general_status_code' => $this->input->post('genStatusCode') ,
+		      //'general_status_code' => $this->input->post('genStatusCode') ,
 		      'account_email_address' => $this->input->post('accEmail') ,
 		      'account_organization_name' => $this->input->post('accOrgName') ,
-		      'account_web_address' => $this->input->post('webAddress') ,
-		      'external_link' => $this->input->post('externalLink') ,
+		      //'account_web_address' => $this->input->post('webAddress') ,
+		      //'external_link' => $this->input->post('externalLink') ,
 		      'account_pwd' => $this->input->post('accPassword') ,
 		      'account_type' => $this->input->post('accType') ,
-		      'account_id' => $this->input->post('accId') ,
-		      'account_username' => $this->input->post('accUsername') ,
-		      'company_id' => $this->input->post('companyId') ,
-		      'account_name' => $this->input->post('accName')
+		      //'account_id' => $this->input->post('accId') ,
+		      'account_username' => $this->input->post('accUsername')
+		      //'company_id' => $this->input->post('companyId') ,
+		      //'account_name' => $this->input->post('accName')
 		      );
-	$this->db->insert('account_general', $data);
+	$this->db->insert('accounts_general', $data);
 	
 	//print_r($data);
 	//exit;
@@ -50,31 +53,46 @@ class mApproveRegister extends CI_Model {
 	//echo $accountId;
 	//$sql="SELECT * FROM prior_authorizaion b, provider_general p WHERE b.doctor_npi='1' AND p.NPI='1'";
 	 $sql= "SELECT p.* FROM accounts_general a  JOIN locations l ON a.account_id=l.account_id join provider_general g  on l.location_id= g.location_id  join prior_authorizaion p on g.NPI=p.doctor_NPI where a.account_id='$accountId'";
-	// print_r($sql);
-	// exit;
-	//$sql="SELECT * FROM prior_authorizaion ";
+	    $mainData= $this->db->query($sql)->result_array();
+	    
+	    $result['table'] =$mainData;
+	    //print_r($mainData);
+	    //exit;
+	    
+	     $sql="SELECT * from ref_reason_code";
+	     $return = $this->db->query($sql)->result_array();
 	
-	$result['table'] = $this->db->query($sql)->result_array();
-
-	$result["user"]=count($result);
-	//print_r($result["user"]);
-	//exit;
-	//$sql="SELECT * FROM prior_authorizaion where status_id=1";
-	//$result1 = $this->db->query($sql)->result_array();
-	//$result["approved"]=count($result1);
-	$sql="SELECT * FROM prior_authorizaion where status_id=2";
-	$result2 = $this->db->query($sql)->result_array();
-	$result["rejected"]=count($result2);
-	$sql="SELECT * FROM prior_authorizaion where status_id=3";
-	$result3 = $this->db->query($sql)->result_array();
-	$result["pending"]=count($result3);
-
+    
+    
+	    $sql="select * from prior_authorizaion where doctor_NPI in (select NPI from provider_general where location_id in (select location_id from locations where account_id in (select account_id from accounts_general where account_id='$accountId')))";
+	    $mainData= $this->db->query($sql, $return_object = TRUE)->result_array();
+	    
+	 
+	    
+	    $sql= "SELECT rr.* FROM accounts_general a  JOIN locations l ON a.account_id=l.account_id join provider_general g  on l.location_id= g.location_id  join prior_authorizaion p on g.NPI=p.doctor_NPI join ref_reason_code rr on p.status_id=rr.reason_code_id where a.account_id='$accountId' and rr.description='Approved' ";
+	    $result = $this->db->query($sql)->result_array();
+	    $result["approved"]=count($result);
+	    
+	    $sql= "SELECT rr.* FROM accounts_general a  JOIN locations l ON a.account_id=l.account_id join provider_general g  on l.location_id= g.location_id  join prior_authorizaion p on g.NPI=p.doctor_NPI join ref_reason_code rr on p.status_id=rr.reason_code_id where a.account_id='$accountId' and rr.description='Rejected' ";
+	    $result1 = $this->db->query($sql)->result_array();
+	    $result["rejected"]=count($result1);
+	    
+	    $sql= "SELECT rr.* FROM accounts_general a  JOIN locations l ON a.account_id=l.account_id join provider_general g  on l.location_id= g.location_id  join prior_authorizaion p on g.NPI=p.doctor_NPI join ref_reason_code rr on p.status_id=rr.reason_code_id where a.account_id='$accountId' and rr.description='In Progress' ";
+	    $result2 = $this->db->query($sql)->result_array();
+	    $result["pending"]=count($result2);
+	    //  print_r(count($result2));
+	    //exit;
+	    
+	   
+	  
+	
+        
 	//print_r($query);
 	//exit;
 	//$query['old']= $query['old1'][0]['count(prior_authorizaion_id)']+ $query['old2'][0]['count(prior_authorizaion_id)']  ;
 	
 	return $result;
-    }
+}
      function getTableDetails($accountId)
     {
 	//$sql="SELECT p.* FROM accounts_general a  JOIN locations l ON a.account_id=l.account_id join provider_general g  on l.location_id= g.location_id  join prior_authorizaion p on g.NPI=p.doctor_NPI where a.account_id='$accountId'";
@@ -109,6 +127,7 @@ class mApproveRegister extends CI_Model {
 	}
     //Dashboard End
     function addLocation(){
+	//$sessionData = $this->session->userdata('account_id');
 	$data = array(
 		      'location_name' => $this->input->post('location_name') ,
 		      //'phone_area_code' => $this->input->post('phoneAreaCode') ,
@@ -128,13 +147,14 @@ class mApproveRegister extends CI_Model {
 		      //'product_build' => $this->input->post('prodBuild') ,
 		      //'product_build_date' => $this->input->post('prodBuildDate') ,
 		      'NPI' => $this->input->post('NPI') ,
-		      'account_id' => $this->input->post('account_id')
+		      'account_id' => $this->session->userdata('account_id')
 		    );
 	$this->db->insert('locations', $data);
+	
     }
     function updateLocation(){
 	$data = array(
-		      //'phone_area_code' => $this->input->post('phoneAreaCode') ,
+		     'location_name' => $this->input->post('location_name') ,
 		      'phone_number' => $this->input->post('phoneNumber') ,
 		      'phone_ext' => $this->input->post('phoneExtension') ,
 		      //'fax_area_code' => $this->input->post('faxAreaCode') ,
@@ -151,17 +171,21 @@ class mApproveRegister extends CI_Model {
 		      //'product_build' => $this->input->post('prodBuild') ,
 		      //'product_build_date' => $this->input->post('prodBuildDate') ,
 		      'NPI' => $this->input->post('NPI'),
-		      'account_id' => $this->input->post('account_id')
+		      'account_id' => $this->session->userdata('account_id')
 		    );
 	$this->db->where('location_id', $this->input->post('locationId'));
 	$this->db->update('locations', $data);
     }
     function getLocationDetails($locationId){
-	$sql="SELECT location_id FROM locations where location_id='3'";
+	$sql="SELECT * FROM locations where location_id='$locationId'";
+	
 	return $this->db->query($sql, $return_object = TRUE)->result_array();
     }
     function deleteLocation($locationId){
+	
 	$this->db->delete('locations', array('location_id' => $locationId));
+	
+        
     }
     //2. GENERAL PROVIDER STARTS
     //DROP DOWN STARTS
@@ -186,7 +210,8 @@ class mApproveRegister extends CI_Model {
 		      
 		    );
 	$this->db->insert('provider_general', $data);
-	
+	print_r($data);
+	exit;
     }
     function updateprovider(){
 	$data = array(
@@ -219,7 +244,9 @@ class mApproveRegister extends CI_Model {
 	$query=$this->db->query("SELECT * FROM provider_general WHERE location_id='$location_id'");
 	return $query->result_array();
     }
+    //3.PRIOR AUTH STARTS
     
+    //PRIOR AUTH ENDS
     
     
     

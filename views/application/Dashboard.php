@@ -10,26 +10,6 @@
 			<h1 class="page-header">Dashboard  <small>header small text goes here...</small></h1>
 			<!-- end page-header -->
 			<!-- begin row -->
-			<div class="row">
-			    <!-- begin col-3 -->
-			  
-			    <!-- end col-3 -->
-			    <!-- begin col-3 -->
-			    
-			    <!-- end col-3 -->
-			    <!-- begin col-3 -->
-			    
-			    <!-- end col-3 -->
-			    <!-- begin col-3 -->
-			      
-			    <!-- end col-3 -->
-			
-			
-			<!-- end row -->
-			</div>
-		
-		
-		
 	<div class="panel panel-inverse">
 		<div class="panel-heading">
 		    <div class="panel-heading-btn">
@@ -41,8 +21,10 @@
 		    <h4 class="panel-title">Prior Authorization</h4>
 		</div>
 		<div class="panel-body" id="form_validation">
-		
-				    <table id="" class="table table-striped table-bordered nowrap responsive" width="100%">
+			<p>
+		<a href="<?php echo site_url('approveRegister/priorAuth'); ?>" onclick="operationOpen();" class="btn btn-primary"><i class="fa fa-plus fa-1x"></i> <span class="f-s-14 f-w-500">Add PA</span></a>
+			</p>
+		<table id="dataRespTable" class="table table-striped table-bordered nowrap responsive" width="100%">
 		      <thead>
 			    <tr>
 				<th data-class="expand"><input type="radio" id="" checked name="already_y"></th>
@@ -58,11 +40,7 @@
 			</thead>
 			<tbody>
 				
-			    <?php
-				
-				 foreach($tableDetails as $row){
-				 
-				?>
+			    <?php foreach($tableDetails as $row){?>
 			   
 			    <tr class="">
 				<td><input type="radio" value="Y" id="radioYes" onclick="patientDetails('<?php echo $row['prior_authorizaion_id']?>')" name="already_y">
@@ -78,43 +56,50 @@
 			  
 			<?php }?>
 			</tbody>
-		    </table>
-				    
-		<div class="col-md-6">
-			<div class="col-md-8">
-				<div class="widget widget-stats bg-green">
-				    <div class="stats-icon stats-icon-lg"><i class="fa  fa-users fa-fw"></i></div>
-				    <div class="stats-title">TOTAL PROGRESS</div>
-				    <div class="stats-number"><?php echo $details['user'];?> PA's in Queues</div>
-				    <div class="stats-progress progress">
-					<div class="progress-bar" style="width: 70.1%;"></div>
-				    </div>
-				    
-				    <div class="stats-desc"><?php echo $details['pending'];?> Pending</div>
-				    <div class="stats-desc"><?php echo $details['rejected'];?> Rejected</div>
+		</table>
+		
+			<div class="col-md-12" style="padding: 10px;"></div>    
+			<div class="col-md-6">
+				<div class="col-md-8">
+					<div class="widget widget-stats bg-black">
+					    <div class="stats-icon stats-icon-lg"><i class="fa  fa-users fa-fw"></i></div>
+					    <div class="stats-title">TOTAL PROGRESS</div>
+					    <div class="stats-number"><?php echo $details['approved'];?> PA's in Queues</div>
+					    <div class="stats-progress progress">
+						<div class="progress-bar" style="width: 70.1%;"></div>
+					    </div>
+					    
+					    <div class="stats-desc"><?php echo $details['pending'];?> Pending</div>
+					    <div class="stats-desc"><?php echo $details['rejected'];?> Rejected</div>
+					</div>
 				</div>
 			</div>
+			
+			<div class="RemoveResponsive"></div>
+		<div class="col-md-12">
+			
+		</div>	
 		</div>
-		<div class="RemoveResponsive"></div>
-		</div>
+		
 	</div>
 </div>
 <script>
-   function patientDetails($id)
-{
-	loadLoader();
-	$.ajax({
-		url: '<?php  echo site_url('approveRegister/paitentDetailsAjax')?>',
-		type: 'POST',
-		data: {prior_authorizaion_id:$id},
-		success: function (response)
-		
-		{
-			$(".RemoveResponsive").html(response);
-			unLoader();
-		}
-	});
-}
+	
+function patientDetails($id)
+	{
+		loadLoader();
+		$.ajax({
+			url: '<?php  echo site_url('approveRegister/paitentDetailsAjax')?>',
+			type: 'POST',
+			data: {prior_authorizaion_id:$id},
+			success: function (response)
+			
+			{
+				$(".RemoveResponsive").html(response);
+				unLoader();
+			}
+		});
+	}
 </script>
 
 
@@ -158,5 +143,11 @@ function unloadTxn() {
     $('body').removeClass('loading').loader('hide');
 }
 	//Loader
+</script>
+<script>
+	$(document).ready(function() {
+    $("#dataRespTable").DataTable();
+     });
+	
 </script>
 	

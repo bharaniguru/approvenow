@@ -36,10 +36,11 @@ class approveRegister extends CI_Controller {
     function createAccount(){
 	if ($this->input->post('proceed')=='Yes'){
 	    $this->mApproveRegister->createAccount();
-	    
+	    redirect(site_url("approveRegister/index"));
 	}
-	$this -> load -> view('createAccount');
-	//redirect(site_url("approveRegister/dashboard"));
+	$data['accountType']=$this->mApproveRegister->getUserDetails();
+	$this -> load -> view('createAccount',$data);
+	
     }
     
     public function Logout(){
@@ -95,6 +96,7 @@ class approveRegister extends CI_Controller {
 					</div>
 				</div>
 				<a href="<?php echo site_url('approveRegister/priorAuth'); ?>" class="btn btn-success pull-right">Fix PA</a>
+				
 			</div>
 		</div>
 		<?php }
@@ -112,14 +114,18 @@ class approveRegister extends CI_Controller {
 	}
     }
     function locationMasterTable(){
+	$sessionData = $this->session->userdata('account_id');
         $this->datatables->select('location_id,location_name,phone_number,phone_ext,fax_number,address,city,state,zip,zip_four,email_address,web_address,NPI,account_id')
-	->from('locations');
+	->from('locations')
+	->where('account_id',$sessionData);
 	echo $this->datatables->generate();
     }
     function getLocationDetails(){
 	header('Content-Type: application/json');
 	$locationId = $_POST['locationId'];
+	
 	$result = $this->mApproveRegister->getLocationDetails($locationId);
+	
 	echo json_encode($result);
     }
     function locationDetailsOperation(){
@@ -159,8 +165,11 @@ class approveRegister extends CI_Controller {
 //    }
    
     function generalProviderTable(){
-        $this->datatables->select('provider_id,first_name,last_name,provider_type_id,phone,NPI,DEA_num,location_id')
-	->from('provider_general');
+        $loaction_id = $_POST['loaction_id'];
+	$this->datatables->select('provider_id,first_name,last_name,provider_type_id,phone,NPI,DEA_num,location_id')
+	->from('provider_general')
+	->where('location_id',$loaction_id);
+	
 	echo $this->datatables->generate();
     }
       function getProviderDetails(){
@@ -189,18 +198,7 @@ class approveRegister extends CI_Controller {
 	$query['status']="Success";
 	echo json_encode($query);
     }
-    function priorAuth()
-    {
-       $this->load->view('header');
-       $this->load->view('application/priorAuth');
-       $this->load->view('footer');
-   }
-       function priorAuth2()
-    {
-       $this->load->view('header');
-       $this->load->view('application/priorAuth2');
-       $this->load->view('footer');
-   }
+   
     
 //     public function ajaxLocations()
 //	{
@@ -211,9 +209,9 @@ class approveRegister extends CI_Controller {
     
 public function ajaxLocations()
 {
-    $location_id = $this->input->post('location_id');
+    $location_id = $this->input->post('loaction_id');
     $data = $this->mApproveRegister->getAjaxLocations($location_id);
-    //print_r($data);
+   // print($data); exit;
     
     ?>
    
@@ -239,7 +237,57 @@ public function ajaxLocations()
     <?php
    
 }    
-    
+   //3. ADD PRIOR AUTHORZATION STARTS
+ function priorAuth(){
+	//$sessionData = $this->session->userdata('accUsername');
+	
+	//if($sessionData!=""){
+	    //$data['locationDetails']= $this->mApproveRegister->getLocationID();
+	   
+	    $this -> load -> view('header');
+	    $data['rejectReason']= $this->mApproveRegister->getRejectDetails();
+	   
+	    $this -> load -> view('application/priorAuth',$data);
+	    $this -> load -> view('footer');
+	//}
+	//else{
+	  //  redirect(site_url());
+	//}
+    }
+//    function priorAuthTable(){
+//        $this->datatables->select('provider_id,first_name,last_name,provider_type_id,phone,NPI,DEA_num,location_id')
+//	->from('provider_general');
+//	echo $this->datatables->generate();
+//    }
+//      function getPriorAuthDetails(){
+//	header('Content-Type: application/json');
+//	$providerId = $_POST['provider_id'];
+//	$result = $this->mApproveRegister->getPriorAuthDetails($providerId);
+//	echo json_encode($result);
+//    }
+//    function priorAuthOperation(){
+//	if($this->input->post('proceed')=='Add'){
+//	    $this->mApproveRegister->addPriorAuth();
+//	    $query['status']="Success";
+//	    echo json_encode($query);
+//	    
+//	}elseif($this->input->post('proceed')=='Edit'){
+//	    
+//	    $this->mApproveRegister->updatePriorAuth();
+//	    $query['status']="Success";
+//	    echo json_encode($query);
+//	}
+//    }
+//    function deletePriorAuth(){
+//	header('Content-Type: application/json');
+//	$locationId = $_POST['provider_id'];
+//	$this->mApproveRegister->deletePriorAuth($providerId);
+//	$query['status']="Success";
+//	echo json_encode($query);
+//    }
+   
+//ADD PRIOR AUTHRZATION ENDS    
+      
     
     
     

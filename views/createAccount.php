@@ -55,7 +55,7 @@
 			</div>
 			<div class="col-sm-6 form-group">
 			    <label  class="control-label"> Password</label>
-			    <input type="text" class="form-control" name="accPassword" placeholder="Password" />
+			    <input type="password" class="form-control" name="accPassword" placeholder="Password" />
 			</div>
 			<!--<div class="col-sm-4 form-group">-->
 			<!--    <label  class="control-label">Title Id</label>-->

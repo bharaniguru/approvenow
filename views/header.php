@@ -267,7 +267,7 @@
                         </a>
                         <ul class="sub-menu">
 			    <li><a href="<?=site_url('approveRegister/locationMaster');?>"><i class="fa fa-suitcase text-warning"></i> <span>Location</span></a></li>
-			    <li><a href="<?=site_url('approveRegister/generalProvider');?>"><i class="fa fa-tasks text-warning"></i> <span>Provider General</span></a></li>
+			   
 			</ul>
                     </li>
 		    <!-- begin sidebar minify button -->

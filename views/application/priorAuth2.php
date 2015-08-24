@@ -122,7 +122,7 @@
                                     </section>
                                     <section class="col-sm-6 form-group">
                                         <label class="control-label">Exclusion Citeria</label>
-                                        <!--<input type="text" name="phone" id="phone"  class="form-control input-sm"  placeholder="Phone" />-->
+                                       
                                     </section>
                                 </div>
                                 <div class="row well">
@@ -131,7 +131,7 @@
                                     </section>
                                     <section class="col-sm-6 form-group">
                                         <label class="control-label">Other Citeria</label>
-                                        <!--<input type="text" name="phone" id="phone"  class="form-control input-sm"  placeholder="Phone" />-->
+                                        
                                     </section>
                                     <section class="col-sm-6 form-group">
                                         <label class="control-label">Explanations</label>
@@ -139,7 +139,7 @@
 				    </section>
                                     <section class="col-sm-6 form-group">
                                         <label class="control-label">Paitent Drug History</label>
-                                        <!--<input type="text" name="phone" id="phone"  class="form-control input-sm"  placeholder="Phone" />-->
+                                       
                                     </section>
 				</div>
                                 </div>
@@ -156,10 +156,10 @@
 					 <label class="page-header">Clinical Details</label>
 				     </section>
 				    
-                                  <section class="col-sm-6 form-group">
-					<label class="control-label">Diagonis</label>
-					<input type="text" name="yourId" id="yourId"  class="form-control input-sm"  placeholder="Diagonis Name" />
-				  </section>
+				    <section class="col-sm-6 form-group">
+					  <label class="control-label">Diagonis</label>
+					  <input type="text" name="yourId" id="yourId"  class="form-control input-sm"  placeholder="Diagonis Name" />
+				    </section>
                                     <section class="col-sm-6 form-group">
 					<label class="control-label">Please Enter Additional Diagonis</label>
 					<input type="text" name="yourId" id="yourId"  class="form-control input-sm"  placeholder="Addtional Diagonis" />
