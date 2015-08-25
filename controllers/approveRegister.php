@@ -254,11 +254,14 @@ public function ajaxLocations()
 	   {
 		$data['rejectReason']= $this->mApproveRegister->getRejectDetails();
 		$data['rejectReference']= $this->mApproveRegister->getReasonRef($id);
+		$data['empty']="data";
 		$this -> load -> view('application/priorAuth',$data);
 		$this -> load -> view('footer');
 	   }
 	    else{
-		$this -> load -> view('application/priorAuth');
+		$data['empty']="empty";
+		
+		$this -> load -> view('application/priorAuth',$data);
 		$this -> load -> view('footer');
 	    }
 	   

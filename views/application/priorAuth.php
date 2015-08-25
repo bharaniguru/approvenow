@@ -533,7 +533,7 @@ $status = $this->session->flashdata('status');
 				    <tbody id="">
 					<tr>
 					 <?php
-					
+					     if($empty!='empty'){
 					 foreach ($rejectReference as $row){?>
 					 
 					<td><?php echo $row['PA_reject_reason']; ?></td>
@@ -542,7 +542,7 @@ $status = $this->session->flashdata('status');
 					<td><input type="checkbox" name="rejectReason" id="rejectReason"></td>
 					</tr>
 				    </tbody>
-				    <?php } ?>
+				    <?php }} ?>
 				</table>
 			    </div>
 			    <div class="col-md-12">
