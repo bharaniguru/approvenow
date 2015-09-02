@@ -244,23 +244,56 @@ public function ajaxLocations()
    
 }    
    //3. ADD PRIOR AUTHORZATION STARTS
- function priorAuth($id){
-	//$sessionData = $this->session->userdata('accUsername');
+   public function priorAuth_View()
+    {
+	$sessionData = $this->session->userdata('accUsername');
+	if($sessionData!=""){
+	$this -> load -> view('header');
+        $this -> load -> view('application/priorAuth_View');
+	 $this -> load -> view('footer');
+	}
+	else
+	{
+	    redirect(site_url());
+	}	
+    }
+   function priorAuthMasterTable(){
+     //$sessionData = $this->session->userdata('account_id');
+$this->datatables->select('prior_authorizaion_id,patient_id,patient_first_name,patient_address,pharmacy_name,pharmacy_city,Prescriber_name,speciality,insurance_name,prior_auth_name')
+	->from('prior_authorizaion');
+	//->where('account_id',$sessionData);
+	echo $this->datatables->generate();
+    
+   }
+   function getPriorAuthDetails(){
+	header('Content-Type: application/json');
+	$prior_authorizaion_id = $_POST['prior_authorizaion_id'];
 	
-	//if($sessionData!=""){
-	    //$data['locationDetails']= $this->mApproveRegister->getLocationID();
-	   $this -> load -> view('header');
+	$result = $this->mApproveRegister->getPriorAuthDetails($prior_authorizaion_id);
+	
+	echo json_encode($result);
+    }
+ function priorAuth($id){
+	$sessionData = $this->session->userdata('accUsername');
+	
+	if($sessionData!=""){
+	   // $data['locationDetails']= $this->mApproveRegister->getLocationID();
+	  
 	   if($id!='empty')
 	   {
 		$data['rejectReason']= $this->mApproveRegister->getRejectDetails();
 		$data['rejectReference']= $this->mApproveRegister->getReasonRef($id);
+		
+		
 		$data['empty']="data";
+		 $this -> load -> view('header');
 		$this -> load -> view('application/priorAuth',$data);
 		$this -> load -> view('footer');
 	   }
 	    else{
 		$data['empty']="empty";
-		
+		$data['state']= $this->mApproveRegister->getStateDetails();
+		 $this -> load -> view('header');
 		$this -> load -> view('application/priorAuth',$data);
 		$this -> load -> view('footer');
 	    }
@@ -273,37 +306,22 @@ public function ajaxLocations()
 	  //  redirect(site_url());
 	//}
     }
-//    function priorAuthTable(){
-//        $this->datatables->select('provider_id,first_name,last_name,provider_type_id,phone,NPI,DEA_num,location_id')
-//	->from('provider_general');
-//	echo $this->datatables->generate();
-//    }
-//      function getPriorAuthDetails(){
-//	header('Content-Type: application/json');
-//	$providerId = $_POST['provider_id'];
-//	$result = $this->mApproveRegister->getPriorAuthDetails($providerId);
-//	echo json_encode($result);
-//    }
-//    function priorAuthOperation(){
-//	if($this->input->post('proceed')=='Add'){
-//	    $this->mApproveRegister->addPriorAuth();
-//	    $query['status']="Success";
-//	    echo json_encode($query);
-//	    
-//	}elseif($this->input->post('proceed')=='Edit'){
-//	    
-//	    $this->mApproveRegister->updatePriorAuth();
-//	    $query['status']="Success";
-//	    echo json_encode($query);
-//	}
-//    }
-//    function deletePriorAuth(){
-//	header('Content-Type: application/json');
-//	$locationId = $_POST['provider_id'];
-//	$this->mApproveRegister->deletePriorAuth($providerId);
-//	$query['status']="Success";
-//	echo json_encode($query);
-//    }
+ }
+    function PriorAuthDetailsOperation(){
+	//print_r($_POST);
+	//exit;
+	    if($this->input->post('sampleData')=='empty'){
+		
+		$this->mApproveRegister->addPriorAuth();
+		$query['status']="Success";
+		echo json_encode($query);
+		
+	    }elseif($this->input->post('sampleData')=='data'){
+		$this->mApproveRegister->updatePriorAuth();
+		$query['status']="Success";
+		echo json_encode($query);
+	    }
+	}
    
 //ADD PRIOR AUTHRZATION ENDS    
       

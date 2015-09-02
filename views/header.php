@@ -259,6 +259,7 @@
                 <!-- begin sidebar nav -->
                 <ul class="nav">
 		    <li><a href="<?=site_url('approveRegister/dashboard');?>"><i class="fa fa-dashboard text-warning"></i> <span>Dashboard</span></a></li>
+		    
                     <li class="has-sub">
                         <a href="javascript:;">
                             <b class="caret pull-right"></b>

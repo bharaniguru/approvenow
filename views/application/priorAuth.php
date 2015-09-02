@@ -34,11 +34,19 @@ $status = $this->session->flashdata('status');
 			
 			<div class="">
 			    
-			    <form id="form_validation" method="POST" enctype="multipart/form-data" action="<?php echo site_url('approveRegister/priorAuth'); ?>" class="">
+			    <form id="priorAuthForm" method="POST" enctype="multipart/form-data" action="<?php echo site_url('approveRegister/priorAuth/'); ?>" class="">
 			    <div class="well">
 				 <label>Submission Date: 07/23/2015</label>
 				    <label class=" form-group pull-right">Status: Rejected</label>
 			    </div>
+			    <?php if($empty=="empty"){
+				?>
+				<input type="hidden" name="sampleData" value="empty">
+				<?php
+				}else { ?>
+				<input type="hidden" name="sampleData" value="data">
+				<?php
+				}?>
 			    <div class="col-md-6">
 				<div class="row well">
 				<section class="col-sm-6 form-group">
@@ -82,8 +90,14 @@ $status = $this->session->flashdata('status');
 			    <section class="col-sm-6 form-group">
 				<label class="control-label">State</label>
 				<select name="patient_state" id="patient_state" class="form-control input-sm">
-				    <option value='0' disabled="">Select</option>
-				    <option>California</option>
+					 <option selected  disabled="">select</option>
+						<?php if (count($state) > 0 )
+						    {
+							foreach ($state as $row)
+							    {
+							    ?>
+						<option value="<?php echo $row['state_code']; ?>"><?php echo $row['state_name']; ?></option>
+						<?php } }?>   
 				</select>
 			    </section>
 			     <section class="col-sm-6 form-group">
@@ -93,14 +107,14 @@ $status = $this->session->flashdata('status');
                            
                              <section class="col-sm-6 form-group">
 				<label class="control-label">Phone</label>
-				<input type="text" name="patient_contact_number	" id="patient_contact_number"  class="form-control input-sm"  placeholder="Phone" />
+				<input type="text" name="patient_contact_number" id="patient_contact_number"  class="form-control input-sm"  placeholder="Phone" />
 			     </section>
                              
                             <section class="col-sm-6 form-group">
 				    <label class="control-label">Gender : </label>
-				    <label><input type="radio" name="male"> Male</label>
+				    <label><input type="radio" name="patient_gender"> Male</label>
 				    <label class="control-label"></label>
-                                    <label><input type="radio" name="female"> Female</label>
+                                    <label><input type="radio" name="patient_gender"> Female</label>
 			    </section>
                            
                             <section class="col-sm-6 form-group">
@@ -109,9 +123,9 @@ $status = $this->session->flashdata('status');
 			    </section>
                            <section class="col-sm-6 form-group">
 				    <label class="control-label">Unit Of Measure for Weight : </label>
-				    <label><input type="radio" name="pounds"> Pounds (lbs)</label>
+				    <label><input type="radio" name="uom_weight"> Pounds (lbs)</label>
 				    <label class="control-label"></label>
-				    <label><input type="radio" name="kilograms"> Kilograms (kg)</label>
+				    <label><input type="radio" name="uom_weight"> Kilograms (kg)</label>
 			   </section>
                             <section class="col-sm-6 form-group">
 				<label class="control-label">Height</label>
@@ -119,9 +133,9 @@ $status = $this->session->flashdata('status');
 			    </section>
                             <section class="col-sm-6 form-group">
 				    <label class="control-label">Unit Of Measure for Height : </label>
-				    <label><input type="radio" name="inches"> Inches (in)</label>
+				    <label><input type="radio" name="uom_height"> Inches (in)</label>
 				    <label class="control-label"></label>
-				    <label><input type="radio" name="centimeters"> Centimeters (cm)</label>
+				    <label><input type="radio" name="uom_height"> Centimeters (cm)</label>
 			    </section>
 			   <section class="col-sm-6 form-group">
 				<label class="control-label">Allergies</label>
@@ -129,12 +143,12 @@ $status = $this->session->flashdata('status');
 			   </section>
                            <section class="col-sm-6 form-group">
 				<label class="control-label">Authorized Repsentative (if applicable)</label>
-				<input type="text" name="authRep" id="authRep"  class="form-control input-sm"  placeholder="Auth Rep" />
+				<input type="text" name="auth_rep" id="auth_rep"  class="form-control input-sm"  placeholder="Auth Rep" />
 			   </section>
 			   
                            <section class="col-sm-6 form-group">
 				<label class="control-label">Authorized Repsentative Phone Number</label>
-				<input type="text" name="authRepPhone" id="authRepPhone"  class="form-control input-sm"  placeholder="Auth Rep Phone Number" />
+				<input type="text" name="auth_rep_phone" id="auth_rep_phone"  class="form-control input-sm"  placeholder="Auth Rep Phone Number" />
 			   </section>
 			   
 			  
@@ -163,15 +177,15 @@ $status = $this->session->flashdata('status');
 			    </section>
                             <section class="col-sm-6 form-group">
 				<label class="control-label">NPI</label>
-				<input type="text" name="yourId" id="yourId" value="" class="form-control input-sm"  placeholder="NPI" />
+				<input type="text" name="doctor_NPI" id="doctor_NPI" value="" class="form-control input-sm"  placeholder="NPI" />
 			    </section>
                             <section class="col-sm-6 form-group">
 				<label class="control-label">Phone</label>
 				<input type="text" name="pharmacy_contact_number" id="pharmacy_contact_number" value="" class="form-control input-sm"  placeholder="Phone" />
 			    </section>
                             <section class="col-sm-6 form-group">
-				<label class="control-label">Fax</label>
-				<input type="text" name="yourId" id="yourId" value="" class="form-control input-sm"  placeholder="Fax" />
+				<label class="control-label">Pharamacy City</label>
+				<input type="text" name="pharmacy_city" id="pharmacy_city" value="" class="form-control input-sm"  placeholder="Fax" />
 			    </section>
 			</div>
 			</div>
@@ -191,54 +205,60 @@ $status = $this->session->flashdata('status');
 				  </section>
                                     <section class="col-sm-6 form-group">
 					<label class="control-label">Speciality</label>
-					<input type="text" name="yourId" id="yourId" value=" "  class="form-control input-sm"  placeholder="Speciality" />
+					<input type="text" name="speciality" id="speciality" value=" "  class="form-control input-sm"  placeholder="Speciality" />
 				    </section>
                                     <section class="col-sm-6 form-group">
 					<label class="control-label">NPI</label>
-					<input type="text" name="yourId" id="yourId" value="" class="form-control input-sm"  placeholder="NPI" />
+					<input type="text" name="doctor_NPI" id="doctor_NPI" value="" class="form-control input-sm"  placeholder="NPI" />
 				    </section>
                                     <section class="col-sm-6 form-group">
 					<label class="control-label">DEA Number(if Required)</label>
-					<input type="text" name="yourId" id="yourId" value="" class="form-control input-sm"  placeholder="DEA Number" />
+					<input type="text" name="DEA_number" id="DEA_number" value="" class="form-control input-sm"  placeholder="DEA Number" />
 				    </section>
                                     <section class="col-sm-6 form-group">
 					<label class="control-label">Address</label>
-					<input type="text" name="yourId" id="yourId" value="  " class="form-control input-sm"  placeholder="Address" />
+					<input type="text" name="prescriber_address" id="prescriber_address" value="  " class="form-control input-sm"  placeholder="Address" />
 				    </section>
 				     <section class="col-sm-6 form-group">
 					<label class="control-label">City</label>
-					<input type="text" name="address" id="address" value="" class="form-control input-sm"  placeholder="City" />
+					<input type="text" name="prescriber_city" id="prescriber_city" value="" class="form-control input-sm"  placeholder="City" />
 				    </section>
 				    <section class="col-sm-6 form-group">
 					<label class="control-label">State</label>
-					<select class="form-control input-sm">
-					    <option value='0' disabled="">Select</option>
-					    <option>California</option>
+					<select class="form-control input-sm" name="prescriber_state">
+					    <option selected  disabled="">select</option>
+						<?php if (count($state) > 0 )
+						    {
+							foreach ($state as $row)
+							    {
+							    ?>
+						<option value="<?php echo $row['state_code']; ?>"><?php echo $row['state_name']; ?></option>
+						<?php } }?>   
 					</select>
 				    </section>
 				    <section class="col-sm-6 form-group">
 				       <label class="control-label">Zip</label>
-				       <input type="text" name="address" id="address"  class="form-control input-sm"  placeholder="Zip Code" />
+				       <input type="text" name="prescriber_zip" id="prescriber_zip"  class="form-control input-sm"  placeholder="Zip Code" />
 				   </section>
                                     <section class="col-sm-6 form-group">
 					<label class="control-label">Phone</label>
-					<input type="text" name="yourId" value="" id="yourId"  class="form-control input-sm"  placeholder="Phone" />
+					<input type="text" name="prescriber_phone" value="" id="prescriber_phone"  class="form-control input-sm"  placeholder="Phone" />
 				    </section>
                                    <section class="col-sm-6 form-group">
 				    <label class="control-label">Fax Number( HIPPA  Area)</label>
-				    <input type="text" name="yourId" id="yourId" value="" class="form-control input-sm"  placeholder="Fax Number" />
+				    <input type="text" name="prescriber_fax" id="prescriber_fax" value="" class="form-control input-sm"  placeholder="Fax Number" />
 				   </section>
                                     <section class="col-sm-6 form-group">
 					<label class="control-label">Email Address</label>
-					<input type="text" name="yourId" id="yourId"  class="form-control input-sm"  placeholder="Email Address" />
+					<input type="text" name="prescriber_email" id="prescriber_email"  class="form-control input-sm"  placeholder="Email Address" />
 				    </section>
                                     <section class="col-sm-6 form-group">
 					<label class="control-label">Office Contact Person</label>
-					<input type="text" name="yourId" id="yourId"  class="form-control input-sm"  placeholder="Office Contact Person" />
+					<input type="text" name="office_contact_person" id="office_contact_person"  class="form-control input-sm"  placeholder="Office Contact Person" />
 				    </section>
                                     <section class="col-sm-6 form-group">
 					<label class="control-label">Requestor (If Different from Prescriber)</label>
-					<input type="text" name="yourId" id="yourId"  class="form-control input-sm"  placeholder="Requister" />
+					<input type="text" name="requestor" id="requestor"  class="form-control input-sm"  placeholder="Requister" />
 				    </section>
                                
 				    <section class="col-sm-10 form-group">
@@ -247,15 +267,15 @@ $status = $this->session->flashdata('status');
 				    
                                     <section class="col-sm-6 form-group">
 					<label class="control-label">Primary Insurance Name</label>
-					<input type="text" name="yourId" id="yourId" value="" class="form-control input-sm"  placeholder="Primary Insurance Name" />
+					<input type="text" name="primary_insurance_name" id="primary_insurance_name" value="" class="form-control input-sm"  placeholder="Primary Insurance Name" />
 				    </section>
                                      <section class="col-sm-6 form-group">
 					<label class="control-label">Primary Patient ID Number</label>
-					<input type="text" name="yourId" id="yourId" value="" class="form-control input-sm"  placeholder="Primary Patient ID Number" />
+					<input type="text" name="primary_paitent_id" id="primary_paitent_id" value="" class="form-control input-sm"  placeholder="Primary Patient ID Number" />
 				     </section>
 				    <section class="col-sm-6 form-group">
 					 <label class="control-label">Secondary Insurance Name</label>
-					 <input type="text" name="yourId" id="yourId"  class="form-control input-sm"  placeholder="Secondary Insurance Name" />
+					 <input type="text" name="secondary_insurance_name" id="secondary_insurance_name"  class="form-control input-sm"  placeholder="Secondary Insurance Name" />
 				    </section>
 				    <section class="col-sm-12 form-group">
 					<label class="control-label"></label>
@@ -307,14 +327,14 @@ $status = $this->session->flashdata('status');
                                     </section>
                                     <section class="col-sm-8 form-group">
                                         <label class="control-label">Theraphy Type : </label>
-                                        <br><label><input type="radio" name="male"> New Theraphy</label>
+                                        <br><label><input type="radio" name="theraphy_type"> New Theraphy</label>
                                         <label class="control-label"></label>
-                                        <br><label><input type="radio" name="female"> Renewal</label>
+                                        <br><label><input type="radio" name="theraphy_type"> Renewal</label>
                                     </section>
                                     <section class="col-sm-6 form-group">
                                         <label class="control-label">Date Theraphy Initiated</label>
                                         <span class='input-group date'>
-                                            <input type="text"  name="DOB" id="DOB" class="input-sm form-control input-group datepicker"  placeholder="Date Theraphy Initiated" />
+                                            <input type="text"  name="date_theraphy" id="date_theraphy" class="input-sm form-control input-group datepicker"  placeholder="Date Theraphy Initiated" />
                                                 <span class="input-group-addon" >
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
@@ -323,7 +343,7 @@ $status = $this->session->flashdata('status');
                                     <section class="col-sm-6 form-group">
                                         <label class="control-label">Duration of Theraphy</label>
                                         <span class='input-group date'>
-                                            <input type="text"  name="DOB" id="DOB" class="input-sm form-control input-group datepicker"  placeholder="Duration of Theraphy" />
+                                            <input type="text"  name="duration_theraphy" id="duration_theraphy" class="input-sm form-control input-group datepicker"  placeholder="Duration of Theraphy" />
                                                 <span class="input-group-addon" >
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
@@ -332,61 +352,61 @@ $status = $this->session->flashdata('status');
 				
                                     <section class="col-sm-6 form-group">
                                         <label class="control-label">Quantity</label>
-                                        <input type="text" name="paitentName" id="paitentName"  class="form-control input-sm"  placeholder="Quantity" />
+                                        <input type="text" name="quantity" id="quantity"  class="form-control input-sm"  placeholder="Quantity" />
                                     </section>
                                     <section class="col-sm-6 form-group">
                                         <label class="control-label">Frequency</label>
-                                        <input type="text" name="paitentName" id="paitentName"  class="form-control input-sm"  placeholder="Frequency" />
+                                        <input type="text" name="frequency" id="frequency"  class="form-control input-sm"  placeholder="Frequency" />
                                     </section>
                                     <section class="col-sm-6 form-group">
                                         <label class="control-label">Length of Theraphy</label>
-                                        <input type="text" name="address" id="address"  class="form-control input-sm"  placeholder="Length of Theraphy" />
+                                        <input type="text" name="length_theraphy" id="length_theraphy"  class="form-control input-sm"  placeholder="Length of Theraphy" />
                                     </section>
                                     <section class="col-sm-6 form-group">
                                         <label class="control-label">Number of Refills</label>
-                                        <input type="text" name="address" id="address"  class="form-control input-sm"  placeholder="Number of Refills" />
+                                        <input type="text" name="num_refills" id="num_refills"  class="form-control input-sm"  placeholder="Number of Refills" />
                                     </section>
                                     <section class="col-sm-6 form-group">
                                         <label class="control-label">Admin Type : </label>
-                                        <br><label><input type="radio" name="pounds"> Oral/SL</label>
+                                        <br><label><input type="radio" name="admin_type"> Oral/SL</label>
                                         <label class="control-label"></label>
-                                        <br><label><input type="radio" name="kilograms"> Topical </label>
+                                        <br><label><input type="radio" name="admin_type"> Topical </label>
                                         <label class="control-label"></label>
-                                        <br><label><input type="radio" name="kilograms"> Injection</label>
+                                        <br><label><input type="radio" name="admin_type"> Injection</label>
                                         <label class="control-label"></label>
-                                        <br><label><input type="radio" name="kilograms"> IV </label>
+                                        <br><label><input type="radio" name="admin_type"> IV </label>
                                         <label class="control-label"></label>
-                                        <br><label><input type="radio" name="kilograms"> Other </label>
+                                        <br><label><input type="radio" name="admin_type"> Other </label>
                                     </section>
                                     <section class="col-sm-6 form-group">
                                         <label class="control-label">Admin Location : </label>
-                                        <label><input type="radio" name="pounds"> Physician's Office</label>
+                                        <label><input type="radio" name="admin_location"> Physician's Office</label>
                                         <label class="control-label"></label>
-                                        <label><input type="radio" name="kilograms"> Ambulatory Infusion Center </label>
+                                        <label><input type="radio" name="admin_location"> Ambulatory Infusion Center </label>
                                         <label class="control-label"></label>
-                                        <label><input type="radio" name="kilograms"> Paitent's Home</label>
+                                        <label><input type="radio" name="admin_location"> Paitent's Home</label>
                                         <label class="control-label"></label>
-                                        <label><input type="radio" name="kilograms"> Home Care Agency </label>
+                                        <label><input type="radio" name="admin_location"> Home Care Agency </label>
                                         <label class="control-label"></label>
-                                        <label><input type="radio" name="kilograms"> Outpaitent Hospital Care </label>
+                                        <label><input type="radio" name="admin_location"> Outpaitent Hospital Care </label>
                                         <label class="control-label"></label>
-                                        <label><input type="radio" name="kilograms"> Long Term Care </label>
+                                        <label><input type="radio" name="admin_location"> Long Term Care </label>
                                         <label class="control-label"></label>
-                                        <br><label><input type="radio" name="kilograms"> Other </label>
+                                        <br><label><input type="radio" name="admin_location"> Other </label>
                                     </section>
                                     <section class="col-sm-8 form-group">
                                             <label class="control-label">How Did the Paitents Receive the Medication  : </label>
-                                            <br><label><input type="radio" name="male"> Paid Under Insurance </label>
+                                            <br><label><input type="radio" name="paitents_receive"> Paid Under Insurance </label>
                                             <label class="control-label"></label>
-                                            <br><label><input type="radio" name="female"> Other</label>
+                                            <br><label><input type="radio" name="paitents_receive"> Other</label>
                                     </section>
                                     <section class="col-sm-6 form-group">
                                         <label class="control-label">Insurance Name</label>
-                                        <input type="text" name="address" id="address" value="" class="form-control input-sm"  placeholder="Insurance Name" />
+                                        <input type="text" name="insurance_name" id="insurance_name" value="" class="form-control input-sm"  placeholder="Insurance Name" />
                                     </section>
                                     <section class="col-sm-6 form-group">
                                         <label class="control-label">Prior Auth Name(if known)</label>
-                                        <input type="text" name="address" id="address"  class="form-control input-sm"  placeholder="Auth Number" />
+                                        <input type="text" name="prior_auth_name" id="prior_auth_name"  class="form-control input-sm"  placeholder="Auth Number" />
                                     </section>
                                     <section class="col-sm-6 form-group">
                                         <label class="control-label">Exclusion Citeria</label>
@@ -405,7 +425,7 @@ $status = $this->session->flashdata('status');
 				    </section>
                                     <section class="col-sm-6 form-group">
                                         <label class="control-label">Explanations</label>
-                                        <textarea class="form-control" rows="8" id="comment"></textarea>
+                                        <textarea class="form-control" rows="8" id="comment" name="explanations"></textarea>
 				    </section>
                                     <section class="col-sm-6 form-group">
                                         <label class="control-label">Paitent Drug History</label>
@@ -446,11 +466,11 @@ $status = $this->session->flashdata('status');
 				    
 				    <section class="col-sm-6 form-group">
 					  <label class="control-label">Diagonis</label>
-					  <input type="text" name="yourId" id="yourId"  class="form-control input-sm"  placeholder="Diagonis Name" />
+					  <input type="text" name="diagnosis_code" id="diagnosis_code"  class="form-control input-sm"  placeholder="Diagonis Name" />
 				    </section>
                                     <section class="col-sm-6 form-group">
 					<label class="control-label">Please Enter Additional Diagonis</label>
-					<input type="text" name="yourId" id="yourId"  class="form-control input-sm"  placeholder="Addtional Diagonis" />
+					<input type="text" name="add_diagonis" id="add_diagonis"  class="form-control input-sm"  placeholder="Addtional Diagonis" />
 				    </section>
                                     <section class="col-sm-10 form-group" id="moreinfo>
                                             <label class="control-label">Has The Paitent's Try any other Medications for this condition : </label>
@@ -465,7 +485,7 @@ $status = $this->session->flashdata('status');
                                         
                                         <section class="col-sm-6 form-group">
                                             <label class="control-label">Medications/Therapy</label>
-                                            <input type="text" name="yourId" id="yourId"  class="form-control input-sm"  placeholder="Medications" />
+                                            <input type="text" name="other_medications" id="other_medications"  class="form-control input-sm"  placeholder="Medications" />
                                         </section>
                                        
                                         <section class="col-sm-6 form-group">
@@ -504,21 +524,21 @@ $status = $this->session->flashdata('status');
                                     </section>
 				     <section class="col-sm-6 form-group">
 					<label class="control-label"></label>
-					<input type="text" name="address" id="address" value=""  class="form-control input-sm"  placeholder="City" />
+					<input type="text" name="address" id="address" value=""  class="form-control input-sm"  placeholder="CONTINUED THERAPHY" />
 				    </section>
 				    <section class="col-sm-10 form-group">
                                         <p><strong>Please Provide any additional clinical information or comment perteniment to this request for coverage</strong></p>
                                     </section>
 				    <section class="col-sm-6 form-group">
 				       <label class="control-label"></label>
-				       <input type="text" name="address" id="address" value="" class="form-control input-sm"  placeholder="Zip Code" />
+				       <input type="text" name="address" id="address" value="" class="form-control input-sm"  placeholder="CONTINUED THERAPHY" />
 				   </section>
                                     
                                    <section class="col-sm-6 form-group">
                                             <label class="control-label">Will you be providing any attachement with this form ? </label>
-                                            <label><input type="radio" name="male"> Yes </label>
+                                            <label><input type="radio" name="attachment_yn"> Yes </label>
                                             <label class="control-label"></label>
-                                            <label><input type="radio" name="female"> No</label>
+                                            <label><input type="radio" name="attachment_yn"> No</label>
                                     </section>
 			    <div class="col-md-12 table-responsive">
 				<table id="" class="table table-striped table-bordered nowrap" width="100%">
@@ -566,7 +586,12 @@ $status = $this->session->flashdata('status');
 				    <a href="<?=site_url('approveRegister/dashboard')?>" onclick="operationClose()"; class="btn btn-sm btn-danger">cancel</a>
 				    <button class="btn btn-sm btn-warning" type="button" onclick="window.history.back();">Back</button>
 				    <button class="btn btn-sm btn-info" type="reset" onclick="form_reset();" >Reset</button>
-				    <input type="submit" name="Save"  class="btn btn-sm btn-success"  value="Update PA">
+				     <?php
+					if($empty=='empty'){?>
+				    <input type="submit" name="proceed"  class="btn btn-sm btn-success"  value="save">
+				    <?php } else { ?>
+					<input type="submit" name="proceed"  class="btn btn-sm btn-success"  value="Update PA">
+				    <?php }  ?>
 				    <input type="submit"  name="Save" id="resubmit"  class="btn btn-sm btn-primary"  value="Resubmit PA">
 				</div>
 			    </div>
@@ -668,7 +693,7 @@ $("#priorAuthForm").submit(function(e) {
 	}
     });
 });
-function editLocation(locationId) {
+function editPriorAuth(prior_authorizaion_id) {
     loadLoader();
     operationOpen();
     
@@ -678,35 +703,79 @@ function editLocation(locationId) {
     $.ajax({
 	type:'POST',
 	url:'<?=site_url('approveRegister/getPriorAuthDetails');?>',
-	data:{locationId:locationId},
+	data:{prior_authorizaion_id:prior_authorizaion_id},
 	dataType: 'json',
 	success:function(json){
 	  console.log(json);
-	    $('#priorAuthForm').find('[name="location_name"]').val(json[0].location_name);
-	    $('#priorAuthForm').find('[name="locationId"]').val(json[0].location_id);
-	    $('#priorAuthForm').find('[name="phoneNumber"]').val(json[0].phone_number);
-	    $('#priorAuthForm').find('[name="phoneExtension"]').val(json[0].phone_ext);
-	    $('#priorAuthForm').find('[name="faxNumber"]').val(json[0].fax_number);
-	    $('#priorAuthForm').find('[name="address"]').val(json[0].address);
-	    $('#priorAuthForm').find('[name="city"]').val(json[0].city);
-	    $('#priorAuthForm').find('[name="state"]').val(json[0].state);
-	    $('#priorAuthForm').find('[name="zipCode"]').val(json[0].zip);
-	    $('#priorAuthForm').find('[name="zipFour"]').val(json[0].zip_four);
-	    $('#priorAuthForm').find('[name="emailAddress"]').val(json[0].email_address);
-	    $('#priorAuthForm').find('[name="webAddress"]').val(json[0].web_address);
-	    $('#priorAuthForm').find('[name="NPI"]').val(json[0].NPI);
-	    $('#priorAuthForm').find('[name="account_id"]').val(json[0].account_id);
+	    $('#priorAuthForm').find('[name="patient_first_name"]').val(json[0].patient_first_name);
+	    $('#priorAuthForm').find('[name="patient_last_name"]').val(json[0].patient_last_name);
+	    $('#priorAuthForm').find('[name="patient_dob"]').val(json[0].patient_dob);
+	    $('#priorAuthForm').find('[name="patient_address"]').val(json[0].patient_address);
+	    $('#priorAuthForm').find('[name="patient_city"]').val(json[0].patient_city);
+	    $('#priorAuthForm').find('[name="patient_state"]').val(json[0].patient_state);
+	    $('#priorAuthForm').find('[name="patient_zip"]').val(json[0].patient_zip);
+	    $('#priorAuthForm').find('[name="patient_contact_type"]').val(json[0].patient_contact_type);
+	    $('#priorAuthForm').find('[name="patient_gender"]').val(json[0].patient_gender);
+	    $('#priorAuthForm').find('[name="weight"]').val(json[0].weight);
+	    $('#priorAuthForm').find('[name="height"]').val(json[0].height);
+	    $('#priorAuthForm').find('[name="uom_weight"]').val(json[0].uom_weight);
+	    $('#priorAuthForm').find('[name="uom_height"]').val(json[0].uom_height);
+	    $('#priorAuthForm').find('[name="allergies"]').val(json[0].allergies);
+	    
+	    $('#priorAuthForm').find('[name="auth_rep"]').val(json[0].auth_rep);
+	    $('#priorAuthForm').find('[name="patient_last_name"]').val(json[0].patient_last_name);
+	    $('#priorAuthForm').find('[name="patient_id"]').val(json[0].patient_id);
+	    $('#priorAuthForm').find('[name="pharmacy_name"]').val(json[0].pharmacy_name);
+	    $('#priorAuthForm').find('[name="doctor_NPI"]').val(json[0].doctor_NPI);
+	    $('#priorAuthForm').find('[name="pharmacy_contact_number"]').val(json[0].pharmacy_contact_number);
+	    $('#priorAuthForm').find('[name="pharmacy_city"]').val(json[0].pharmacy_city);
+	    $('#priorAuthForm').find('[name="Prescriber_name"]').val(json[0].Prescriber_name);
+	    $('#priorAuthForm').find('[name="doctor_NPI"]').val(json[0].doctor_NPI);
+	    $('#priorAuthForm').find('[name="DEA_number"]').val(json[0].DEA_number);
+	    $('#priorAuthForm').find('[name="prescriber_address"]').val(json[0].prescriber_address);
+	    $('#priorAuthForm').find('[name="prescriber_city"]').val(json[0].prescriber_city);
+	    $('#priorAuthForm').find('[name="prescriber_state"]').val(json[0].prescriber_state);
+	    $('#priorAuthForm').find('[name="prescriber_zip"]').val(json[0].prescriber_zip);
+	    
+	    $('#priorAuthForm').find('[name="prescriber_phone"]').val(json[0].prescriber_phone);
+	    $('#priorAuthForm').find('[name="prescriber_fax"]').val(json[0].prescriber_fax);
+	    $('#priorAuthForm').find('[name="prescriber_email"]').val(json[0].prescriber_email);
+	    $('#priorAuthForm').find('[name="office_contact_person"]').val(json[0].office_contact_person);
+	    $('#priorAuthForm').find('[name="requestor"]').val(json[0].requestor);
+	    $('#priorAuthForm').find('[name="primary_insurance_name"]').val(json[0].primary_insurance_name);
+	    $('#priorAuthForm').find('[name="secondary_insurance_name"]').val(json[0].secondary_insurance_name);
+	    $('#priorAuthForm').find('[name="primary_paitent_id"]').val(json[0].primary_paitent_id);
+	    $('#priorAuthForm').find('[name="theraphy_type"]').val(json[0].theraphy_type);
+	    $('#priorAuthForm').find('[name="date_theraphy"]').val(json[0].date_theraphy);
+	    $('#priorAuthForm').find('[name="duration_theraphy"]').val(json[0].duration_theraphy);
+	    $('#priorAuthForm').find('[name="quantity"]').val(json[0].quantity);
+	    $('#priorAuthForm').find('[name="frequency"]').val(json[0].frequency);
+	    $('#priorAuthForm').find('[name="length_theraphy"]').val(json[0].length_theraphy);
+	    
+	    $('#priorAuthForm').find('[name="num_refills"]').val(json[0].num_refills);
+	    $('#priorAuthForm').find('[name="admin_type"]').val(json[0].admin_type);
+	    $('#priorAuthForm').find('[name="admin_location"]').val(json[0].admin_location);
+	    $('#priorAuthForm').find('[name="paitents_receive"]').val(json[0].paitents_receive);
+	    $('#priorAuthForm').find('[name="insurance_name"]').val(json[0].insurance_name);
+	    $('#priorAuthForm').find('[name="prior_auth_name"]').val(json[0].prior_auth_name);
+	    $('#priorAuthForm').find('[name="diagonis"]').val(json[0].diagonis);
+	    $('#priorAuthForm').find('[name="add_diagonis"]').val(json[0].add_diagonis);
+	    $('#priorAuthForm').find('[name="other_medications"]').val(json[0].other_medications);
+	    $('#priorAuthForm').find('[name="date_theraphy"]').val(json[0].date_theraphy);
+	    $('#priorAuthForm').find('[name="duration_theraphy"]').val(json[0].duration_theraphy);
+	    $('#priorAuthForm').find('[name="explanations"]').val(json[0].explanations);
+	   
 	    unLoader();
 	}
     });
 }
-function deleteLocation(locationId) {
+function deleteLocation(prior_authorizaion_id) {
     bootbox.confirm("Are you sure you want to delete?", function(confirmed) {
 	if (confirmed) {
 	    $.ajax({
 		type:'POST',
 		url:'<?php echo  site_url('approveRegister/deleteLocation');?>',
-		data:{locationId:locationId},
+		data:{prior_authorizaion_id:prior_authorizaion_id},
 		dataType: 'json',
 		success:function(json){
 		    //if(response==1){
@@ -727,6 +796,8 @@ function loadLoader() {
 function unLoader() {
     $('body').removeClass('loading').loader('hide');
 }
+//VIEW TABLE STARTS
+//VIEW TABLE ENDS
 //FILEUPLOAD SCRIPT START
 $(function(){
     $("#upload_link").on('click', function(e){
