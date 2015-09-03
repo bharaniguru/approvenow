@@ -18,7 +18,18 @@
 	<link href="<?=site_url();?>assets/css/style.min.css" rel="stylesheet" />
 	<link href="<?=site_url();?>assets/css/style-responsive.min.css" rel="stylesheet" />
 	<link href="<?=site_url();?>assets/css/theme/default.css" rel="stylesheet" id="theme" />
+	<link href="<?php echo base_url(); ?>assets/plugins/formValidation/css/formValidation.css" rel="stylesheet" />
 	<!-- ================== END BASE CSS STYLE ================== -->
+	<style>
+	    .has-feedback .form-control-feedback {
+		top: 25px;
+		right: 0;
+	    }
+	    .has-feedback .form-control-feedback {
+		top: 0;
+		right: 15px;
+	    }
+	</style>
 </head>
 <body>
 	<!-- begin #page-loader -->
@@ -45,7 +56,7 @@
             </div>
             <!-- end brand -->
             <div class="login-content">
-		<form action="<?=site_url();?>approveRegister/createAccount" method="POST" class="margin-bottom-0">
+		<form id="form_validation" action="<?=site_url();?>approveRegister/createAccount" method="POST" class="margin-bottom-0">
 		   <div class="col-md-offset-2">
 		    <div class="col-md-10">
 			
@@ -163,6 +174,8 @@
 	<!-- ================== END BASE JS ================== -->
 	
 	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+	<script src="<?php echo base_url(); ?>assets/plugins/formValidation/js/formValidation.js"></script>
+	<script src="<?php echo base_url(); ?>assets/plugins/formValidation/js/framework/bootstrap.min.js"></script>
 	<script src="<?=site_url();?>assets/js/login-v2.demo.min.js"></script>
 	<script src="<?=site_url();?>assets/js/apps.min.js"></script>
 	<!-- ================== END PAGE LEVEL JS ================== -->
@@ -172,6 +185,80 @@
 			App.init();
 			LoginV2.init();
 		});
+	</script>
+	<script>
+	    $(document).ready(function() {
+		$('#form_validation').formValidation({
+		    //framework: 'bootstrap',
+		    container: 'tooltip',
+		    message: 'This value is not valid',
+		    //excluded:[':disabled',':hidden'],
+		    feedbackIcons: {
+			valid: 'fa fa-check',
+			invalid: 'fa fa-times',
+			validating: 'fa fa-refresh'
+		    },
+		    fields: {
+			accUsername: {
+			    validators: {
+				notEmpty: {
+				    message: 'Username cannot be empty.'
+				}
+			    }
+			},
+			accPassword: {
+			    validators: {
+				notEmpty: {
+				    message: 'Password cannot be empty.'
+				}
+			    }
+			},
+			accFirstName: {
+			    validators: {
+				notEmpty: {
+				    message: 'First name cannot be empty.'
+				}
+			    }
+			},
+			accLastName: {
+			    validators: {
+				notEmpty: {
+				    message: 'Last name cannot be empty.'
+				}
+			    }
+			},
+			accEmail: {
+			    validators: {
+				notEmpty: {
+				    message: 'Email cannot be empty.'
+				}
+			    }
+			},
+			accOrgName: {
+			    validators: {
+				notEmpty: {
+				    message: 'Organization name cannot be empty.'
+				}
+			    }
+			},
+			accType: {
+			    validators: {
+				notEmpty: {
+				    message: 'Account type cannot be empty.'
+				}
+			    }
+			},
+			accountNumber: {
+			    validators: {
+				notEmpty: {
+				    message: 'Account number cannot be empty.'
+				}
+			    }
+			},
+
+		    }
+		});
+	    });
 	</script>
     </body>
 </html>

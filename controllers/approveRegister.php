@@ -8,6 +8,7 @@ class approveRegister extends CI_Controller {
 	$this->load->library('table');
 	$this->load->library('Datatables');
 	$this->load->helper('datatables_helper');
+	$this->load->library('encrypt');
     }
     
     //Authentication Controllers Begin
@@ -22,11 +23,16 @@ class approveRegister extends CI_Controller {
 	if ($this->input->post('proceed')=='Yes'){
 	    $result = $this->mApproveRegister->checkForAuthentication();
 	    if($result){
-		$this->session->set_userdata('accUsername',$result[0]['account_username']);
-		$this->session->set_userdata('account_id',$result[0]['account_id']);
-		redirect(site_url("approveRegister/dashboard"));
+		if($result[0]['account_status']=="Y"){
+		    $this->session->set_userdata('accUsername',$result[0]['account_username']);
+		    $this->session->set_userdata('account_id',$result[0]['account_id']);
+		    redirect(site_url("approveRegister/dashboard"));
+		}elseif($result[0]['account_status']=="N"){
+		    $data['errorMsg'] = 'Please active your account from your email.';
+		}
+		
 	    }else{
-		$data['errorMsg'] = 'Invalid User Id and Password Please check it';
+		
 	    }
 	}
 	$this -> load -> view('index',$data);
@@ -35,14 +41,45 @@ class approveRegister extends CI_Controller {
     
     function createAccount(){
 	if ($this->input->post('proceed')=='Yes'){
-	    $this->mApproveRegister->createAccount();
-	    redirect(site_url("approveRegister/index"));
+	    $accountId = $this->mApproveRegister->createAccount();
+	    $this->load->library('ApproveNowEmail');
+	    $receiptEmailId = $this->input->post('accEmail');
+	    $subject='Email Verification';
+	    $body='Hi '.$this->input->post('accFirstName').' '.$this->input->post('accLastName').', your account is created succefully..
+	    Please click the link below to verify your account....
+	    '.site_url().'approveRegister/accountVerification/'.$accountId.'';
+	    $this->approvenowemail->EmailSend($receiptEmailId,$subject,$body);
+	    redirect(site_url("approveRegister/accountSubmitted"));
 	}
 	$data['accountType']=$this->mApproveRegister->getUserDetails();
 	$this -> load -> view('createAccount',$data);
 	
     }
-    
+    function accountVerification($verificationCode){
+	$result = $this->mApproveRegister->checkVerified($verificationCode);
+	if($result){
+	    if($result[0]['account_status']=='N'){
+		$this->mApproveRegister->updateAccountStatus($verificationCode);
+		redirect(site_url('approveRegister/verifiedSuccess'));
+	    }elseif($result[0]['account_status']=='Y'){
+		redirect(site_url('approveRegister/existingAccount'));
+	    }
+	}else{
+	    redirect(site_url('approveRegister/error404'));
+	}
+    }
+    function error404(){
+	$this ->load->view('404_error');
+    }
+    function existingAccount(){
+	$this ->load->view('existingAccount');
+    }
+    function verifiedSuccess(){
+	$this ->load->view('verifiedSuccess');
+    }
+    function accountSubmitted(){
+	$this ->load->view('accountSubmitted');
+    }
     public function Logout(){
 	$this->session->unset_userdata('accUsername');
 	unset($this->session->userdata);

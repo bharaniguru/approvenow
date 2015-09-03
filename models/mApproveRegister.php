@@ -27,9 +27,18 @@ class mApproveRegister extends CI_Model {
 		      //'account_name' => $this->input->post('accName')
 		      );
 	$this->db->insert('accounts_general', $data);
-	
-	//print_r($data);
-	//exit;
+	return $this->db->insert_id();
+    }
+    function checkVerified($verificationCode){
+	$sql="SELECT * FROM accounts_general where account_id='$verificationCode'";
+	return $this->db->query($sql, $return_object = TRUE)->result_array();
+    }
+    function updateAccountStatus($verificationCode){
+	$data = array(
+		      'account_status' => 'Y'
+		    );
+	$this->db->where('account_id', $verificationCode);
+	$this->db->update('accounts_general', $data);
     }
     function checkForAuthentication(){
 	$accUsername = $this->input->post('accUsername');
