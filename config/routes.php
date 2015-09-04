@@ -39,7 +39,7 @@
 */
 
 $route['default_controller'] = "approveRegister";
-$route['404_override'] = '';
+$route['404_override'] = 'approveRegister';
 
 
 /* End of file routes.php */

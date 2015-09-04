@@ -42,6 +42,7 @@ class approveRegister extends CI_Controller {
     function createAccount(){
 	if ($this->input->post('proceed')=='Yes'){
 	    $accountId = $this->mApproveRegister->createAccount();
+	    //$accountId=23;
 	    $this->load->library('ApproveNowEmail');
 	    $receiptEmailId = $this->input->post('accEmail');
 	    $subject='Email Verification';

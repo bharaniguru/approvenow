@@ -5,7 +5,8 @@ class ApproveNowEmail {
 	$CI =& get_instance();
 	$config = Array(
 			'protocol' => 'smtp',
-			'smtp_host' => 'ssl://smtp.googlemail.com',
+			//'smtp_host' => 'ssl://smtp.googlemail.com',
+			'smtp_host' => 'ssl://smtp.gmail.com',
 			'smtp_port' => 465,
 			'smtp_user' => 'ppkk036@gmail.com',
 			'smtp_pass' => '12619892233'

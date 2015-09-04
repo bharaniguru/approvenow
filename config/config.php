@@ -14,16 +14,16 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://localhost/approvenow/';
-//if($_SERVER['SERVER_NAME']=="localhost")
-//{
-//    $config['base_url']	= 'http://localhost/spine/';
-//}
-//else
-//{
-//    $config['base_url']	= 'http://www.sedarspine.com/spine/';
-//    //$config['base_url']	= 'http://103.231.209.49/spine/';
-//}
+//$config['base_url']	= 'http://localhost/approvenow/';
+if($_SERVER['SERVER_NAME']=="localhost")
+{
+    $config['base_url']	= 'http://localhost/approvenow/';
+}
+else
+{
+    $config['base_url']	= 'http://www.appnlogic.com/approvenow/';
+    //$config['base_url']	= 'http://103.231.209.49/spine/';
+}
 
 //$root=(isset($_SERVER['HTTPS']) ? "https://" : "http://").$_SERVER['HTTP_HOST'];
 //$root.= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
