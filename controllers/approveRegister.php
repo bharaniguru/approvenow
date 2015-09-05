@@ -122,9 +122,9 @@ class approveRegister extends CI_Controller {
 	    header('Content-Type: application/json');
 	    $alreadyExits=$this->input->post('accUsername');
 	    $viewresult=$this->mApproveRegister->alreadyExits($alreadyExits);
-	    //print_r($viewresult);
+	    //print_r($viewresult[0]);
 	    //exit;
-	    if($viewresult[0]['[COUNT(account_username)]']>0)
+	    if($viewresult[0]['COUNT(account_username)']>0)
 	    {
 		echo json_encode(array('valid'=>'false'));
 	    }
