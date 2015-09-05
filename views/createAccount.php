@@ -37,7 +37,7 @@
 	<!-- end #page-loader -->
 	
 	<div class="login-cover">
-	    <div class="login-cover-image"><img src="<?=site_url();?>assets/img/login-bg/bg-6.jpg" data-id="login-cover-image" alt="" /></div>
+	    <div class="login-cover-image"><img src="<?=site_url();?>assets/img/login-bg/bg3.jpeg" data-id="login-cover-image" alt="" /></div>
 	    <div class="login-cover-bg"></div>
 	</div>
 	<!-- begin #page-container -->
@@ -98,7 +98,7 @@
 			<!--</div>-->
 			<div class="col-sm-6 form-group">
 			    <label  class="control-label">Email Address</label>
-			    <input type="text" class="form-control" name="accEmail" placeholder="Email Address" />
+			    <input type="email" class="form-control" name="accEmail" placeholder="Email Address" />
 			</div>
 			<div class="col-sm-6 form-group">
 			    <label  class="control-label">Organization Name</label>
@@ -203,7 +203,13 @@
 			    validators: {
 				notEmpty: {
 				    message: 'Username cannot be empty.'
-				}
+				},
+				remote:
+				{
+				 message: 'Username Is Already Exits',
+				 url: '<?php  echo site_url('approveRegister/alreadyExits')?>',
+				 type: 'POST'
+				},
 			    }
 			},
 			accPassword: {

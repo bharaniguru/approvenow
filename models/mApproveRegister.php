@@ -55,6 +55,13 @@ class mApproveRegister extends CI_Model {
    
     
     //Dashboard join table end
+    //Already Exits Val Starts
+    function alreadyExits($alreadyExits)
+        {
+            $sql="SELECT COUNT(account_username) FROM accounts_general where account_username='$alreadyExits'";
+            return $this->db->query($sql, $return_object = TRUE)->result_array();
+        }
+    //Already Exits Val Ends
     public function dashboard()
     {
 	$accUsername=$this->session->userdata('accUsername');

@@ -87,6 +87,53 @@ class approveRegister extends CI_Controller {
 	redirect(site_url(),'refresh');
     }
     
+    //Checking Login User Valdation Starts
+    public function CheckingData(){
+	header('Access-Control-Allow-Origin:*');
+	header('Content-Type: application/json');
+	$accUsername=$this->input->post('accUsername');
+	
+	$sql="SELECT COUNT(account_username) FROM accounts_general where account_username='$accUsername'";
+	$query = $this->db->query($sql)->result_array();
+	 if($query[0]['COUNT(account_username)']>0){
+	    echo json_encode(array('valid'=>'true'));
+	}else{
+	    echo json_encode(array('valid'=>'false'));
+	}
+    }
+    public function CheckingUser(){
+	header('Access-Control-Allow-Origin:*');
+	header('Content-Type: application/json');
+	$accUsername=$this->input->post('accUsername');
+	$password=$this->security->xss_clean($this->input->post('accPassword'));
+	
+	$sql="SELECT COUNT(account_username) FROM accounts_general where account_username='$accUsername' AND account_pwd='$password'";
+	$query = $this->db->query($sql)->result_array();
+	 if($query[0]['COUNT(account_username)']==1){
+	    echo json_encode(array('valid'=>'true'));
+	}else{
+	    echo json_encode(array('valid'=>'false'));
+	}
+    }
+    //Checkng Login User Valdation Ends
+    //User Name Already Exits Starts
+    public function alreadyExits()
+	{
+	    header('Content-Type: application/json');
+	    $alreadyExits=$this->input->post('accUsername');
+	    $viewresult=$this->mApproveRegister->alreadyExits($alreadyExits);
+	    //print_r($viewresult);
+	    //exit;
+	    if($viewresult[0]['[COUNT(account_username)]']>0)
+	    {
+		echo json_encode(array('valid'=>'false'));
+	    }
+	    else
+	    {
+	       echo json_encode(array('valid'=>'true'));
+	    }
+	}
+    //User Name Already Exits Ends
     function dashboard()
     {
 	$sessionData = $this->session->userdata('accUsername');
@@ -369,33 +416,8 @@ $this->datatables->select('prior_authorizaion_id,patient_id,patient_first_name,p
     
     
  //********************************************************END************************************************************************   
-    public function CheckingData(){
-	header('Access-Control-Allow-Origin:*');
-	header('Content-Type: application/json');
-	$user_id=$this->input->post('user_id');
-	$date = date('d-M-y');
-	$sql="SELECT COUNT(USER_ID) FROM APPS_USER where USER_ID='$user_id' and USER_ACTIVE_YN='Y' and ( TRUNC(USER_FROM_DT) <='$date' and TRUNC(USER_UPTO_DT)>='$date')";
-	$query = $this->db->query($sql)->result_array();
-	 if($query[0]['COUNT(USER_ID)']>0){
-	    echo json_encode(array('valid'=>'true'));
-	}else{
-	    echo json_encode(array('valid'=>'false'));
-	}
-    }
-    public function CheckingUser(){
-	header('Access-Control-Allow-Origin:*');
-	header('Content-Type: application/json');
-	$user_id=$this->input->post('user_id');
-	$password=md5($this->security->xss_clean($this->input->post('password')));
-	$date = date('d-M-y');
-	$sql="SELECT COUNT(USER_ID) FROM APPS_USER where USER_ID='$user_id' AND USER_PASSWD='$password' and USER_ACTIVE_YN='Y' and ( TRUNC(USER_FROM_DT) <='$date' and TRUNC(USER_UPTO_DT)>='$date')";
-	$query = $this->db->query($sql)->result_array();
-	 if($query[0]['COUNT(USER_ID)']==1){
-	    echo json_encode(array('valid'=>'true'));
-	}else{
-	    echo json_encode(array('valid'=>'false'));
-	}
-    }
+   
+    
     public function CheckingUserMail(){
 	header('Access-Control-Allow-Origin:*');
 	header('Content-Type: application/json');

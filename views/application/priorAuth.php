@@ -491,7 +491,7 @@ $status = $this->session->flashdata('status');
                                         <section class="col-sm-6 form-group">
                                             <label class="control-label">Duration Of Therapy</label>
                                             <span class='input-group date'>
-                                                <input type="text"  name="DOB" id="DOB" class="input-sm form-control input-group datepicker"  placeholder="Duration Of Therapy" />
+                                                <input type="text"  name="durationOfTherapy" id="DOB" class="input-sm form-control input-group datepicker"  placeholder="Duration Of Therapy" />
                                                     <span class="input-group-addon" >
                                                         <span class="glyphicon glyphicon-calendar"></span>
                                                     </span>
@@ -499,16 +499,16 @@ $status = $this->session->flashdata('status');
                                         </section>
                                         <section class="col-sm-6 form-group">
                                             <label class="control-label">Response/Failure/Allergy</label>
-                                            <input type="text" name="yourId" id="yourId"  class="form-control input-sm"  placeholder="Address" />
+                                            <input type="text" name="response" id="response"  class="form-control input-sm"  placeholder="Address" />
                                         </section>
                                         <section class="col-sm-6 form-group">
                                             <label class="control-label">Medications/Therapy</label>
-                                            <input type="text" name="yourId" id="yourId"  class="form-control input-sm"  placeholder="Medications" />
+                                            <input type="text" name="medications" id="medications"  class="form-control input-sm"  placeholder="Medications" />
                                         </section>
                                         <section class="col-sm-6 form-group">
                                             <label class="control-label">Duration Of Therapy</label>
                                             <span class='input-group date'>
-                                                <input type="text"  name="DOB" id="DOB" class="input-sm form-control input-group datepicker"  placeholder="Duration Of Therapy" />
+                                                <input type="text"  name="durationOfTherapy2" id="DOB" class="input-sm form-control input-group datepicker"  placeholder="Duration Of Therapy" />
                                                     <span class="input-group-addon" >
                                                         <span class="glyphicon glyphicon-calendar"></span>
                                                     </span>
@@ -516,7 +516,7 @@ $status = $this->session->flashdata('status');
                                         </section>
                                         <section class="col-sm-6 form-group">
                                             <label class="control-label">Resaon for Failure/Allergy</label>
-                                            <input type="text" name="yourId" id="yourId"  class="form-control input-sm"  placeholder="Resaon for Failure" />
+                                            <input type="text" name="reasonFailure" id="yourId"  class="form-control input-sm"  placeholder="Resaon for Failure" />
                                         </section>
                                     </div>
 				    <section class="col-sm-10 form-group">
@@ -524,14 +524,14 @@ $status = $this->session->flashdata('status');
                                     </section>
 				     <section class="col-sm-6 form-group">
 					<label class="control-label"></label>
-					<input type="text" name="address" id="address" value=""  class="form-control input-sm"  placeholder="CONTINUED THERAPHY" />
+					<input type="text" name="cTheraphy" id="address" value=""  class="form-control input-sm"  placeholder="CONTINUED THERAPHY" />
 				    </section>
 				    <section class="col-sm-10 form-group">
                                         <p><strong>Please Provide any additional clinical information or comment perteniment to this request for coverage</strong></p>
                                     </section>
 				    <section class="col-sm-6 form-group">
 				       <label class="control-label"></label>
-				       <input type="text" name="address" id="address" value="" class="form-control input-sm"  placeholder="CONTINUED THERAPHY" />
+				       <input type="text" name="cTheraphy1" id="address" value="" class="form-control input-sm"  placeholder="CONTINUED THERAPHY" />
 				   </section>
                                     
                                    <section class="col-sm-6 form-group">
@@ -807,3 +807,428 @@ $(function(){
 });
 //FILE UPLOAD SCRIPTY END
 </script>
+ <script>
+ $(document).ready(function() {
+    $('#priorAuthForm').formValidation({
+	//container: 'tooltip',
+	message: 'This value is not valid',
+	feedbackIcons: {
+	    valid: 'fa fa-check',
+	    invalid: 'fa fa-times',
+	    validating: 'fa fa-refresh'
+	    },
+        fields: {
+	   
+	     patient_first_name: {
+		validators: {
+		   notEmpty: {
+                        message: 'Paitents First Name is required'
+                    }
+                   
+                }
+            },
+	     patient_last_name: {
+		validators: {
+		   notEmpty: {
+                        message: 'Paitents Last Name is required'
+                    }
+                   
+                }
+            },
+	     patient_dob: {
+		validators: {
+		   
+		   notEmpty: {
+                        message: 'Paitents DOB is required'
+                    }
+                   
+                }
+            },
+	    patient_city: {
+		validators: {
+		   notEmpty: {
+                        message: 'Paitents City is required'
+                    }
+                   
+                }
+            },
+	    patient_state: {
+		validators: {
+		   notEmpty: {
+                        message: 'Paitents state is required'
+                    }
+                   
+                }
+            },
+	     patient_address: {
+		validators: {
+		   notEmpty: {
+                        message: 'Paitents Address is required'
+                    }
+                   
+                }
+            },
+	    patient_zip: {
+		validators: {
+		   notEmpty: {
+                        message: 'Paitents Zip Code is required'
+                    }
+                   
+                }
+            },
+	     patient_contact_number: {
+		validators: {
+		   notEmpty: {
+                        message: 'Paitents Contact Number is required'
+                    }
+                   
+                }
+            },
+	    weight: {
+		validators: {
+		   notEmpty: {
+                        message: 'Weight  is required'
+                    }
+                   
+                }
+            },
+	    height: {
+		validators: {
+		   notEmpty: {
+                        message: 'Height  is required'
+                    }
+                   
+                }
+            },
+	     allergies: {
+		validators: {
+		   notEmpty: {
+                        message: 'Allergies Field is required'
+                    }
+                   
+                }
+            },
+	    auth_rep: {
+		validators: {
+		   notEmpty: {
+                        message: 'Auth Rep Field is required'
+                    }
+                   
+                }
+            },
+	    auth_rep_phone: {
+		validators: {
+		   notEmpty: {
+                        message: 'Auth Rep Phone Field is required'
+                    }
+                   
+                }
+            },
+	    patient_id: {
+		validators: {
+		   notEmpty: {
+                        message: 'Patient Id Field is required'
+                    }
+                   
+                }
+            },
+	    pharmacy_name: {
+		validators: {
+		   notEmpty: {
+                        message: 'Pharmacy Name Field is required'
+                    }
+                   
+                }
+            },
+	    doctor_NPI: {
+		validators: {
+		   notEmpty: {
+                        message: 'Doctor NPI Field is required'
+                    }
+                   
+                }
+            },
+	    pharmacy_contact_number: {
+		validators: {
+		   notEmpty: {
+                        message: 'Pharmacy Contact Number Field is required'
+                    }
+                   
+                }
+            },
+	    pharmacy_city: {
+		validators: {
+		   notEmpty: {
+                        message: 'Pharmacy City Field is required'
+                    }
+                   
+                }
+            },
+	    pharmacist_first_name: {
+		validators: {
+		   notEmpty: {
+                        message: 'Pharmacist First Name Field is required'
+                    }
+                   
+                }
+            },
+	    speciality: {
+		validators: {
+		   notEmpty: {
+                        message: 'Speciality Field is required'
+                    }
+                   
+                }
+            },
+	    cTheraphy: {
+		validators: {
+		   notEmpty: {
+                        message: 'Customer Theraphy Field is required'
+                    }
+                   
+                }
+            },
+	    cTheraphy1: {
+		validators: {
+		   notEmpty: {
+                        message: 'Customer Theraphy 2 Field is required'
+                    }
+                   
+                }
+            },
+	    reasonFailure: {
+		validators: {
+		   notEmpty: {
+                        message: 'Reason Failure Field is required'
+                    }
+                   
+                }
+            },
+	    DEA_number: {
+		validators: {
+		   notEmpty: {
+                        message: 'DEA Number Field is required'
+                    }
+                   
+                }
+            },
+	    prescriber_address: {
+		validators: {
+		   notEmpty: {
+                        message: 'Prescriber Address Field is required'
+                    }
+                   
+                }
+            },
+	    prescriber_city: {
+		validators: {
+		   notEmpty: {
+                        message: 'Prescriber City Field is required'
+                    }
+                   
+                }
+            },
+	    prescriber_state: {
+		validators: {
+		   notEmpty: {
+                        message: 'Prescriber State Field is required'
+                    }
+                   
+                }
+            },
+	    prescriber_zip: {
+		validators: {
+		   notEmpty: {
+                        message: 'Prescriber Zip Field is required'
+                    }
+                   
+                }
+            },
+	    prescriber_phone: {
+		validators: {
+		   notEmpty: {
+                        message: 'Prescriber Phone Field is required'
+                    }
+                   
+                }
+            },
+	    prescriber_fax: {
+		validators: {
+		   notEmpty: {
+                        message: 'Prescriber Fax Field is required'
+                    }
+                   
+                }
+            },
+	    prescriber_email: {
+		validators: {
+		   notEmpty: {
+                        message: 'Prescriber Email Field is required'
+                    }
+                   
+                }
+            },
+	    office_contact_person: {
+		validators: {
+		   notEmpty: {
+                        message: 'Office Contact Person Field is required'
+                    }
+                   
+                }
+            },
+	    requestor: {
+		validators: {
+		   notEmpty: {
+                        message: 'Requestor Field is required'
+                    }
+                   
+                }
+            },
+	    primary_insurance_name: {
+		validators: {
+		   notEmpty: {
+                        message: 'Primary Insurance Name Field is required'
+                    }
+                   
+                }
+            },
+	    primary_paitent_id: {
+		validators: {
+		   notEmpty: {
+                        message: 'Primary Paitent Id Field is required'
+                    }
+                   
+                }
+            },
+	    secondary_insurance_name: {
+		validators: {
+		   notEmpty: {
+                        message: 'Secondary Insurance Name Field is required'
+                    }
+                   
+                }
+            },
+	    date_theraphy: {
+		validators: {
+		   notEmpty: {
+                        message: 'Date Theraphy Field is required'
+                    }
+                   
+                }
+            },
+	    duration_theraphy: {
+		validators: {
+		   notEmpty: {
+                        message: 'Duration Theraphy Field is required'
+                    }
+                   
+                }
+            },
+	    quantity: {
+		validators: {
+		   notEmpty: {
+                        message: 'Quantity Field is required'
+                    }
+                   
+                }
+            },
+	    frequency: {
+		validators: {
+		   notEmpty: {
+                        message: 'Duration Theraphy Field is required'
+                    }
+                   
+                }
+            },
+	    length_theraphy: {
+		validators: {
+		   notEmpty: {
+                        message: 'Length Theraphy Field is required'
+                    }
+                   
+                }
+            },
+	    num_refills: {
+		validators: {
+		   notEmpty: {
+                        message: 'Num Refills Field is required'
+                    }
+                   
+                }
+            },
+	    insurance_name: {
+		validators: {
+		   notEmpty: {
+                        message: 'Insurance Name Field is required'
+                    }
+                   
+                }
+            },
+	    prior_auth_name: {
+		validators: {
+		   notEmpty: {
+                        message: 'Prior Auth Name Field is required'
+                    }
+                   
+                }
+            },
+	    diagnosis_code: {
+		validators: {
+		   notEmpty: {
+                        message: 'Diagnosis Code Field is required'
+                    }
+                   
+                }
+            },
+	    add_diagonis: {
+		validators: {
+		   notEmpty: {
+                        message: 'Add Diagonis Field is required'
+                    }
+                   
+                }
+            },
+	    other_medications: {
+		validators: {
+		   notEmpty: {
+                        message: 'Other Medications Field is required'
+                    }
+                   
+                }
+            },
+	    durationOfTherapy: {
+		validators: {
+		   notEmpty: {
+                        message: 'Duration Of Therapy Field is required'
+                    }
+                   
+                }
+            },
+	    response: {
+		validators: {
+		   notEmpty: {
+                        message: 'Response Field is required'
+                    }
+                   
+                }
+            },
+	    medications: {
+		validators: {
+		   notEmpty: {
+                        message: 'Medications Field is required'
+                    }
+                   
+                }
+            },
+	    durationOfTherapy2: {
+		validators: {
+		   notEmpty: {
+                        message: 'Duration Of Therapy 2 Field is required'
+                    }
+                   
+                }
+            },
+	    }
+	    });
+    });
+ </script>

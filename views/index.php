@@ -26,7 +26,7 @@
 	<!-- end #page-loader -->
 	
 	<div class="login-cover">
-	    <div class="login-cover-image"><img src="<?=site_url();?>assets/img/login-bg/bg-6.jpg" data-id="login-cover-image" alt="" /></div>
+	    <div class="login-cover-image"><img src="<?=site_url();?>assets/img/login-bg/bg3.jpeg" data-id="login-cover-image" alt="" /></div>
 	    <div class="login-cover-bg"></div>
 	</div>
 	<!-- begin #page-container -->
@@ -40,15 +40,15 @@
                     <small>Login Now</small>
                 </div>
                 <div class="icon">
-                    <i class="fa fa-sign-in"></i>
-                </div>
+                    <i class="fa fa-user-md"></i>
+		</div>
             </div>
             <!-- end brand -->
             <div class="login-content" style="width: 445px">
 		<?php if($errorMsg) { ?>
 		<div class="alert alert-danger errorMsgDiv"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">&times;</a><?php echo $errorMsg; ?></div>
 		<?php } ?>
-                <form action="<?=site_url();?>approveRegister" method="POST" class="margin-bottom-0">
+                <form action="<?=site_url();?>approveRegister" method="POST" id="form_validation" class="margin-bottom-0">
 		    <div class="form-group m-b-20">
 			<input type="text" class="form-control" name="accUsername" placeholder="Username" />
 		    </div>
@@ -88,7 +88,10 @@
 	<script src="<?=site_url();?>assets/js/login-v2.demo.min.js"></script>
 	<script src="<?=site_url();?>assets/js/apps.min.js"></script>
 	<!-- ================== END PAGE LEVEL JS ================== -->
-
+	<!--	Bootstrap validation-->
+	<link href="<?php echo base_url(); ?>assets/plugins/bootstrap-validation/css/bootstrapValidator.css" rel="stylesheet" />
+	<script src="<?php echo base_url(); ?>assets/plugins/bootstrap-validation/js/bootstrapValidator.js"></script>
+       <!-- Bootstrap validation end -->
 	<script>
 		$(document).ready(function() {
 			App.init();
@@ -100,3 +103,49 @@
 	</script>
     </body>
 </html>
+<script>
+	 $('#form_validation').bootstrapValidator({
+        message: 'This value is not valid',
+	container: 'tooltip',
+	//+excluded:[':disabled'],
+        feedbackIcons: {
+            valid: 'fa fa-check',
+            invalid: 'fa fa-times',
+            validating: 'fa fa-refresh fa-spin' 
+        },
+        fields: {
+            accUsername: {
+		message: 'The City Code is not valid',
+                validators:{
+		    
+                    notEmpty: {
+                        message: 'Please Enter Valid User Id'
+                    },
+		    remote:{
+			message: 'Please Enter Valid User Id',
+			url: '<?php  echo site_url('approveRegister/CheckingData'); ?>',
+			type: 'POST'
+		    }
+                }
+            },
+	    accPassword: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please Enter Correct Password'
+                    },
+		    remote:{
+			message: 'Please Enter Correct Password',
+			data:  function(validator) {
+				return {
+				    accUsername: validator.getFieldElements('accUsername').val(),
+				};
+                        },
+			url: '<?php  echo site_url('approveRegister/CheckingUser')?>',
+			type: 'POST'
+		    }
+                }
+            },
+	    
+	}
+    })
+</script>

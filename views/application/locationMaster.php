@@ -125,7 +125,7 @@ $status = $this->session->flashdata('status');
 			    </section>
 			    <section class="col-sm-3 form-group">
 				<label  class="control-label">Email Address</label>
-				<input type="text" class="form-control" name="emailAddress" placeholder="Email Address" />
+				<input type="email" class="form-control" name="emailAddress" placeholder="Email Address" />
 			    </section>
 			    <section class="col-sm-3 form-group">
 				<label  class="control-label">Web Address</label>
@@ -623,3 +623,189 @@ $(document).ready(function() {
 
 
 </script>
+ <script>
+ $(document).ready(function() {
+    $('#locationForm').formValidation({
+	//container: 'tooltip',
+	message: 'This value is not valid',
+	feedbackIcons: {
+	    valid: 'fa fa-check',
+	    invalid: 'fa fa-times',
+	    validating: 'fa fa-refresh'
+	    },
+        fields: {
+	   
+	     location_name: {
+		validators: {
+		   notEmpty: {
+                        message: 'Location Name is required'
+                    }
+                   
+                }
+            },
+	     phoneNumber: {
+		validators: {
+		   notEmpty: {
+                        message: 'Phone Number is required'
+                    }
+                   
+                }
+            },
+	     phoneExtension: {
+		validators: {
+		   notEmpty: {
+                        message: 'Phone Extension is required'
+                    }
+                   
+                }
+            },
+	    faxNumber: {
+		validators: {
+		   notEmpty: {
+                        message: 'Fax Number is required'
+                    }
+                   
+                }
+            },
+	    address: {
+		validators: {
+		   notEmpty: {
+                        message: 'Address is required'
+                    }
+                   
+                }
+            },
+	     city: {
+		validators: {
+		   notEmpty: {
+                        message: 'City is required'
+                    }
+                   
+                }
+            },
+	    state: {
+		validators: {
+		   notEmpty: {
+                        message: 'State Code is required'
+                    }
+                   
+                }
+            },
+	     zipCode: {
+		validators: {
+		   notEmpty: {
+                        message: 'Zip Code is required'
+                    }
+                   
+                }
+            },
+	    zipFour: {
+		validators: {
+		   notEmpty: {
+                        message: 'Zip Four  is required'
+                    }
+                   
+                }
+            },
+	    emailAddress: {
+		validators: {
+		   notEmpty: {
+                        message: 'Email Address  is required'
+                    }
+                   
+                }
+            },
+	     webAddress: {
+		validators: {
+		   notEmpty: {
+                        message: 'Web Address is required'
+                    }
+                   
+                }
+            },
+	    NPI: {
+		validators: {
+		   notEmpty: {
+                        message: 'NPI Field is required'
+                    }
+                   
+                }
+            },
+	    
+	    
+	    }
+    });
+});
+ </script>
+  <script>
+ $(document).ready(function() {
+    $('#providerForm').formValidation({
+	//container: 'tooltip',
+	message: 'This value is not valid',
+	feedbackIcons: {
+	    valid: 'fa fa-check',
+	    invalid: 'fa fa-times',
+	    validating: 'fa fa-refresh'
+	    },
+        fields: {
+	   
+	     firstName: {
+		validators: {
+		   notEmpty: {
+                        message: 'First Name is required'
+                    }
+                   
+                }
+            },
+	     lastName: {
+		validators: {
+		   notEmpty: {
+                        message: ' Last Name is required'
+                    }
+                   
+                }
+            },
+	     provider_type_id: {
+		validators: {
+		   notEmpty: {
+                        message: 'Provider Type ID is required'
+                    }
+                   
+                }
+            },
+	    phoneNumber: {
+		validators: {
+		   notEmpty: {
+                        message: 'Phone Number is required'
+                    }
+                   
+                }
+            },
+	    NPI: {
+		validators: {
+		   notEmpty: {
+                        message: 'NPI  is required'
+                    }
+                   
+                }
+            },
+	     deaNumber: {
+		validators: {
+		   notEmpty: {
+                        message: 'DEA Number is required'
+                    }
+                   
+                }
+            },
+	    locationID: {
+		validators: {
+		   notEmpty: {
+                        message: 'Location ID is required'
+                    }
+                   
+                }
+            },
+	    }
+	    });
+    });
+ </script>
