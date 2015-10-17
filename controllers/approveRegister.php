@@ -5,12 +5,13 @@ class approveRegister extends CI_Controller {
 	parent::__construct();
 	$this->load->model('mApproveRegister');
 	$this->load->library('session');
+	$this->load->helper('dompdf_helper');
 	$this->load->library('table');
 	$this->load->library('Datatables');
 	$this->load->helper('datatables_helper');
 	$this->load->library('encrypt');
     }
-    
+
     //Authentication Controllers Begin
     function index(){
 	$sessionData = $this->session->userdata('accUsername');
@@ -342,6 +343,62 @@ public function ajaxLocations()
 	    redirect(site_url());
 	}	
     }
+    
+//    function pdfConvert()
+//    {
+//	$this->load->helper('dompdf_helper');
+//	$data['patient_first_name']=$_POST['patient_first_name'];
+//	$data['patient_last_name']=$_POST['patient_last_name'];
+//	$data['patient_contact_number']=$_POST['patient_contact_number'];
+//	$data['patient_address']=$_POST['patient_address'];
+//	$data['patient_city']=$_POST['patient_city'];
+//	$data['patient_state']=$_POST['patient_state'];
+//	$data['patient_zip']=$_POST['patient_zip'];
+//	$data['patient_dob']=$_POST['patient_dob'];
+//	$data['height']=$_POST['height'];
+//	$data['weight']=$_POST['weight'];
+//	$data['patient_gender']=$_POST['patient_gender'];	
+//	$data['allergies']=$_POST['allergies'];
+//	$data['auth_rep']=$_POST['auth_rep'];
+//	$data['auth_rep_phone']=$_POST['auth_rep_phone'];
+//	$data['primary_insurance_name']=$_POST['primary_insurance_name'];
+//	$data['primary_paitent_id']=$_POST['primary_paitent_id'];
+//	$data['patient_id']=$_POST['patient_id'];
+//	$data['secondary_insurance_name']=$_POST['secondary_insurance_name'];
+//	$data['pharmacist_first_name']=$_POST['pharmacist_first_name'];
+//	$data['speciality']=$_POST['speciality'];
+//	$data['prescriber_address']=$_POST['prescriber_address'];
+//	$data['prescriber_city']=$_POST['prescriber_city'];
+//	$data['prescriber_state']=$_POST['prescriber_state'];
+//	$data['prescriber_zip']=$_POST['prescriber_zip'];
+//	$data['requestor']=$_POST['requestor'];
+//	$data['office_contact_person']=$_POST['office_contact_person'];
+//	$data['doctor_NPI']=$_POST['doctor_NPI'];
+//	$data['prescriber_phone']=$_POST['prescriber_phone'];
+//	$data['DEA_number']=$_POST['DEA_number'];
+//	$data['prescriber_fax']=$_POST['prescriber_fax'];
+//	$data['prescriber_email']=$_POST['prescriber_email'];
+//	$data['theraphy_type']=$_POST['theraphy_type'];
+//	$data['date_theraphy']=$_POST['date_theraphy'];
+//	$data['duration_theraphy']=$_POST['duration_theraphy'];
+//	$data['paitents_receive']=$_POST['paitents_receive'];
+//	$data['prior_auth_name']=$_POST['prior_auth_name'];
+//	$data['insurance_name']=$_POST['insurance_name'];
+//	$data['frequency']=$_POST['frequency'];
+//	$data['length_theraphy']=$_POST['length_theraphy'];
+//	$data['quantity']=$_POST['quantity'];
+//	$data['admin_type']=$_POST['admin_type'];
+//	$data['admin_location']=$_POST['admin_location'];
+//	$data['already_y']=$_POST['already_y'];
+//	$data['other_medications']=$_POST['other_medications'];
+//	$data['durationOfTherapy']=$_POST['durationOfTherapy'];
+//	$data['response']=$_POST['response'];
+//	//$data['theraphy_type']=$_POST['theraphy_type'];	
+//        $html=$this->load->view('application/pdf/prescription',$data,true);
+//	pdf_create($html,'Customer',$stream=TRUE);
+//	
+//    }    
+    
    function priorAuthMasterTable(){
      //$sessionData = $this->session->userdata('account_id');
 $this->datatables->select('prior_authorizaion_id,patient_id,patient_first_name,patient_address,pharmacy_name,pharmacy_city,Prescriber_name,speciality,insurance_name,prior_auth_name')
@@ -371,7 +428,7 @@ $this->datatables->select('prior_authorizaion_id,patient_id,patient_first_name,p
 		
 		
 		$data['empty']="data";
-		 $this -> load -> view('header');
+		$this -> load -> view('header');
 		$this -> load -> view('application/priorAuth',$data);
 		$this -> load -> view('footer');
 	   }
@@ -382,32 +439,37 @@ $this->datatables->select('prior_authorizaion_id,patient_id,patient_first_name,p
 		$this -> load -> view('application/priorAuth',$data);
 		$this -> load -> view('footer');
 	    }
-	   
-	   
-	    
-	    
+
 	//}
 	//else{
 	  //  redirect(site_url());
 	//}
     }
  }
+//    function PriorAuthDetailsOperation(){
+// 
+//	if($this->input->post('sampleData')=='empty'){
+//	    $this->mApproveRegister->addPriorAuth();
+//	    $query['status']="Success";
+//	    echo json_encode($query);
+//	    
+//	}elseif($this->input->post('sampleData')=='data'){
+//	    $this->mApproveRegister->updatePriorAuth();
+//	    $query['status']="Success";
+//	    echo json_encode($query);
+//	}
+//	}
+
     function PriorAuthDetailsOperation(){
-	//print_r($_POST);
-	//exit;
-	    if($this->input->post('sampleData')=='empty'){
-		
-		$this->mApproveRegister->addPriorAuth();
-		$query['status']="Success";
-		echo json_encode($query);
-		
-	    }elseif($this->input->post('sampleData')=='data'){
-		$this->mApproveRegister->updatePriorAuth();
-		$query['status']="Success";
-		echo json_encode($query);
-	    }
-	}
-   
+	$this->mApproveRegister->addPriorAuth();
+	$query['status']="Success";
+	echo json_encode($query);	
+    }
+    function pdfConvert(){
+	$data['pdfValue']=$this->mApproveRegister->pdfPriorAuthorizaion();
+        $html=$this->load->view('application/pdf/prescription',$data,true);
+	pdf_create($html,'Customer',$stream=TRUE);	
+    }
 //ADD PRIOR AUTHRZATION ENDS    
       
     
