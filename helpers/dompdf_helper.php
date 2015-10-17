@@ -6,9 +6,10 @@ function pdf_create($html, $filename, $stream=TRUE)
     $date=date("m_d_Y");
     $filename = $filename.'_'.$date.'_'.rand();
     $dompdf = new DOMPDF();
-    $dompdf->load_html($html);
+    $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');   
+    $dompdf->load_html($html , 'UTF-8');
     //$dompdf->set_paper($_POST["paper"], $_POST["orientation"]);
-    $dompdf->render();
+    $dompdf->render();    
     $dompdf->stream("$filename".".pdf", array("Attachment" => false));
 }
 function attachAndSendEmail($html,$filename,$receiptEmailId, $stream=TRUE) 
