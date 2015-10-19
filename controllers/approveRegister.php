@@ -466,9 +466,54 @@ $this->datatables->select('prior_authorizaion_id,patient_id,patient_first_name,p
 	echo json_encode($query);	
     }
     function pdfConvert(){
+	$this->load->helper('interfax_helper');
+	$faxNumber= '+18772200199';
+	
 	$data['pdfValue']=$this->mApproveRegister->pdfPriorAuthorizaion();
-        $html=$this->load->view('application/pdf/prescription',$data,true);
-	pdf_create($html,'Customer',$stream=TRUE);	
+        $html = $this->load->view('application/pdf/prescription',$data,true);
+	$pdfPath = pdf_create($html,'Customer',$stream=TRUE);
+	
+	$transactionId = sendFaxWithPdf($faxNumber, $pdfPath);
+	//$transactionId = sendFaxWithHtml($faxNumber,$html);
+	echo 'Your Prior authentication is sent to '.$transactionId;	
+    }
+    function sendFaxSample(){
+	/**************** Settings begin **************/
+ 
+	$username          = 'maisondx';  // Insert your InterFAX username here
+	$password          = 'Westero5';  // Insert your InterFAX password here
+	$faxnumber         = '+18772200199';  // Enter the destination fax number here, e.g. +497116589658
+	$filename          = base_url().'assets/Customer_10_19_2015_13659.pdf'; // A file in your filesystem
+	$filetype          = 'PDF'; // File format; supported types are listed at 
+			   // http://www.interfax.net/en/help/supported_file_types 
+	 
+	/**************** Settings end ****************/
+	 
+	// Open File
+	if( !($fp = fopen($filename, "r"))){
+	    // Error opening file
+	    echo "Error opening file";
+	    exit;
+	}
+	 
+	// Read data from the file into $data
+	$data = "";
+	while (!feof($fp)) $data .= fread($fp,1024);
+	fclose($fp);
+	 
+	 
+	$client = new SoapClient("http://ws.interfax.net/dfs.asmx?WSDL");
+	$params = new stdClass(); 
+	$params->Username  = $username;
+	$params->Password  = $password;
+	$params->FaxNumber = $faxnumber;
+	$params->FileData  = $data;
+	$params->FileType  = $filetype;
+	 
+	$result = $client->Sendfax($params);
+	print_r($result);
+	echo $result->SendfaxResult; // returns the transactionID if successful
+				     // or a negative number if otherwise
     }
 //ADD PRIOR AUTHRZATION ENDS    
       

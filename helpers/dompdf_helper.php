@@ -10,7 +10,11 @@ function pdf_create($html, $filename, $stream=TRUE)
     $dompdf->load_html($html , 'UTF-8');
     //$dompdf->set_paper($_POST["paper"], $_POST["orientation"]);
     $dompdf->render();    
-    $dompdf->stream("$filename".".pdf", array("Attachment" => false));
+    //$dompdf->stream("$filename".".pdf", array("Attachment" => false));
+    $output = $dompdf->output();
+    $file_to_save = 'uploads/'."$filename".".pdf";
+    file_put_contents($file_to_save, $output);
+    return base_url().$file_to_save;
 }
 function attachAndSendEmail($html,$filename,$receiptEmailId, $stream=TRUE) 
 {
