@@ -138,7 +138,6 @@ class mApproveRegister extends CI_Model {
 	{
 	    $priorId=$_POST["prior_authorizaion_id"];
 	    $sql="SELECT * FROM  prior_authorizaion where prior_authorizaion_id='$priorId'";
-	  
 	    return $this->db->query($sql, $return_object = TRUE)->result_array();
 	}
     //Dashboard End
@@ -269,16 +268,14 @@ class mApproveRegister extends CI_Model {
     {
 	$sql="SELECT * FROM PA_reject_reason WHERE prior_authorizaion_id='$id'";
 	return $this->db->query($sql)->result_array();
-	}
+    }
     //State Details From States Table Starts
     public function getStateDetails()
-        {
-            return $this->db->get('states')->result_array();
-        }
+    {
+	return $this->db->get('states')->result_array();
+    }
     //State Details From States Table Ends 
     function addPriorAuth(){
-	//print_r($_POST);
-	//exit;
 	$sessionData = $this->session->userdata('account_id');
 	$data = array(
 		      'patient_first_name' => $this->input->post('patient_first_name'),
@@ -338,9 +335,70 @@ class mApproveRegister extends CI_Model {
 		      'explanations' => $this->input->post('explanations')
 		      );
 	$this->db->insert('prior_authorizaion', $data);
-	$table=$this->db->get('prior_authorizaion')->result_array();
+	//$table=$this->db->get('prior_authorizaion')->result_array();
     }
-    
+    function UpdatePriorAuth(){
+	$sessionData = $this->session->userdata('account_id');
+	$data = array(
+		      'patient_first_name' => $this->input->post('patient_first_name'),
+		      'patient_last_name' => $this->input->post('patient_last_name'),
+		      'patient_dob' => $this->input->post('patient_dob'),
+		      'patient_address' => $this->input->post('patient_address') ,
+		      'patient_city' => $this->input->post('patient_city') ,
+		      'patient_state' => $this->input->post('patient_state') ,
+		      'patient_zip' => $this->input->post('patient_zip') ,
+		      'patient_contact_type' => $this->input->post('patient_contact_type') ,
+		      'patient_gender' => $this->input->post('patient_gender'),
+		      'weight' => $this->input->post('weight'),
+		      'height' => $this->input->post('height'),
+		      'uom_weight' => $this->input->post('uom_weight'),
+		      'uom_height' => $this->input->post('uom_height'),
+		      'allergies' => $this->input->post('allergies'),
+		      'auth_rep' => $this->input->post('auth_rep') ,	
+		      'auth_rep_phone' =>$this->input->post('auth_rep_phone'),
+		      'patient_id' =>$this->input->post('patient_id'),
+		      'pharmacy_name' =>$this->input->post('pharmacy_name'),
+		      'doctor_NPI' => $this->input->post('doctor_NPI'),
+		      'pharmacy_contact_number' => $this->input->post('pharmacy_contact_number'),
+		      'pharmacy_city' => $this->input->post('pharmacy_city'),
+		      'Prescriber_name' => $this->input->post('Prescriber_name'),
+		      'speciality' => $this->input->post('speciality'),
+		      'doctor_NPI' => $this->input->post('doctor_NPI'),
+		      'DEA_number' =>$this->input->post('DEA_number'),
+		      'prescriber_address' =>$this->input->post('prescriber_address'),
+		      'prescriber_city' => $this->input->post('prescriber_city'),
+		      'prescriber_state' => $this->input->post('prescriber_state'),
+		      'prescriber_zip' => $this->input->post('prescriber_zip') ,
+		      'prescriber_phone' =>$this->input->post('prescriber_phone'),
+		      'prescriber_fax' =>$this->input->post('prescriber_fax'),
+		      'prescriber_email' => $this->input->post('prescriber_email'),
+		      'office_contact_person' => $this->input->post('office_contact_person'),
+		      'requestor' => $this->input->post('requestor'),
+		      'primary_insurance_name' => $this->input->post('primary_insurance_name'),
+		      'secondary_insurance_name' => $this->input->post('secondary_insurance_name'),
+		      'primary_paitent_id' => $this->input->post('primary_paitent_id'),
+		      'theraphy_type' =>$this->input->post('theraphy_type'),
+		      'date_theraphy' => $this->input->post('date_theraphy'),
+		      'duration_theraphy' => $this->input->post('duration_theraphy'),
+		      'quantity' => $this->input->post('quantity'),
+		      'frequency' => $this->input->post('frequency'),
+		      'length_theraphy' => $this->input->post('length_theraphy'),
+		      'num_refills' => $this->input->post('num_refills'),
+		      'admin_type' => $this->input->post('admin_type'),
+		      'admin_location' => $this->input->post('admin_location'),
+		      'paitents_receive' => $this->input->post('paitents_receive'),
+		      'insurance_name' =>$this->input->post('insurance_name'),
+		      'prior_auth_name' => $this->input->post('prior_auth_name'),
+		      'diagnosis_code' => $this->input->post('diagnosis_code'),
+		      'add_diagonis' => $this->input->post('add_diagonis'),
+		      'other_medications' => $this->input->post('other_medications'),
+		      //'attachment_yn' =>$this->input->post('attachment_yn'),
+		      //'attachments' =>$this->input->post('attachments'),
+		      'explanations' => $this->input->post('explanations')
+		      );
+	$this->db->insert('prior_authorizaion', $data);
+	//$table=$this->db->get('prior_authorizaion')->result_array();
+    }
     function pdfPriorAuthorizaion(){
 	$data=array(
 		    'patient_first_name' => $this->input->post('patient_first_name'),

@@ -34,8 +34,6 @@
 				<th data-hide="phone,tablet">Drugname</th>
 				<th data-hide="phone,tablet">Provider</th>
 				<th data-hide="phone,tablet">Status</th>
-				
-			        
 			    </tr>
 			</thead>
 			<tbody>

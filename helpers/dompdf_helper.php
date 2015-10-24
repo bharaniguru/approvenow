@@ -10,12 +10,32 @@ function pdf_create($html, $filename, $stream=TRUE)
     $dompdf->load_html($html , 'UTF-8');
     //$dompdf->set_paper($_POST["paper"], $_POST["orientation"]);
     $dompdf->render();    
+    $dompdf->stream("$filename".".pdf", array("Attachment" => false));
+    
+    //$output = $dompdf->output();
+    //$file_to_save = 'uploads/'."$filename".".pdf";
+    //file_put_contents($file_to_save, $output);
+    //return base_url().$file_to_save;
+}
+
+function pdf_create1($html,$filename,$stream=TRUE,$val)
+{
+    require_once("dompdf/dompdf_config.inc.php");
+    $date=date("m_d_Y");
+    $filename = $filename.'_'.$date.'_'.rand();
+    $dompdf = new DOMPDF();
+    $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');   
+    $dompdf->load_html($html , 'UTF-8');
+    //$dompdf->set_paper($_POST["paper"], $_POST["orientation"]);
+    $dompdf->render();    
     //$dompdf->stream("$filename".".pdf", array("Attachment" => false));
+    
     $output = $dompdf->output();
     $file_to_save = 'uploads/'."$filename".".pdf";
     file_put_contents($file_to_save, $output);
     return base_url().$file_to_save;
 }
+
 function attachAndSendEmail($html,$filename,$receiptEmailId, $stream=TRUE) 
 {
     $CI =& get_instance();

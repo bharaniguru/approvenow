@@ -29,21 +29,23 @@ $status = $this->session->flashdata('status');
 			</div>
 			<h4 class="panel-title">Prior Authorization</h4>
 		    </div>		    
-		    <div class="panel-body">
+		    <div class="panel-body" id="Prior">
 			
 			<div class="">
 			    
-			    <form id="priorAuthForm" method="POST" enctype="multipart/form-data" action="<?php echo site_url('approveRegister/pdfConvert/'); ?>" class="" autocomplete="on">
+			    <form id="priorAuthForm" method="POST" enctype="multipart/form-data" action="<?php echo site_url('approveRegister/pdfConvert/');?>" class="" autocomplete="on">
 			    <div class="well">
-				 <label>Submission Date: 07/23/2015</label>
-				    <label class=" form-group pull-right">Status: Rejected</label>
+				<label>Submission Date: <?php echo date('d/m/Y'); ?></label>
+				<label class=" form-group pull-right">Status:<?php echo "Pending";?></label>
 			    </div>
 			    <?php if($empty=="empty"){
 				?>
 				<input type="hidden" name="sampleData" value="empty">
+				<input type="hidden" name="editId" id="editId" value="<?php echo $editId;?>">
 				<?php
 				}else { ?>
 				<input type="hidden" name="sampleData" value="data">
+				<input type="hidden" name="editId" id="editId" value="<?php echo $editId;?>">
 				<?php
 				}?>
 			    <div class="col-md-6">
@@ -586,13 +588,35 @@ $status = $this->session->flashdata('status');
 				    <button class="btn btn-sm btn-info" type="reset" onclick="form_reset();" >Reset</button>
 				     <?php
 					if($empty=='empty'){?>
-				    <input type="button" name="proceed" onclick="savePdf();" class="btn btn-sm btn-success"  value="save">
+				    <input type="button" name="proceed" onclick="saveData();" class="btn btn-sm btn-success"  value="save">
 				    <?php } else { ?>
-					<input type="submit" name="proceed"  class="btn btn-sm btn-success"  value="Update PA">
+				    <input type="submit" name="proceed"  class="btn btn-sm btn-success"  value="Update PA">
 				    <?php }  ?>
 				    <input type="submit"  name="Save" id="resubmit"  class="btn btn-sm btn-primary"  value="Resubmit PA">
 				    <!--<input type="button"  name="PdfSave" onclick="savePdf();" id="Pdfsubmit"  class="btn btn-sm btn-primary"  value="PDF">-->
-				    <input type="submit" name="pdfSave" id="Pdfsubmit" class="btn btn-sm btn-primary" value="pdf">
+				    <!--<input type="submit" name="pdfSave" id="Pdfsubmit" class="btn btn-sm btn-primary" value="pdf">-->
+				    <a class="print btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-dialog" >Fax PA</a> 
+				    <!--<button type="button" class="btn btn-sm btn-primary" name="pdfSave" id="Pdfsubmit"><a data-fancybox-type="iframe" href=""><span class="glyphicon glyphicon-eye-open"></span>PDF</a></button>-->
+				    <div class="modal fade" id="modal-dialog">
+					<div class="modal-dialog modal-lg">
+					    <div class="modal-content">
+						<form  id="category-form" class="smart-form" >
+						    <div class="modal-header">
+							<h4 class="modal-title"></h4>
+						    </div>
+						    <div class="modal-body printPadding">
+							<iframe class="responsiveiframe" width="872px" id="previewiframe" height="700px"></iframe>
+						    </div>
+						    <div class="modal-footer">
+							
+							<a class="btn btn-sm btn-primary" href="<?php echo site_url('approveRegister/pdfConvert1/');?>" name="pdfSave" id="Pdfsubmit" target="_blank"value="pdf">Fax PA</a>
+							<a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
+							
+						    </div>
+						</form>
+					    </div>
+					</div>
+				    </div>  				    
 				</div>
 			    </div>
 			  </form>
@@ -611,7 +635,30 @@ $status = $this->session->flashdata('status');
 	<!-- end page container -->
 	</body>
     </html>
-  
+    
+  <script type="text/javascript">
+    $(document).ready(function(){
+	var Edit=$("#editId").val();
+	    if (Edit != 'noId')
+	    {
+		editPriorAuth(Edit);
+	    }
+    });
+  </script>
+  <script>
+    $('#Prior').on('click', '.print', function(e) {
+	//loadModalLoader('printPreview');
+	//var systemId = $(this).attr('systemId');
+	var data = "approveRegister/pdfConvert/";
+	var preview = "<?php echo site_url()?>"+data;
+	$('#previewiframe').attr('src',preview);
+	var dataURL = "approveRegister/pdfConvert/";
+	//var sendPrint = "<?php echo site_url()?>"+dataURL;
+	//$('#sendPrint').attr('href',sendPrint);
+	//$('#emailSystemId').val(systemId);
+	
+    });
+  </script>
     
 <script type="text/javascript">
 $(function () {
@@ -655,6 +702,8 @@ $(function () {
 	    }
 
 	    });
+	   
+	    
 	
     </script>
 
@@ -1235,19 +1284,21 @@ $(function(){
 //    });    
 
 
-    function savePdf(){
-	loadLoader();
+    function saveData(){
+	//loadLoader();
 	$.ajax({
 	    type: "POST",
 	    url: "<?=site_url('approveRegister/PriorAuthDetailsOperation');?>",
 	    data: $("#priorAuthForm").find("select,radio,checkbox,textarea, input").serialize(),
 	    dataType:'json',
-	    processData: false,
-	    contentType: false,	    
+	    //processData: false,
+	    //contentType: false,	    
 	    success: function (json) {
+		//console.log();
 		operationClose();
 		$('#dataRespTable').dataTable().fnDraw();
-		unLoader();		
+		//unLoader();
+		//console.log(operationClose);
 		
 	    },
 	});

@@ -426,14 +426,15 @@ $this->datatables->select('prior_authorizaion_id,patient_id,patient_first_name,p
 		$data['rejectReason']= $this->mApproveRegister->getRejectDetails();
 		$data['rejectReference']= $this->mApproveRegister->getReasonRef($id);
 		
-		
 		$data['empty']="data";
+		$data['editId']=$id;
 		$this -> load -> view('header');
 		$this -> load -> view('application/priorAuth',$data);
 		$this -> load -> view('footer');
 	   }
 	    else{
 		$data['empty']="empty";
+		$data['editId']='noId';
 		$data['state']= $this->mApproveRegister->getStateDetails();
 		 $this -> load -> view('header');
 		$this -> load -> view('application/priorAuth',$data);
@@ -466,12 +467,26 @@ $this->datatables->select('prior_authorizaion_id,patient_id,patient_first_name,p
 	echo json_encode($query);	
     }
     function pdfConvert(){
-	$this->load->helper('interfax_helper');
-	$faxNumber= '+18772200199';
+	//$this->load->helper('interfax_helper');
+	//$faxNumber= '+18772200199';
 	
 	$data['pdfValue']=$this->mApproveRegister->pdfPriorAuthorizaion();
         $html = $this->load->view('application/pdf/prescription',$data,true);
-	$pdfPath = pdf_create($html,'Customer',$stream=TRUE);
+	//echo $html;
+	pdf_create($html,'Customer',$stream=TRUE);
+	
+	//$transactionId = sendFaxWithPdf($faxNumber, $pdfPath);
+	//$transactionId = sendFaxWithHtml($faxNumber,$html);
+	//echo 'Your Prior authentication is sent to '.$transactionId;	
+    }
+    function pdfConvert1(){
+	$this->load->helper('interfax_helper');
+	$faxNumber= '+18772200199';
+	
+	$val="";
+	$data['pdfValue']=$this->mApproveRegister->pdfPriorAuthorizaion();
+        $html = $this->load->view('application/pdf/prescription',$data,true);
+	$pdfPath = pdf_create1($html,'Customer',$stream=TRUE,$val);
 	
 	$transactionId = sendFaxWithPdf($faxNumber, $pdfPath);
 	//$transactionId = sendFaxWithHtml($faxNumber,$html);
