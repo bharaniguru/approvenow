@@ -48,8 +48,9 @@
 				<td><?php echo $row['patient_last_name']; ?></td>
 				<td><?php echo $row['patient_dob']; ?></td>
 				<td><?php echo $row['written_drug_form_desc']; ?></td>				    
-				<td><?php echo $row['pharmacy_name']; ?></td>
-				<td><?php  foreach($statusDesc as $status){ if($status['reason_code_id']== $row['status_id'])echo $status['description']; } ?></td>
+				<td><?php echo $row['Prescriber_name']; ?></td>
+				<td><?php echo $row['prior_auth_status']; ?></td>
+				<!--<td><?php  foreach($statusDesc as $status){ if($status['reason_code_id']== $row['status_id'])echo $status['description']; } ?></td>-->
 			    </tr>
 			  
 			<?php }?>

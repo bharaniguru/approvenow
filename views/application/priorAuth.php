@@ -354,8 +354,12 @@ $status = $this->session->flashdata('status');
 					<label class="page-header">Prescriber Details</label>
 				    </section>
 				    <section class="col-sm-6 form-group">
-					<label class="control-label">Prescriber's Name</label>
-					<input type="text" name="Prescriber_name"  class="form-control input-sm"  placeholder="Prescribers Name" value="<?=$priorAuthDetails[0]['Prescriber_name']?>" />
+					<label class="control-label">Prescriber's First Name</label>
+					<input type="text" name="prescriber_first_name"  class="form-control input-sm"  placeholder="Prescribers First Name" value="<?=$priorAuthDetails[0]['prescriber_first_name']?>" />
+				    </section>
+				    <section class="col-sm-6 form-group">
+					<label class="control-label">Prescriber's Last Name</label>
+					<input type="text" name="prescriber_last_name"  class="form-control input-sm"  placeholder="Prescribers Last Name" value="<?=$priorAuthDetails[0]['prescriber_last_name']?>" />
 				    </section>
                                     <section class="col-sm-6 form-group">
 					<label class="control-label">Speciality</label>
@@ -491,14 +495,15 @@ $status = $this->session->flashdata('status');
 				    </section>
 				    <section class="col-sm-6 form-group">
 					<label class="control-label"></label>
-					<input type="text" name="diagonis_current_drugs" id="diagonis_current_drugs" class="form-control input-sm"  placeholder="CONTINUED THERAPHY" value="<?=$priorAuthDetails[0]['diagonis_current_clinical_info']?>"/>
+					<textarea class="form-control" rows="5" name="diagonis_current_drugs" id="diagonis_current_drugs" placeholder="CONTINUED THERAPHY"><?=$priorAuthDetails[0]['diagonis_current_clinical_info']?></textarea>
+					
 				    </section>
 				    <section class="col-sm-10 form-group">
 					<p><strong>Please Provide any additional clinical information or comment perteniment to this request for coverage</strong></p>
 				    </section>
 				    <section class="col-sm-6 form-group">
 					<label class="control-label"></label>
-					<input type="text" name="diagonis_current_clinical_info" id="diagonis_current_clinical_info" value="<?=$priorAuthDetails[0]['diagonis_current_clinical_info']?>" class="form-control input-sm"  placeholder="CONTINUED THERAPHY" />
+					<textarea class="form-control" rows="5" name="diagonis_current_clinical_info" id="diagonis_current_clinical_info" placeholder="CONTINUED THERAPHY"><?=$priorAuthDetails[0]['diagonis_current_clinical_info']?></textarea>
 				    </section>
 				    <section class="col-sm-6 form-group hide">
 					<label class="control-label">Will you be providing any attachement with this form ? </label>
@@ -507,26 +512,39 @@ $status = $this->session->flashdata('status');
 					<label><input type="radio" name="attachment_yn"> No</label>
 				    </section>
 				</div>
-				<div  class="row well">
+				<?php if($empty!='empty'){ ?>
+				<div class="row well">
 				    <div class="col-md-12 table-responsive">
-					<table id="" class="table table-striped table-bordered nowrap" width="100%">
+					<div class="btn-group btn-group-justified" role="group" aria-label="...">
+					    <div class="btn-group" role="group">
+						<button onclick="updatePriorAuthReasonStatus('completed')" type="button" class="btn btn-success">Completed</button>
+					    </div>
+					    <div class="btn-group" role="group">
+						<button onclick="updatePriorAuthReasonStatus('pending')" type="button" class="btn btn-primary">Pending</button>
+					    </div>
+					    <div class="btn-group" role="group">
+						<button onclick="updatePriorAuthReasonStatus('delete')" type="button" class="btn btn-danger">Delete</button>
+					    </div>
+					</div>
+					<p class="notes">Note: Please check the following reasons and do the above actions</p>
+					<table id="priorAuthReasonTable" class="table table-striped table-bordered nowrap" width="100%">
 					    <thead>
 						<tr>
 						    <th>PA Reject Reason </th>
-						    <th>Reject Reason Col</th>
 						    <th>Notes</th>
+						    <th>Status</th>
 						    <th><a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#priorAuthReason" data-priorAuthId="<?=$priorAuthDetails[0]['prior_authorizaion_id']?>" ><i class="fa fa-plus"></i></a></th>
 						</tr>
 					    </thead>
-					    <tbody id="">
-						<?php if($empty!='empty'){ foreach ($rejectReasonDetails as $row){ ?>
+					    <tbody id="priorAuthTbody">
+						<?php foreach ($rejectReasonDetails as $row){ ?>
 						<tr>
 						    <td><?php echo $row['PA_reject_reason']; ?></td>
-						    <td><?php echo $row['PA_reject_reasoncol']; ?></td>
 						    <td><?php echo $row['Notes']; ?></td>
-						    <td><input type="checkbox" name="rejectReason" id="rejectReason"></td>
+						    <td><?php echo $row['status']; ?></td>
+						    <td><input type="checkbox" name="rejectReasonId" value="<?=$row['PA_reject_reason_id']?>" /></td>
 						</tr>
-						<?php } } ?>
+						<?php } ?>
 					    </tbody>
 					</table>
 				    </div>
@@ -539,6 +557,7 @@ $status = $this->session->flashdata('status');
 					</div>
 				    </div>
 				</div>
+				<?php } ?>
 			    </div>
 			    <div class="col-md-6 col-md-offset-4">
 				<div class="form-group">
@@ -603,7 +622,59 @@ $status = $this->session->flashdata('status');
 				var modal = $(this)
 				console.log(attachment);
 				modal.find('.modal-body iframe').attr('src', attachment)
-			    })
+			    });
+			    $("#priorAuthReasonForm").submit(function(e) {
+				
+				e.preventDefault();
+				var formData = new FormData($(this)[0]);
+				$.ajax({
+				    type:'POST',
+				    url:'<?=site_url('approveRegister/addPriorAuthReason');?>',
+				    mimeType:"multipart/form-data",
+				    data:formData,
+				    dataType:'json',
+				    processData: false,
+				    contentType: false,
+				    success:function(json){
+					var trHTML = '';
+					$.each(json, function (i, json) {
+					    trHTML += '<tr><td>' + json.PA_reject_reason + '</td><td>' + json.Notes + '</td><td>' + json.status + '</td><td><input type="checkbox" name="rejectReasonId" value="' + json.PA_reject_reason_id + '" /></td></tr>';
+					});
+					$('#priorAuthTbody').html(trHTML);
+					$('#priorAuthReasonForm')[0].reset();
+					$('#priorAuthReason').modal('hide');
+				    }
+				});
+			    });
+			    function updatePriorAuthReasonStatus(action) {
+				var rejectReasonId = [];
+				var selectedReasonIdCount=0;
+				var priorAuthId = '<?=$priorAuthDetails[0]['prior_authorizaion_id']?>';
+				$("#priorAuthReasonTable input[name$=rejectReasonId]:checked").each(function()
+				{
+				    rejectReasonId.push($(this).val());
+				    selectedReasonIdCount++;
+				});
+				if (selectedReasonIdCount==0) {
+				    alert('Please select at least one record');
+				}else{
+				    $.ajax({
+					type:'POST',
+					url:'<?=site_url('approveRegister/updatePriorAuthReasonStatus');?>',
+					data:{action:action,rejectReasonId:rejectReasonId,priorAuthId:priorAuthId},
+					dataType:'json',
+					success:function(json){
+					    var trHTML = '';
+					    $.each(json, function (i, json) {
+						trHTML += '<tr><td>' + json.PA_reject_reason + '</td><td>' + json.Notes + '</td><td>' + json.status + '</td><td><input type="checkbox" name="rejectReasonId" value="' + json.PA_reject_reason_id + '" /></td></tr>';
+					    });
+					    $('#priorAuthTbody').html(trHTML);
+					    $('#priorAuthReasonForm')[0].reset();
+					    $('#priorAuthReason').modal('hide');
+					}
+				    });
+				}
+			    }
 			</script>
 		    </div>
 		<!-- end panel -->

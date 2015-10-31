@@ -331,6 +331,22 @@ class approveRegister extends CI_Controller {
 	$result = $this->mApproveRegister->getPriorAuthDetails($prior_authorizaion_id);
 	echo json_encode($result);
     }
+    function addPriorAuthReason(){
+	$this->mApproveRegister->addPriorAuthReason();
+	$result = $this->mApproveRegister->getRejectReason($_POST['priorAuthIdForReason']);
+	echo json_encode($result);
+    }
+    function updatePriorAuthReasonStatus(){
+	$this->mApproveRegister->updatePriorAuthReasonStatus();
+	$result = $this->mApproveRegister->getRejectReason($_POST['priorAuthId']);
+	echo json_encode($result);
+    }
+    function digitalRx($data){
+	echo "<pre>";
+	print_r($_GET);
+	echo "</pre>";
+	echo $data;
+    }
     function priorAuth($id){
 	$sessionData = $this->session->userdata('accUsername');
 	if($sessionData!=""){

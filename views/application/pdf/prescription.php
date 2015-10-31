@@ -135,7 +135,7 @@
         <tr>
             <td style="width: 30%;">Date Of Birth:<?php echo $pdfValue[0]['patient_dob'];?></td>
             <td style="width: 20%;">Male <input type="checkbox" <?php if($pdfValue[0]['patient_gender']=='male') echo "checked";?>><br> Female <input type="checkbox" value="female" <?php if($pdfValue[0]['patient_gender']=='female') echo "checked"?>> <br></td>
-            <td style="width: 30%;">Circle unit of measure<br>Height(in/CM):<u><?php echo $pdfValue[0]['height'];?></u>  Weight(lb/Kg):<u><?php echo $pdfValue[0]['weight'];?></u></td>
+            <td style="width: 30%;">Circle unit of measure<br>Height(in/CM):<u><?php echo $pdfValue[0]['patient_height'];?></u>  Weight(lb/Kg):<u><?php echo $pdfValue[0]['patient_weight'];?></u></td>
             <td style="width: 25%;">Allergies:<?php echo $pdfValue[0]['allergies'];?></td>
         </tr>
     </table>
@@ -164,8 +164,8 @@
         </tr>
         
         <tr>
-            <td colspan="4">First Name:<?php echo $pdfValue[0]['pharmacist_first_name'];?></td>
-            <td colspan="4">Last Name:</td>
+            <td colspan="4">First Name:<?php echo $pdfValue[0]['prescriber_first_name'];?></td>
+            <td colspan="4">Last Name:<?php echo $pdfValue[0]['prescriber_last_name'];?></td>
             <td colspan="6">Specialty:<?php echo $pdfValue[0]['speciality'];?></td>
         </tr>
         <tr>

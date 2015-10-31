@@ -275,6 +275,38 @@ class mApproveRegister extends CI_Model {
 	$sql="SELECT * FROM PA_reject_reason where prior_authorizaion_id='$prior_authorizaion_id'";
 	return $this->db->query($sql)->result_array();
     }
+    function addPriorAuthReason(){
+	$data = array(
+		      'PA_reject_reason' => $this->input->post('PA_reject_reason'),
+		      'Notes' => $this->input->post('Notes'),
+		      'status' => 'Pending',
+		      'prior_authorizaion_id' => $this->input->post('priorAuthIdForReason')
+		    );
+	return $this->db->insert('PA_reject_reason', $data);
+    }
+    function updatePriorAuthReasonStatus(){
+	if($_POST['action']=="pending"){
+	    for($i=0;$i<count($_POST['rejectReasonId']);$i++){
+		$data = array(
+			      'status' =>'Pending'
+			    );
+		$this->db->where('PA_reject_reason_id', $_POST['rejectReasonId'][$i]);
+		$this->db->update('PA_reject_reason', $data);
+	    }
+	}elseif($_POST['action']=="completed"){
+	    for($i=0;$i<count($_POST['rejectReasonId']);$i++){
+		$data = array(
+			      'status' =>'Completed'
+			    );
+		$this->db->where('PA_reject_reason_id', $_POST['rejectReasonId'][$i]);
+		$this->db->update('PA_reject_reason', $data);
+	    }
+	}elseif($_POST['action']=="delete"){
+	    for($i=0;$i<count($_POST['rejectReasonId']);$i++){
+		$this->db->delete('PA_reject_reason', array('PA_reject_reason_id' => $_POST['rejectReasonId'][$i])); 
+	    }
+	}
+    }
     //State Details From States Table Starts
     public function getStateDetails()
     {
@@ -339,7 +371,8 @@ class mApproveRegister extends CI_Model {
 		      'prior_auth_name' => $this->input->post('prior_auth_name'),
 		      'explanations' => $this->input->post('explanations'),
 		      'attachments' => $attachmentPath,
-		      'Prescriber_name' => $this->input->post('Prescriber_name'),
+		      'prescriber_first_name' => $this->input->post('prescriber_first_name'),
+		      'prescriber_last_name' => $this->input->post('prescriber_last_name'),
 		      'speciality' => $this->input->post('speciality'),
 		      'prescriber_NPI' => $this->input->post('prescriber_NPI'),
 		      'DEA_number' =>$this->input->post('DEA_number'),
@@ -433,7 +466,8 @@ class mApproveRegister extends CI_Model {
 		      'prior_auth_name' => $this->input->post('prior_auth_name'),
 		      'explanations' => $this->input->post('explanations'),
 		      'attachments' => $attachmentPath,
-		      'Prescriber_name' => $this->input->post('Prescriber_name'),
+		      'prescriber_first_name' => $this->input->post('prescriber_first_name'),
+		      'prescriber_last_name' => $this->input->post('prescriber_last_name'),
 		      'speciality' => $this->input->post('speciality'),
 		      'prescriber_NPI' => $this->input->post('prescriber_NPI'),
 		      'DEA_number' =>$this->input->post('DEA_number'),
