@@ -171,14 +171,15 @@ function operationClose() {
     $('#operationPanel').addClass('hide');
 }
 $("#locationForm").submit(function(e) {
-    loadLoader();
+    //loadLoader();
     e.preventDefault();
+    console.log('testtest');
     var formData = new FormData($(this)[0]);
     $.ajax({
 	type:'POST',
 	url:'<?=site_url('approveRegister/locationDetailsOperation');?>',
 	mimeType:"multipart/form-data",
-	data:formData,
+	//data:formData,
 	dataType:'json',
 	processData: false,
 	contentType: false,
@@ -464,9 +465,10 @@ $("#providerForm").submit(function(e) {
 	    //console.log(json);
 	  
 	    unLoader1();
-	    operationClose1();
+	    
 	
 	    $('#dataRespTable1').dataTable().fnDraw();
+	    operationClose1();
 		    
 	    
 	}
@@ -625,7 +627,7 @@ $(document).ready(function() {
 </script>
  <script>
  $(document).ready(function() {
-    $('#locationForm').formValidation({
+    $('#locationFormee').formValidation({
 	//container: 'tooltip',
 	message: 'This value is not valid',
 	feedbackIcons: {
@@ -739,7 +741,7 @@ $(document).ready(function() {
  </script>
   <script>
  $(document).ready(function() {
-    $('#providerForm').formValidation({
+    $('#providerFormee').formValidation({
 	//container: 'tooltip',
 	message: 'This value is not valid',
 	feedbackIcons: {
