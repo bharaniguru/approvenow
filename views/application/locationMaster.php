@@ -28,10 +28,10 @@ $status = $this->session->flashdata('status');
 		    </div>
 		    <h4 class="panel-title">View</h4>
 		</div>
-		<div class="panel-body" id="form_validation">
+		<div class="panel-body" id="form_validation1">
 		    <div id="alert"></div>
 		    <p id="addbutton">
-			<a class="btn btn-primary btn-sm " onclick="operationOpen();"><i class="fa fa-plus fa-1x"></i> <span class="f-s-14 f-w-500">Add</span></a>
+			<a class="btn btn-primary btn-sm" onclick="operationOpen();"><i class="fa fa-plus fa-1x"></i> <span class="f-s-14 f-w-500">Add</span></a>
 		    </p>
 		    <?php if($status)
 			{?>
@@ -76,11 +76,11 @@ $status = $this->session->flashdata('status');
 		    </div>
 		    <h4 class="panel-title">Add</h4>
 		</div>
-		<div class="panel-body" id="form_validation">
+		<div class="panel-body" id="form_validation2">
 		    <?php if(isset($error_message)) { ?>
 		    <div class="alert alert-danger errorMsgDiv"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">&times;</a><?php echo $error_message; ?></div>
 		    <?php } ?>
-		    <form id="locationForm" data-fv-trigger="blur change keyup"   enctype="multipart/form-data" role="form">
+		    <form id="locationForm" data-fv-trigger="blur change keyup" method="post"  enctype="multipart/form-data" role="form">
 			
 			<div class="row">
 			    <section class="col-sm-3 form-group">
@@ -141,7 +141,7 @@ $status = $this->session->flashdata('status');
 				<input type="hidden" name="proceed" value="Add" />
 				<input type="hidden" name="locationId" value="" />
 				
-				<button class="btn btn-sm btn-primary m-r-5" name="save" type="submit">Save</button>
+				<button class="btn btn-sm btn-primary m-r-5" name="save" type="submit" >Save</button>
 				<button class="btn btn-sm btn-default" onclick="operationClose();" type="button">Cancel</button>
 			    </section>
 			</div>
@@ -170,27 +170,35 @@ function operationClose() {
     $('#viewPanel').removeClass('hide');
     $('#operationPanel').addClass('hide');
 }
-$("#locationForm").submit(function(e) {
-    //loadLoader();
-    e.preventDefault();
-    console.log('testtest');
-    var formData = new FormData($(this)[0]);
-    $.ajax({
-	type:'POST',
-	url:'<?=site_url('approveRegister/locationDetailsOperation');?>',
-	mimeType:"multipart/form-data",
-	//data:formData,
-	dataType:'json',
-	processData: false,
-	contentType: false,
-	success:function(json){
-	    operationClose();
-	    $('#dataRespTable').dataTable().fnDraw();
-	    
-	    unLoader();
-	}
-    });
-});
+function testestest() {
+    alert('testing');
+}
+//$("#locationForm").submit(function(e) {
+//    //loadLoader();
+//      alert("sad");
+//    
+//    
+//
+//    
+//    e.preventDefault();
+// 
+//    var formData = new FormData($(this)[0]);
+//    $.ajax({
+//	type:'POST',
+//	url:'<?=site_url('approveRegister/locationDetailsOperation');?>',
+//	mimeType:"multipart/form-data",
+//	data:formData,
+//	dataType:'json',
+//	processData: false,
+//	contentType: false,
+//	success:function(json){
+//	    operationClose();
+//	    $('#dataRespTable').dataTable().fnDraw();
+//	    
+//	    unLoader();
+//	}
+//    });
+//});
 function editLocation(locationId) {
     loadLoader();
     operationOpen();
@@ -341,7 +349,7 @@ $(document).ready(function() {
 		    
 		    <h4 class="panel-title">Provider General View</h4>
 		</div>
-		<div class="panel-body" id="form_validation">
+		<div class="panel-body" id="form_validation3">
 		    <div id="alert"></div>
 		    <p id="addbutton1">
 			<a class="btn btn-primary btn-sm " onclick="operationOpen1();"><i class="fa fa-plus fa-1x"></i> <span class="f-s-14 f-w-500">Add</span></a>
@@ -379,7 +387,7 @@ $(document).ready(function() {
 		    
 		    <h4 class="panel-title">Provider General Add</h4>
 		</div>
-		<div class="panel-body" id="form_validation">
+		<div class="panel-body" id="form_validation4">
 		    <?php if(isset($error_message)) { ?>
 		    <div class="alert alert-danger errorMsgDiv"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">&times;</a><?php echo $error_message; ?></div>
 		    <?php } ?>
@@ -448,32 +456,37 @@ function operationClose1() {
     $('#viewPanel1').removeClass('hide');
     $('#operationPanel1').addClass('hide');
 }
-$("#providerForm").submit(function(e) {
-   
-    e.preventDefault();
-    var formData = new FormData($(this)[0]);
-    loadLoader1();
-    $.ajax({
-	type:'POST',
-	url:'<?=site_url('approveRegister/generalProviderOperation');?>',
-	mimeType:"multipart/form-data",
-	data:formData,
-	dataType:'json',
-	processData: false,
-	contentType: false,
-	success:function(json){
-	    //console.log(json);
-	  
-	    unLoader1();
-	    
-	
-	    $('#dataRespTable1').dataTable().fnDraw();
-	    operationClose1();
-		    
-	    
-	}
-    });
-});
+
+function providergneral() {
+    alert('testing');
+}
+//$("#providerForm").submit(function(e) {
+//    
+//   
+//    e.preventDefault();
+//    var formData = new FormData($(this)[0]);
+//    loadLoader1();
+//    $.ajax({
+//	type:'POST',
+//	url:'<?=site_url('approveRegister/generalProviderOperation');?>',
+//	mimeType:"multipart/form-data",
+//	data:formData,
+//	dataType:'json',
+//	processData: false,
+//	contentType: false,
+//	success:function(json){
+//	    //console.log(json);
+//	  
+//	    unLoader1();
+//	    
+//	
+//	    $('#dataRespTable1').dataTable().fnDraw();
+//	    operationClose1();
+//		    
+//	    
+//	}
+//    });
+//});
 
 function editProvider(providerId) {
     loadLoader1();
@@ -626,8 +639,11 @@ $(document).ready(function() {
 
 </script>
  <script>
+    
  $(document).ready(function() {
-    $('#locationFormee').formValidation({
+    
+    $('#locationForm')
+    .formValidation({
 	//container: 'tooltip',
 	message: 'This value is not valid',
 	feedbackIcons: {
@@ -736,12 +752,36 @@ $(document).ready(function() {
 	    
 	    
 	    }
+	    
+    })
+    .on('success.form.fv', function(e, data) {
+            e.preventDefault();
+	    testestest();
+    var formData = new FormData($(this)[0]);
+    $.ajax({
+	type:'POST',
+	url:'<?=site_url('approveRegister/locationDetailsOperation');?>',
+	mimeType:"multipart/form-data",
+	data:formData,
+	dataType:'json',
+	processData: false,
+	contentType: false,
+	success:function(json){
+	    operationClose();
+	    $('#dataRespTable').dataTable().fnDraw();
+	    
+	    unLoader();
+	}
     });
+        });
+    
 });
+ 
  </script>
   <script>
  $(document).ready(function() {
-    $('#providerFormee').formValidation({
+    $('#providerForm')
+    .formValidation({
 	//container: 'tooltip',
 	message: 'This value is not valid',
 	feedbackIcons: {
@@ -808,6 +848,33 @@ $(document).ready(function() {
                 }
             },
 	    }
-	    });
+	    })
+     .on('success.form.fv', function(e, data) {
+            e.preventDefault();
+	    providergneral();
+	     var formData = new FormData($(this)[0]);
+    loadLoader1();
+    $.ajax({
+	type:'POST',
+	url:'<?=site_url('approveRegister/generalProviderOperation');?>',
+	mimeType:"multipart/form-data",
+	data:formData,
+	dataType:'json',
+	processData: false,
+	contentType: false,
+	success:function(json){
+	    //console.log(json);
+	  
+	    unLoader1();
+	    
+	
+	    $('#dataRespTable1').dataTable().fnDraw();
+	    operationClose1();
+		    
+	    
+	}
+    });
+        });
     });
  </script>
+  

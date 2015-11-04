@@ -167,7 +167,10 @@ class mApproveRegister extends CI_Model {
 		      'account_id' => $this->session->userdata('account_id')
 		    );
 	$this->db->insert('locations', $data);
-	
+	//echo "<pre>";
+	//print_r($data);
+	//echo "</pre>";
+	//exit;
     }
     function updateLocation(){
 	$data = array(
